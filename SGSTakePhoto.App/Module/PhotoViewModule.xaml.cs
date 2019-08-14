@@ -30,13 +30,16 @@ namespace SGSTakePhoto.App
         /// <summary>
         /// 
         /// </summary>
+        public UserControl ParentControl { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="fileName"></param>
         public PhotoViewModule(string fileName)
         {
             InitializeComponent();
-            FileName = fileName;
-            BitmapImage bitmapImage = new BitmapImage(new Uri(FileName));
-            imgPhotoView.Source = bitmapImage;
+            gdPhotoView.DataContext = new { PicturePath = fileName };
         }
 
 
@@ -47,7 +50,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-
+            CommonHelper.MainWindow.brMain.Child = ParentControl;
         }
     }
 }

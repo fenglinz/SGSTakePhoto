@@ -19,7 +19,7 @@
             </EventTrigger.Actions>
         </EventTrigger>
     </UserControl.Triggers>
-    <Grid>
+    <Grid Name="gdPhotoView">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
@@ -27,10 +27,6 @@
         <StackPanel Orientation="Vertical">
             <Button Name="btnBack" Content="Back" Style="{StaticResource btn-success}" Margin="10,10" Width="80" Click="BtnBack_Click"/>
         </StackPanel>
-        <Image Grid.Column="1" Name="imgPhotoView">
-            <Image.Source>
-                <BitmapImage UriSource="{Binding Path = PicturePath}"/>
-            </Image.Source>
-        </Image>
+        <Image Grid.Column="1" Name="imgPhotoView" Source="{Binding Path=PicturePath}"/>
     </Grid>
 </UserControl>

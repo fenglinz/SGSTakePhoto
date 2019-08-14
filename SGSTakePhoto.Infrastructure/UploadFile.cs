@@ -6,7 +6,7 @@ namespace SGSTakePhoto.Infrastructure
     /// <summary>
     /// Upload
     /// </summary>
-    public class Upload : NotifyBaseEntity
+    public class UploadFile : NotifyBaseEntity
     {
         #region 字段
 
@@ -44,9 +44,9 @@ namespace SGSTakePhoto.Infrastructure
         /// 隐士转换
         /// </summary>
         /// <param name="row"></param>
-        public static implicit operator Upload(DataRow row)
+        public static implicit operator UploadFile(DataRow row)
         {
-            return new Upload
+            return new UploadFile
             {
                 Id = row.IsNull("Id") ? string.Empty : row["Id"].ToString(),
                 OrderId = row.IsNull("OrderId") ? string.Empty : row["OrderId"].ToString(),

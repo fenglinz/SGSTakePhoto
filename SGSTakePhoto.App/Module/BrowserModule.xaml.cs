@@ -28,7 +28,10 @@ namespace SGSTakePhoto.App
         /// </summary>
         public Order Order { get; set; }
 
-        public DataTable dtTemp = new DataTable();
+        /// <summary>
+        /// 
+        /// </summary>
+        private DataTable dtTemp { get; set; }
 
         /// <summary>
         /// 
@@ -37,12 +40,12 @@ namespace SGSTakePhoto.App
         public BrowserModule(Order order)
         {
             InitializeComponent();
-
             Order = order;
         }
 
         private void Browser_Loaded(object sender, RoutedEventArgs e)
         {
+            dtTemp = new DataTable();
             var files = Directory.GetFiles(@"C:\Users\meizu\Pictures\Saved Pictures");
             dtTemp.Columns.Add("Id", typeof(int));
             dtTemp.Columns.Add("IsUploaded", typeof(int));
@@ -152,7 +155,10 @@ namespace SGSTakePhoto.App
                 case "Edit":
                     break;
                 case "Browser":
-                    PhotoViewModule viewModule = new PhotoViewModule(row["PicturePath"].ToString());
+                    PhotoViewModule viewModule = new PhotoViewModule(row["PicturePath"].ToString())
+                    {
+                        ParentControl = this
+                    };
                     CommonHelper.MainWindow.brMain.Child = viewModule;
                     break;
                 case "Upload":

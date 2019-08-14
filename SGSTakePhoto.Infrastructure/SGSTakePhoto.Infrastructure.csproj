@@ -55,7 +55,7 @@
     <Compile Include="SqLiteHelper.cs" />
     <Compile Include="TransferType.cs" />
     <Compile Include="UpdateInfo.cs" />
-    <Compile Include="Upload.cs" />
+    <Compile Include="UploadFile.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UserConfig.cs" />
   </ItemGroup>

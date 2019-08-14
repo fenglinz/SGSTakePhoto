@@ -1,18 +1,6 @@
 ﻿using SGSTakePhoto.Infrastructure;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using WPFMediaKit.DirectShow.Controls;
 
 namespace SGSTakePhoto.App
@@ -50,13 +38,14 @@ namespace SGSTakePhoto.App
         {
             InitializeComponent();
             this.Order = order;
-            Start();
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public void Start()
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Camera_Loaded(object sender, RoutedEventArgs e)
         {
             if (MultimediaUtil.VideoInputNames.Length > 0)
             {
@@ -67,10 +56,7 @@ namespace SGSTakePhoto.App
                 MessageBox.Show("No camera found", "Notice", MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
-            if (!VideoCapture.IsPlaying)
-            {
-                MessageBox.Show("照相机关闭");
-            }
+            VideoCapture.Play();
         }
 
         /// <summary>
@@ -79,16 +65,6 @@ namespace SGSTakePhoto.App
         public void Stop()
         {
             VideoCapture.Close();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void UserControl_Loaded(object sender, RoutedEventArgs e)
-        {
-            VideoCapture.Play();
         }
     }
 }

@@ -1,4 +1,6 @@
 ﻿using SGSTakePhoto.Infrastructure;
+using System;
+using System.Collections.ObjectModel;
 using System.Windows.Controls;
 
 namespace SGSTakePhoto.App
@@ -8,7 +10,22 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class UploadModule : UserControl
     {
-        private Order order;
+        /// <summary>
+        /// 
+        /// </summary>
+        public Order Order { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        private ObservableCollection<UploadFile> UploadFiles { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public UploadModule()
+        {
+            InitializeComponent();
+        }
 
         /// <summary>
         /// 
@@ -16,7 +33,31 @@ namespace SGSTakePhoto.App
         public UploadModule(Order order)
         {
             InitializeComponent();
-            this.order = order;
+            this.Order = order;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Upload_Loaded(object sender, System.Windows.RoutedEventArgs e)
+        {
+            if (Order == null) return;
+            if (UploadFiles != null) return;
+
+            UploadFiles = new ObservableCollection<UploadFile>
+            {
+                new UploadFile
+                {
+                    Id = Guid.NewGuid().ToString(),
+                     FileName = "哈哈哈",
+                     Status = "Uploading",
+                     UploadTime = DateTime.Now
+                }
+            };
+
+            dgUpload.ItemsSource = UploadFiles;
         }
 
         /// <summary>

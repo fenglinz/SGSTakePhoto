@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:SGSTakePhoto.App"
              mc:Ignorable="d"
              Name="Upload"
+             Loaded="Upload_Loaded"
              d:DesignHeight="800" d:DesignWidth="1200">
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
@@ -33,7 +34,7 @@
                 <Button Content="Back" Width="80" Style="{DynamicResource btn-success}" Name="btnBack" Click="BtnBack_Click"/>
                 <Button Content="Upload" Width="80" Style="{DynamicResource btn-info}" Name="btnUpload" Margin="20,0" Click="BtnUpload_Click"/>
             </StackPanel>
-            <DataGrid Grid.Row="1">
+            <DataGrid Grid.Row="1" Name="dgUpload" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="" Width="35">
                         <DataGridTemplateColumn.CellTemplate>
@@ -44,7 +45,7 @@
                     </DataGridTemplateColumn>
                     <DataGridTextColumn Width="70*" IsReadOnly="True" Header="Photo Name" Binding="{Binding FileName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="15*" IsReadOnly="True" Header="Status" Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
-                    <DataGridTextColumn Width="15*" IsReadOnly="True" Header="Update Time" Binding="{Binding UpdateTime,StringFormat='yyyy/MM/dd HH:mm:ss', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="15*" IsReadOnly="True" Header="Update Time" Binding="{Binding UploadTime,StringFormat='yyyy/MM/dd HH:mm:ss', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

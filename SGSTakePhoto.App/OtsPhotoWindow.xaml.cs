@@ -83,7 +83,15 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
+            Order order = dgOtsOrder.SelectedItem as Order;
+            if (order != null)
+            {
 
+            }
+            else
+            {
+                MessageBox.Show("No Data Selected", "Error");
+            }
         }
 
         /// <summary>
@@ -99,6 +107,10 @@ namespace SGSTakePhoto.App
                 UploadModule uploadModule = new UploadModule(order);
                 CommonHelper.MainWindow.brMain.Child = uploadModule;
             }
+            else
+            {
+                MessageBox.Show("No Data Selected", "Error");
+            }
         }
 
         /// <summary>
@@ -113,6 +125,10 @@ namespace SGSTakePhoto.App
             {
                 BrowserModule module = new BrowserModule(order);
                 CommonHelper.MainWindow.brMain.Child = module;
+            }
+            else
+            {
+                MessageBox.Show("No Data Selected", "Error");
             }
         }
     }

@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:SGSTakePhoto.App"
              xmlns:wpfmedia="clr-namespace:WPFMediaKit.DirectShow.Controls;assembly=WPFMediaKit"
              mc:Ignorable="d"
-             Loaded="UserControl_Loaded" Name="Camera"
+             Loaded="Camera_Loaded" Name="Camera"
              d:DesignHeight="450" d:DesignWidth="800">
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">

@@ -1,4 +1,5 @@
 ﻿using SGSTakePhoto.Infrastructure;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -16,19 +17,33 @@ namespace SGSTakePhoto.App
         public Order Order { get; set; }
 
         /// <summary>
-        /// 
+        /// 选择的照片类型
+        /// </summary>
+        public string PhotoType { get; set; } = "Original";
+
+        #region 构造函数
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
+        public OtsOrderModule()
+        {
+            InitializeComponent();
+            if (Order != null) gdOtsOrder.DataContext = Order;
+        }
+
+        /// <summary>
+        /// 构造函数
         /// </summary>
         /// <param name="order"></param>
         public OtsOrderModule(Order order)
         {
             InitializeComponent();
-
             this.Order = order;
-            if (order != null)
-            {
-                gdOtsOrder.DataContext = order;
-            }
+            if (Order != null) gdOtsOrder.DataContext = Order;
         }
+
+        #endregion
 
         /// <summary>
         /// 
@@ -81,7 +96,7 @@ namespace SGSTakePhoto.App
         private void BtnImageType_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender as Button;
-            switch (btn.Content)
+            switch (btn.Content.ToString())
             {
                 case "Original":
                     break;
@@ -100,8 +115,8 @@ namespace SGSTakePhoto.App
                     break;
             }
 
+            PhotoType = btn.Content.ToString();
             CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.cameraModule;
-            CommonHelper.MainWindow.cameraModule.Start();
         }
 
         /// 关闭窗口事件
