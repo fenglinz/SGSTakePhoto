@@ -1,0 +1,2 @@
+# SGSTakePhoto
+SGSTakePhoto
