@@ -9,6 +9,19 @@
     <UserControl.Resources>
         <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
     </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="UserControl.Loaded">
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <!--<ThicknessAnimation Duration="0:0:.85" Storyboard.TargetProperty="Margin" From="900,0,-900,0" To="0" DecelerationRatio=".9" />-->
+                        <ThicknessAnimation Duration="0:0:.45" Storyboard.TargetProperty="Margin" From="-50,0,50,0" To="0" DecelerationRatio=".9" />
+                        <DoubleAnimation Duration="0:0:.35" Storyboard.TargetProperty="Opacity" From="0" To="1" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+    </UserControl.Triggers>
     <GroupBox Header="Share Folder List">
         <Grid>
             <Grid.RowDefinitions>
@@ -48,7 +61,7 @@
                 <Button Style="{DynamicResource btn-danger}" Content="Delete" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnDelete" Click="BtnDelete_Click"/>
                 <Button Style="{DynamicResource btn-info}" Content="Upload" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnUpload" Click="BtnUpload_Click"/>
             </StackPanel>
-            <DataGrid Grid.Row="2" Name="dgShareFolder">
+            <DataGrid Grid.Row="2" Name="dgShareFolder" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="" Width="35">
                         <DataGridTemplateColumn.CellTemplate>
@@ -61,7 +74,7 @@
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="SampleID" Binding="{Binding SampleID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Status" Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Owner" Binding="{Binding Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
-                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Create Time" Binding="{Binding CreateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Create Time" Binding="{Binding CreateTime,StringFormat='yyyy/MM/dd HH:mm:ss', Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTemplateColumn x:Name="Operation" Header="Operation" Width="220" IsReadOnly="True">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

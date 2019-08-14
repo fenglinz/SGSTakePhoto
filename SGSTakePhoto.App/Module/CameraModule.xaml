@@ -8,7 +8,21 @@
              mc:Ignorable="d"
              Loaded="UserControl_Loaded" Name="Camera"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="UserControl.Loaded">
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <!--<ThicknessAnimation Duration="0:0:.85" Storyboard.TargetProperty="Margin" From="900,0,-900,0" To="0" DecelerationRatio=".9" />-->
+                        <ThicknessAnimation Duration="0:0:.45" Storyboard.TargetProperty="Margin" From="-50,0,50,0" To="0" DecelerationRatio=".9" />
+                        <DoubleAnimation Duration="0:0:.35" Storyboard.TargetProperty="Opacity" From="0" To="1" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+    </UserControl.Triggers>
     <Grid>
         <wpfmedia:VideoCaptureElement Name="VideoCapture"/>
     </Grid>
 </UserControl>
+    

@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Net;
 
-namespace SGSTakePhoto.App.Extention
+namespace SGSTakePhoto.App
 {
     /// <summary>
     /// 文件上传服务

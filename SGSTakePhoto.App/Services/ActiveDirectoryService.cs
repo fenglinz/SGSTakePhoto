@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using SGSTakePhoto.Infrastructure;
 
-namespace SGSTakePhoto.App.Extention
+namespace SGSTakePhoto.App
 {
     /// <summary>
     /// 域服务器服务类

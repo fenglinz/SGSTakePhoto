@@ -10,6 +10,19 @@
     <UserControl.Resources>
         <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
     </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="UserControl.Loaded">
+            <EventTrigger.Actions>
+                <BeginStoryboard>
+                    <Storyboard>
+                        <!--<ThicknessAnimation Duration="0:0:.85" Storyboard.TargetProperty="Margin" From="900,0,-900,0" To="0" DecelerationRatio=".9" />-->
+                        <ThicknessAnimation Duration="0:0:.45" Storyboard.TargetProperty="Margin" From="-50,0,50,0" To="0" DecelerationRatio=".9" />
+                        <DoubleAnimation Duration="0:0:.35" Storyboard.TargetProperty="Opacity" From="0" To="1" />
+                    </Storyboard>
+                </BeginStoryboard>
+            </EventTrigger.Actions>
+        </EventTrigger>
+    </UserControl.Triggers>
     <GroupBox Header="Setting">
         <Grid>
             <DataGrid CanUserResizeRows="False" CanUserResizeColumns="True"  CanUserAddRows="False"  AutoGenerateColumns="False"  RowHeaderWidth="0" Name="dgUserConfig" SelectionChanged="DgUserConfig_SelectionChanged">
