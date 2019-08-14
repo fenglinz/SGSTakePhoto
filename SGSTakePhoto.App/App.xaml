@@ -1,0 +1,17 @@
+﻿<Application x:Class="SGSTakePhoto.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             mc:Ignorable="d"
+             DispatcherUnhandledException="Application_DispatcherUnhandledException"
+             StartupUri="LoginWindow.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/SGSTakePhoto.App;component/Styles/Bootstrap.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/SGSTakePhoto.App;component/PathGeometries/Glyphicons.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

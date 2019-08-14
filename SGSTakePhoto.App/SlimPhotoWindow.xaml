@@ -1,0 +1,79 @@
+﻿<UserControl x:Class="SGSTakePhoto.App.SlimPhotoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:SGSTakePhoto.App"
+        Name="SlimPhoto"
+        mc:Ignorable="d" Height="800" Width="1200">
+    <UserControl.Resources>
+        <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
+    </UserControl.Resources>
+    <GroupBox Header="SLIM Order List">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="20*"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="80*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <GroupBox Header="Search" Grid.Row="0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="12*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="12*"></ColumnDefinition>
+                        <ColumnDefinition Width="30*"></ColumnDefinition>
+                        <ColumnDefinition Width="15*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Label Grid.Column="0" Content="Order Num" Height="30" Style="{DynamicResource h5}"/>
+                    <TextBox Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                    <Label Grid.Column="2" Content="Job Num" Height="30" Style="{DynamicResource h5}"/>
+                    <ComboBox Grid.Column="3" Height="30" Text="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                        <ComboBoxItem Content="120000" IsSelected="True" />
+                        <ComboBoxItem Content="500000"  />
+                        <ComboBoxItem Content="1200000"  />
+                        <ComboBoxItem Content="2000000"  />
+                    </ComboBox>
+                    <Label Grid.Row="1" Grid.Column="0" Content="Sample ID" Height="30" Style="{DynamicResource h5}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                    <Button Grid.Row="1" Grid.Column="2" Style="{DynamicResource btn-primary}" Content="Search" Height="30" HorizontalAlignment="Right" Width="100" x:Name="btnSearch"/>
+                </Grid>
+            </GroupBox>
+            <StackPanel Orientation="Horizontal" Grid.Row="1" Height="50">
+                <Button Style="{DynamicResource btn-primary}" Content="Take Photo" Height="30" Margin="5,0,0,0" Width="100" x:Name="btnTakePhoto" Click="BtnTakePhoto_Click"/>
+                <Button Style="{DynamicResource btn-danger}" Content="Delete" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnDelete" Click="BtnDelete_Click"/>
+                <Button Style="{DynamicResource btn-info}" Content="Upload" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnUpload" Click="BtnUpload_Click"/>
+            </StackPanel>
+            <DataGrid Grid.Row="2" Name="dgSlimOrder">
+                <DataGrid.Columns>
+                    <DataGridTemplateColumn Header="" Width="35">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsEnabled="{Binding TotalRows,Converter={StaticResource CheckBoxEnableConverter}}" IsChecked="{Binding IsSync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Order Num" Binding="{Binding CaseNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="SampleID" Binding="{Binding SampleID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Status" Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Owner" Binding="{Binding Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Create Time" Binding="{Binding CreateTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTemplateColumn x:Name="Operation" Header="Operation" Width="220" IsReadOnly="True">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button x:Name="btnPhotoList" Content="Photo List" Margin="10,0,0,0" Height="30" Width="100" Click="BtnUpload_Click"/>
+                                    <Button x:Name="btnBrowser" Content="Browser" Margin="10,0,0,0" Height="30" Width="80" Click="BtnBrowser_Click"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </GroupBox>
+</UserControl>

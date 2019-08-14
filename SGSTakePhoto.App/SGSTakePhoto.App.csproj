@@ -1,0 +1,340 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{07728E05-58E9-4C96-B273-59248FD28A73}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>SGSTakePhoto.App</RootNamespace>
+    <AssemblyName>SGSTakePhoto.App</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <Deterministic>true</Deterministic>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>Icon\Default.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="PresentationFramework.Aero" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+    <Reference Include="WPFMediaKit, Version=2.2.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\WPFMediaKit.2.2.0\lib\WPFMediaKit.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="zxing, Version=1.0.3824.27643, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Library\zxing.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="LoginWindow.xaml.cs">
+      <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="OtsPhotoWindow.xaml.cs">
+      <DependentUpon>OtsPhotoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Services\BaseServices.cs" />
+    <Compile Include="Services\UserServices.cs" />
+    <Compile Include="SettingWindow.xaml.cs">
+      <DependentUpon>SettingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ShareFolderWindow.xaml.cs">
+      <DependentUpon>ShareFolderWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SlimPhotoWindow.xaml.cs">
+      <DependentUpon>SlimPhotoWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="UpdateWindow.xaml.cs">
+      <DependentUpon>UpdateWindow.xaml</DependentUpon>
+    </Compile>
+    <Page Include="LoginWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Converts\AutoNumberValueConverter.cs" />
+    <Compile Include="Converts\BooleanVisibility.cs" />
+    <Compile Include="Converts\CheckBoxEnableConverter.cs" />
+    <Compile Include="Converts\CreateDate.cs" />
+    <Compile Include="Converts\EnableColor.cs" />
+    <Compile Include="Converts\Enalue.cs" />
+    <Compile Include="Converts\IsRun.cs" />
+    <Compile Include="Converts\MyDate.cs" />
+    <Compile Include="Converts\PasswordBoxBindingHelper.cs" />
+    <Compile Include="Converts\RecipesImageInfoConverter.cs" />
+    <Compile Include="Converts\RunType.cs" />
+    <Compile Include="Converts\SourceServerConverter.cs" />
+    <Compile Include="Converts\StartParameters.cs" />
+    <Compile Include="Converts\TargetServerConverter.cs" />
+    <Compile Include="Converts\TransferTypeConverter.cs" />
+    <Compile Include="Extention\ActiveDirectoryService.cs" />
+    <Compile Include="Extention\BarCodeScan.cs" />
+    <Compile Include="Extention\CommonHelper.cs" />
+    <Compile Include="Extention\ToastNotificationHelper.cs" />
+    <Compile Include="Extention\UploadFileService.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="Module\BrowserModule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\CameraModule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\OtsOrderModule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\PhotoViewModule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\ScanWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\ShareFolderModule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\SlimOrderModule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\UploadModule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\UserConfigModule.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="OtsPhotoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="PathGeometries\Glyphicons.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SettingWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ShareFolderWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SlimPhotoWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\BaseStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Bootstrap.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Colors.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\DataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Fonts.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\FormControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\InputGroup.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Label.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Panel.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Path.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ProgressBar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Sizes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\Window.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UpdateWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Module\BrowserModule.xaml.cs">
+      <DependentUpon>BrowserModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\CameraModule.xaml.cs">
+      <DependentUpon>CameraModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\OtsOrderModule.xaml.cs">
+      <DependentUpon>OtsOrderModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\PhotoViewModule.xaml.cs">
+      <DependentUpon>PhotoViewModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\ScanWindow.xaml.cs">
+      <DependentUpon>ScanWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\ShareFolderModule.xaml.cs">
+      <DependentUpon>ShareFolderModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\SlimOrderModule.xaml.cs">
+      <DependentUpon>SlimOrderModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\UploadModule.xaml.cs">
+      <DependentUpon>UploadModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\UserConfigModule.xaml.cs">
+      <DependentUpon>UserConfigModule.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Data\SgsLocalData.db" />
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\glyphicons-halflings-regular.svg" />
+    <Resource Include="Icon\Default.ico" />
+    <Resource Include="Icon\icon.png" />
+    <Resource Include="Icon\sgs-logo.png" />
+    <Resource Include="Icon\Update.ico" />
+    <Content Include="Library\DirectShowLib-2005.dll" />
+    <Content Include="Library\EVRPresenter32.dll" />
+    <Content Include="Library\EVRPresenter64.dll" />
+    <Content Include="Library\System.Runtime.dll" />
+    <Content Include="Library\System.Runtime.InteropServices.WindowsRuntime.dll" />
+    <Content Include="Library\Windows.ApplicationModel.dll" />
+    <Content Include="Library\Windows.UI.dll" />
+    <Content Include="Library\WPFMediaKit.dll" />
+    <Content Include="Library\zxing.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoUpdate\AutoUpdate.csproj">
+      <Project>{68772be6-d9cc-47cd-8c46-2a043a48a8fe}</Project>
+      <Name>AutoUpdate</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SGSTakePhoto.Infrastructure\SGSTakePhoto.Infrastructure.csproj">
+      <Project>{35cb56f0-97ad-4091-bc46-45328186b2a3}</Project>
+      <Name>SGSTakePhoto.Infrastructure</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets" Condition="Exists('..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\WPFMediaKit.2.2.0\build\WPFMediaKit.targets'))" />
+  </Target>
+  <PropertyGroup>
+    <PostBuildEvent>del *.xml
+del *.pdb</PostBuildEvent>
+  </PropertyGroup>
+</Project>
