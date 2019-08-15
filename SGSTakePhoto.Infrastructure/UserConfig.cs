@@ -8,7 +8,6 @@ namespace SGSTakePhoto.Infrastructure
     /// </summary>
     public class UserConfig : NotifyBaseEntity
     {
-        private string id;
         private string userName;
         private string organization;
         private string executionSystem;
@@ -16,15 +15,6 @@ namespace SGSTakePhoto.Infrastructure
         private double defaultHeight;
         private double defaultDPI;
 
-        [Column(PrimaryKey = true, ColumnName = "Id")]
-        public string Id
-        {
-            get => id; set
-            {
-                id = value;
-                NotifyPropertyChange(() => Id);
-            }
-        }
         [Column(ColumnName = "User")]
         public string UserName
         {
@@ -102,7 +92,7 @@ namespace SGSTakePhoto.Infrastructure
         {
             if (string.IsNullOrEmpty(sql))
             {
-                sql = string.Format(@"INSERT INTO UserConfig(Id,UserName,Organization,ExecutionSystem,DefaultWidth,DefaultHeight,DefaultDPI) VALUES('{0}','{1}','{2}','{3}',{4},{5},{6})",
+                sql = string.Format(@"INSERT INTO [UserConfig](Id,UserName,Organization,ExecutionSystem,DefaultWidth,DefaultHeight,DefaultDPI) VALUES('{0}','{1}','{2}','{3}',{4},{5},{6})",
                          Guid.NewGuid().ToString(),
                          UserName,
                          Organization,
@@ -124,7 +114,7 @@ namespace SGSTakePhoto.Infrastructure
         {
             if (string.IsNullOrEmpty(sql))
             {
-                sql = string.Format(@"UPDATE UserConfig SET UserName = '{0}',Organization = '{1}',ExecutionSystem = '{2}',DefaultWidth = '{3}',DefaultHeight = '{4}',DefaultDPI = '{5}' WHERE Id = '{6}'",
+                sql = string.Format(@"UPDATE [UserConfig] SET UserName = '{0}',Organization = '{1}',ExecutionSystem = '{2}',DefaultWidth = '{3}',DefaultHeight = '{4}',DefaultDPI = '{5}' WHERE Id = '{6}'",
                          UserName,
                          Organization,
                          ExecutionSystem,
@@ -146,7 +136,7 @@ namespace SGSTakePhoto.Infrastructure
         {
             if (string.IsNullOrEmpty(sql))
             {
-                sql = string.Format(@"DELETE FROM UserConfig WHERE Id = '{0}'", Id);
+                sql = string.Format(@"DELETE FROM [UserConfig] WHERE Id = '{0}'", Id);
             }
 
             return base.Delete(sql);

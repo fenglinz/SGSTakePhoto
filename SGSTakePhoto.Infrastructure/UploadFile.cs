@@ -10,7 +10,6 @@ namespace SGSTakePhoto.Infrastructure
     {
         #region 字段
 
-        private string id;
         private string orderId;
         private bool isSync;
         private string status;
@@ -24,8 +23,6 @@ namespace SGSTakePhoto.Infrastructure
         #endregion
 
         #region 属性
-
-        public string Id { get => id; set { id = value; NotifyPropertyChange(() => Id); } }
         public string OrderId { get => orderId; set { orderId = value; NotifyPropertyChange(() => OrderId); } }
         public string ExecutionSystem { get => executionSystem; set { executionSystem = value; NotifyPropertyChange(() => ExecutionSystem); } }
         public bool IsSync { get => isSync; set { isSync = value; NotifyPropertyChange(() => IsSync); } }
@@ -74,7 +71,7 @@ namespace SGSTakePhoto.Infrastructure
         {
             if (string.IsNullOrEmpty(sql))
             {
-                sql = string.Format(@"INSERT INTO UploadFile
+                sql = string.Format(@"INSERT INTO [UploadFile]
                                                   (
                                                       Id,
                                                       OrderId,
@@ -88,17 +85,17 @@ namespace SGSTakePhoto.Infrastructure
                                                       CreateTime
                                                   )
                                                   VALUES
-                                                  (   NEWID(),      -- Id - uniqueidentifier
-                                                      '{0}',      -- OrderId - uniqueidentifier
-                                                      '{1}',       -- ExecutionSystem - nvarchar(256)
-                                                          0,         -- IsSync - int
-                                                      '{2}',       -- FileName - nvarchar(512)
-                                                      '{3}',       -- Location - nvarchar(512)
-                                                      '{4}',        -- PhotoType - varchar(64)
-                                                      '{5}',       -- Status - nvarchar(64)
-                                                      NULL, -- UploadTime - datetime
-                                                      GETDATE()  -- CreateTime - datetime
-                                                      )", OrderId, ExecutionSystem, FileName, Location, PhotoType, Status);
+                                                  (   '{0}',
+                                                      '{1}', 
+                                                      '{2}', 
+                                                          0,    
+                                                      '{3}',
+                                                      '{4}',
+                                                      '{5}',
+                                                      '{6}',
+                                                      NULL,
+                                                      DATETIME()
+                                                      )", Id, OrderId, ExecutionSystem, FileName, Location, PhotoType, Status);
             }
 
             return base.Create(sql);
@@ -113,7 +110,7 @@ namespace SGSTakePhoto.Infrastructure
         {
             if (string.IsNullOrEmpty(sql))
             {
-                sql = string.Format(@"UPDATE UploadFile SET IsSync = '{0}',
+                sql = string.Format(@"UPDATE [UploadFile] SET IsSync = '{0}',
                                                       FileName = '{1}',
                                                       Location = '{2}',
                                                       PhotoType = '{3}',
@@ -133,7 +130,7 @@ namespace SGSTakePhoto.Infrastructure
         {
             if (string.IsNullOrEmpty(sql))
             {
-                sql = string.Format("DELETE FROM UploadFile WHERE Id = '{0}'", Id);
+                sql = string.Format("DELETE FROM [UploadFile] WHERE Id = '{0}'", Id);
             }
 
             return base.Delete(sql);

@@ -1,5 +1,6 @@
 ﻿using SGSTakePhoto.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,13 +20,12 @@ namespace SGSTakePhoto.App
         /// <summary>
         /// 
         /// </summary>
-        private Order SelectedItem
-        {
-            get
-            {
-                return dgOtsOrder.SelectedItem as Order;
-            }
-        }
+        private readonly OrderServices orderServices;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private Order SelectedItem => dgOtsOrder.SelectedItem as Order;
 
         /// <summary>
         /// 构造函数初始化数据
@@ -33,13 +33,24 @@ namespace SGSTakePhoto.App
         public OtsPhotoWindow()
         {
             InitializeComponent();
-            Orders = new ObservableCollection<Order>
+            orderServices = new OrderServices();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OtsPhoto_Loaded(object sender, RoutedEventArgs e)
+        {
+            var result = orderServices.GetList("SELECT * FROM [Order]");
+            if (result.Success)
             {
-                new Order{Id=Guid.NewGuid().ToString(), CaseNum="001", JobNum="job111", OrderNum="o001", SampleID="s001", Status="待上传", Owner="test",CreateTime=DateTime.Now },
-                new Order{Id=Guid.NewGuid().ToString(), CaseNum="002", JobNum="job222", OrderNum="o002", SampleID="s002", Status="上传中", Owner="test",CreateTime=DateTime.Now }
-            };
+                Orders = result.Datas;
+            }
 
             dgOtsOrder.ItemsSource = Orders;
+            dgOtsOrder.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -82,13 +93,13 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedItem != null)
+            if (SelectedItem == null) return;
+            MessageBoxResult result = MessageBox.Show("Delete after confirmation", "Comfirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            if (MessageBoxResult.Yes == result)
             {
-
-            }
-            else
-            {
-                MessageBox.Show("No Data Selected", "Error");
+                SelectedItem.Delete();
+                Orders.Remove(SelectedItem);
+                dgOtsOrder.SelectedIndex = 0;
             }
         }
 
@@ -129,15 +140,36 @@ namespace SGSTakePhoto.App
         }
 
         /// <summary>
-        /// 
+        /// 搜索
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void DgOtsOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
-            if (SelectedItem != null)
+            List<string> lstFilter = new List<string> { "WHERE (1=1)" };
+            if (!string.IsNullOrEmpty(txtCaseNum.Text))
             {
-                gdOtsOrder.DataContext = SelectedItem;
+                lstFilter.Add(string.Format("CaseNum = '{0}'", txtCaseNum.Text));
+            }
+            if (!string.IsNullOrEmpty(txtJobNum.Text))
+            {
+                lstFilter.Add(string.Format("JobNum = '{0}'", txtJobNum.Text));
+            }
+            if (cmbStatus.SelectedIndex >= 0)
+            {
+                lstFilter.Add(string.Format("Status = '{0}'", cmbStatus.SelectedValue));
+            }
+
+            var result = orderServices.GetList(string.Format("SELECT * FROM [Order] {0}", string.Join(" AND ", lstFilter)));
+            if (result.Success)
+            {
+                Orders = result.Datas;
+                dgOtsOrder.ItemsSource = Orders;
+                dgOtsOrder.SelectedIndex = 0;
+            }
+            else
+            {
+                Orders.Clear();
             }
         }
     }

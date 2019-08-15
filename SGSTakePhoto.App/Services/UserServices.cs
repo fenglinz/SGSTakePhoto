@@ -53,7 +53,7 @@ namespace SGSTakePhoto.App
             }
 
             ObservableCollection<UserConfig> datas = new ObservableCollection<UserConfig>();
-            result.Data.Rows.Cast<UserConfig>().ToList().ForEach(x => datas.Add(x));
+            result.Data.Rows.Cast<DataRow>().ToList().ForEach(x => datas.Add(x));
 
             return new ResponseSet<UserConfig> { Datas = datas };
         }
@@ -77,7 +77,7 @@ namespace SGSTakePhoto.App
             }
 
 
-            return new Response<UserConfig> { Data = result.Data.Rows.Cast<UserConfig>().FirstOrDefault() };
+            return new Response<UserConfig> { Data = result.Data.Rows.Cast<DataRow>().FirstOrDefault() };
         }
 
         /// <summary>

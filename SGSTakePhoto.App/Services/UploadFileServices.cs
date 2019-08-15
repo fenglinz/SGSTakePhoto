@@ -49,7 +49,7 @@ namespace SGSTakePhoto.App
             }
 
             ObservableCollection<UploadFile> datas = new ObservableCollection<UploadFile>();
-            result.Data.Rows.Cast<UploadFile>().ToList().ForEach(x => datas.Add(x));
+            result.Data.Rows.Cast<DataRow>().ToList().ForEach(x => datas.Add(x));
 
             return new ResponseSet<UploadFile> { Datas = datas };
         }
@@ -73,7 +73,7 @@ namespace SGSTakePhoto.App
             }
 
 
-            return new Response<UploadFile> { Data = result.Data.Rows.Cast<UploadFile>().FirstOrDefault() };
+            return new Response<UploadFile> { Data = result.Data.Rows.Cast<DataRow>().FirstOrDefault() };
         }
 
         /// <summary>

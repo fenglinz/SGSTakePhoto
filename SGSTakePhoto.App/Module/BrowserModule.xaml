@@ -78,13 +78,13 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Name="btnOriginal" Grid.Column="0" Content="Original" Style="{Binding}" Cursor="Hand" Click="BtnOperate_Click"/>
-            <Button Name="btnBefore" Grid.Column="1" Content="Before" Style="{Binding}" Cursor="Hand"/>
-            <Button Name="btnTesting" Grid.Column="2" Content="Testing" Style="{Binding}" Cursor="Hand"/>
-            <Button Name="btnAfter"  Grid.Column="3" Content="After" Style="{Binding}" Cursor="Hand"/>
-            <Button Name="btnTest"  Grid.Column="4" Content="Test" Style="{Binding}" Cursor="Hand"/>
-            <Button Name="btnFeature"  Grid.Column="5" Content="Feature" Style="{Binding}" Cursor="Hand"/>
-            <Button Name="btnOther"  Grid.Column="6" Content="Other" Style="{Binding}" Cursor="Hand"/>
+            <Button Name="btnOriginal" Grid.Column="0" Content="Original" Style="{Binding}" Cursor="Hand" Click="BtnPhotoTypeFilter_Click"/>
+            <Button Name="btnBefore" Grid.Column="1" Content="Before" Style="{Binding}" Cursor="Hand" Click="BtnPhotoTypeFilter_Click"/>
+            <Button Name="btnTesting" Grid.Column="2" Content="Testing" Style="{Binding}" Cursor="Hand" Click="BtnPhotoTypeFilter_Click"/>
+            <Button Name="btnAfter"  Grid.Column="3" Content="After" Style="{Binding}" Cursor="Hand" Click="BtnPhotoTypeFilter_Click"/>
+            <Button Name="btnTest"  Grid.Column="4" Content="Test" Style="{Binding}" Cursor="Hand" Click="BtnPhotoTypeFilter_Click"/>
+            <Button Name="btnFeature"  Grid.Column="5" Content="Feature" Style="{Binding}" Cursor="Hand" Click="BtnPhotoTypeFilter_Click"/>
+            <Button Name="btnOther"  Grid.Column="6" Content="Other" Style="{Binding}" Cursor="Hand" Click="BtnPhotoTypeFilter_Click"/>
 
             <Button Name="btnBack" Grid.Row="1" Content="Back" Width="100" Style="{DynamicResource btn-success}" Click="BtnBack_Click"/>
             <Button Name="btnTakePhoto" Width="100" Grid.Row="1" Grid.Column="1" Content="Take Photo" Click="BtnTakePhoto_Click"/>

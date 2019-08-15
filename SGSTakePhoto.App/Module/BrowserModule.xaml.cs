@@ -47,7 +47,7 @@ namespace SGSTakePhoto.App
         public BrowserModule()
         {
             InitializeComponent();
-        } 
+        }
 
         #endregion
 
@@ -78,7 +78,7 @@ namespace SGSTakePhoto.App
             }
 
             lbImageView.ItemsSource = dtTemp.DefaultView;
-        } 
+        }
 
         #endregion
 
@@ -169,6 +169,39 @@ namespace SGSTakePhoto.App
         #region 图片操作
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnPhotoTypeFilter_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            string filter = btn.Content.ToString();
+            switch (filter)
+            {
+                case "Original":
+                    break;
+                case "Before":
+                    break;
+                case "Testing":
+                    break;
+                case "During":
+                    break;
+                case "After":
+                    break;
+                case "Test":
+                    break;
+                case "Feature":
+                    break;
+                case "Other":
+                    break;
+                default:
+
+                    break;
+            }
+        }
+
+        /// <summary>
         /// 图片操作
         /// </summary>
         /// <param name="sender"></param>
@@ -176,7 +209,7 @@ namespace SGSTakePhoto.App
         private void BtnOperate_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            DataRow row = dtTemp.Select(string.Format("Id = {0}", btn.Tag))[0];
+            DataRow row = dtTemp.Select(string.Format("Id = '{0}'", btn.Tag))[0];
             switch (btn.Content)
             {
                 case "Del":

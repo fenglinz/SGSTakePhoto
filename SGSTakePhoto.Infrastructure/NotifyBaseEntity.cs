@@ -12,8 +12,16 @@ namespace SGSTakePhoto.Infrastructure
     /// </summary>
     public abstract class NotifyBaseEntity
     {
-        public StringBuilder sb = new StringBuilder();
+        /// <summary>
+        /// 
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="expression"></param>
         protected void NotifyPropertyChange<T>(Expression<Func<T>> expression)
         {
             if (PropertyChanged != null)
@@ -21,6 +29,18 @@ namespace SGSTakePhoto.Infrastructure
                 var propertyName = ((MemberExpression)expression.Body).Member.Name;
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        private string id;
+        [Column(PrimaryKey = true, ColumnName = "Id")]
+        public string Id { get => id; set { id = value; NotifyPropertyChange(() => Id); } }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public NotifyBaseEntity()
+        {
+            Id = Guid.NewGuid().ToString();
         }
 
         /// <summary>
@@ -82,21 +102,21 @@ namespace SGSTakePhoto.Infrastructure
         /// <typeparam name="T"></typeparam>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public virtual Response<T> SingleOrDefault<T>(string sql = "")
-        {
-            Response<DataTable> result = SqLiteHelper.ExecuteDataTable(sql);
+        //public virtual Response<T> SingleOrDefault<T>(string sql = "")
+        //{
+        //    Response<DataTable> result = SqLiteHelper.ExecuteDataTable(sql);
 
-            if (!result.Success)
-            {
-                return new Response<T> { ErrorMessage = result.ErrorMessage };
-            }
-            if (result.Data == null || result.Data.Rows.Count <= 0)
-            {
-                return new Response<T> { ErrorMessage = "No Data" };
-            }
+        //    if (!result.Success)
+        //    {
+        //        return new Response<T> { ErrorMessage = result.ErrorMessage };
+        //    }
+        //    if (result.Data == null || result.Data.Rows.Count <= 0)
+        //    {
+        //        return new Response<T> { ErrorMessage = "No Data" };
+        //    }
 
 
-            return new Response<T> { Data = result.Data.Rows.Cast<T>().FirstOrDefault() };
-        }
+        //    return new Response<T> { Data = result.Data.Rows.Cast<T>().FirstOrDefault() };
+        //}
     }
 }

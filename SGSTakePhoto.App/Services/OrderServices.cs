@@ -34,7 +34,7 @@ namespace SGSTakePhoto.App
             }
 
             ObservableCollection<Order> datas = new ObservableCollection<Order>();
-            result.Data.Rows.Cast<Order>().ToList().ForEach(x => datas.Add(x));
+            result.Data.Rows.Cast<DataRow>().ToList().ForEach(x => datas.Add(x));
 
             return new ResponseSet<Order> { Datas = datas };
         }
@@ -53,7 +53,7 @@ namespace SGSTakePhoto.App
             }
 
 
-            return new Response<Order> { Data = result.Data.Rows.Cast<Order>().FirstOrDefault() };
+            return new Response<Order> { Data = result.Data.Rows.Cast<DataRow>().FirstOrDefault() };
         }
 
         public Response<int> Update(Order entity)
