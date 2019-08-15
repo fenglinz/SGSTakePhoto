@@ -17,6 +17,17 @@ namespace SGSTakePhoto.App
         private ObservableCollection<Order> Orders { get; set; }
 
         /// <summary>
+        /// 
+        /// </summary>
+        private Order SelectedItem
+        {
+            get
+            {
+                return dgOtsOrder.SelectedItem as Order;
+            }
+        }
+
+        /// <summary>
         /// 构造函数初始化数据
         /// </summary>
         public OtsPhotoWindow()
@@ -46,21 +57,9 @@ namespace SGSTakePhoto.App
             }
             else
             {
-                if (scan.ShowDialog() == false)
-                {
-                    switch ((sender as TextBox).Name)
-                    {
-                        case "txtCaseNum":
-
-                            break;
-                        case "txtJobNum":
-
-                            break;
-                        case "txtSampleId":
-
-                            break;
-                    }
-                }
+                if (scan.ShowDialog() == true) return;
+                TextBox txtBox = (sender as TextBox);
+                txtBox.Text = scan.BarCode;
             }
         }
 
@@ -83,8 +82,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            Order order = dgOtsOrder.SelectedItem as Order;
-            if (order != null)
+            if (SelectedItem != null)
             {
 
             }
@@ -101,10 +99,9 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnUpload_Click(object sender, RoutedEventArgs e)
         {
-            Order order = dgOtsOrder.SelectedItem as Order;
-            if (order != null)
+            if (SelectedItem != null)
             {
-                UploadModule uploadModule = new UploadModule(order);
+                UploadModule uploadModule = new UploadModule(SelectedItem);
                 CommonHelper.MainWindow.brMain.Child = uploadModule;
             }
             else
@@ -120,15 +117,27 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnBrowser_Click(object sender, RoutedEventArgs e)
         {
-            Order order = dgOtsOrder.SelectedItem as Order;
-            if (order != null)
+            if (SelectedItem != null)
             {
-                BrowserModule module = new BrowserModule(order);
+                BrowserModule module = new BrowserModule { Order = SelectedItem, ParentControl = this };
                 CommonHelper.MainWindow.brMain.Child = module;
             }
             else
             {
                 MessageBox.Show("No Data Selected", "Error");
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DgOtsOrder_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SelectedItem != null)
+            {
+                gdOtsOrder.DataContext = SelectedItem;
             }
         }
     }

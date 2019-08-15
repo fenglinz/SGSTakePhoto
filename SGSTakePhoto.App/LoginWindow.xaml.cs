@@ -1,16 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SGSTakePhoto.App
 {
@@ -19,6 +9,9 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class LoginWindow : Window
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public LoginWindow()
         {
             InitializeComponent();
@@ -39,8 +32,10 @@ namespace SGSTakePhoto.App
 
         #endregion
 
+        #region 域用户登录
+
         /// <summary>
-        /// 
+        /// 域用户登录
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -51,9 +46,44 @@ namespace SGSTakePhoto.App
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
             };
 
-            main.Show();
+            //if (!ValidateInput()) return;
 
+            main.Show();
             this.Close();
+
+            //ActiveDirectoryService directoryService = new ActiveDirectoryService("http://mysoft.com.cn", txtUserName.Text, txtPwd.Password);
+            //var result = directoryService.ValidateDomainUser();
+            //if (result.Success)
+            //{
+            //    main.Show();
+            //    this.Close();
+            //}
+            //else
+            //{
+            //    MessageBox.Show(result.ErrorMessage);
+            //}
         }
+
+        /// <summary>
+        /// 校验输入是否为空
+        /// </summary>
+        /// <returns></returns>
+        private bool ValidateInput()
+        {
+            if (string.IsNullOrEmpty(txtUserName.Text.Trim()))
+            {
+                MessageBox.Show("Please input user name!", "Notice");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txtPwd.Password))
+            {
+                MessageBox.Show("Please input password!", "Notice");
+                return false;
+            }
+
+            return true;
+        }
+
+        #endregion
     }
 }

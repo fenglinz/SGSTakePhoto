@@ -1,5 +1,4 @@
 ﻿using SGSTakePhoto.Infrastructure;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -70,21 +69,9 @@ namespace SGSTakePhoto.App
             }
             else
             {
-                if (scan.ShowDialog() == false)
-                {
-                    switch ((sender as TextBox).Name)
-                    {
-                        case "txtCaseNum":
-
-                            break;
-                        case "txtJobNum":
-
-                            break;
-                        case "txtSampleId":
-
-                            break;
-                    }
-                }
+                if (scan.ShowDialog() == true) return;
+                TextBox txtBox = (sender as TextBox);
+                txtBox.Text = scan.BarCode;
             }
         }
 

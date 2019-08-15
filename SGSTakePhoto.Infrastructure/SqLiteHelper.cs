@@ -190,27 +190,6 @@ namespace SGSTakePhoto.Infrastructure
 
         #endregion
 
-        #region GetFilterTables
-
-        /// <summary>
-        /// 获取基础表
-        /// </summary>
-        /// <returns></returns>
-        //public static ResponseSet<string> GetFilterTables(bool isEnable = false, bool isBasic = true)
-        //{
-        //    var response = ExecuteDataTable(string.Format("SELECT Name FROM BaseDataTable WHERE IsEnable = {0} {1}", isEnable ? 1 : 0, isBasic ? "AND IsBasic = 1" : string.Empty));
-        //    if (!response.Success) return new ResponseSet<string> { Message = response.Message };
-        //    ObservableCollection<string> lstTbNames = new ObservableCollection<string>();
-        //    foreach (DataRow row in response.Data.Rows)
-        //    {
-        //        lstTbNames.Add(row[0].ToString());
-        //    }
-
-        //    return new ResponseSet<string> { Datas = lstTbNames };
-        //}
-
-        #endregion
-
         #region DataTypeToDbType
 
         /// <summary>

@@ -9,14 +9,14 @@ namespace SGSTakePhoto.App
     /// <summary>
     /// 文件上传服务
     /// </summary>
-    public class UploadFileService : IDisposable
+    public class UploadFileExtention : IDisposable
     {
         private const int BUFFER_SIZE = 4096;
         protected string ServerIP { get; }
         protected string UserID { get; }
         protected string Password { get; }
 
-        public UploadFileService() { }
+        public UploadFileExtention() { }
 
         /// <summary>
         /// 构造函数初始化参数
@@ -24,7 +24,7 @@ namespace SGSTakePhoto.App
         /// <param name="ftpServerIP"></param>
         /// <param name="ftpUserID"></param>
         /// <param name="ftpPassword"></param>
-        public UploadFileService(string serverIP, string userID, string password)
+        public UploadFileExtention(string serverIP, string userID, string password)
         {
             ServerIP = serverIP;
             UserID = userID;

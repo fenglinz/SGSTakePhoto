@@ -125,7 +125,7 @@ namespace SGSTakePhoto.App
 
             if (!CommonHelper.UserControls.ContainsKey("Browser"))
             {
-                BrowserModule browserModule = new BrowserModule(order);
+                BrowserModule browserModule = new BrowserModule { Order = order, ParentControl = this };
                 CommonHelper.MainWindow.brMain.Child = browserModule;
                 CommonHelper.UserControls.Add("Browser", browserModule);
             }

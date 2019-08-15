@@ -78,7 +78,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Name="btnOriginal" Grid.Column="0" Content="Original" Style="{Binding}" Cursor="Hand"/>
+            <Button Name="btnOriginal" Grid.Column="0" Content="Original" Style="{Binding}" Cursor="Hand" Click="BtnOperate_Click"/>
             <Button Name="btnBefore" Grid.Column="1" Content="Before" Style="{Binding}" Cursor="Hand"/>
             <Button Name="btnTesting" Grid.Column="2" Content="Testing" Style="{Binding}" Cursor="Hand"/>
             <Button Name="btnAfter"  Grid.Column="3" Content="After" Style="{Binding}" Cursor="Hand"/>

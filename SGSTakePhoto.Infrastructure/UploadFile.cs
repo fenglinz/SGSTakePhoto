@@ -111,6 +111,16 @@ namespace SGSTakePhoto.Infrastructure
         /// <returns></returns>
         public override Response<int> Update(string sql = "")
         {
+            if (string.IsNullOrEmpty(sql))
+            {
+                sql = string.Format(@"UPDATE UploadFile SET IsSync = '{0}',
+                                                      FileName = '{1}',
+                                                      Location = '{2}',
+                                                      PhotoType = '{3}',
+                                                      Status = '{4}',
+                                                      UploadTime = {5}", IsSync, FileName, Location, PhotoType, Status, UploadTime.HasValue ? string.Format("'{0}'", UploadTime.Value.ToString("yyyy-MM-dd hh:mm:ss")) : "'NULL'", CreateTime);
+            }
+
             return base.Update(sql);
         }
 
@@ -121,6 +131,11 @@ namespace SGSTakePhoto.Infrastructure
         /// <returns></returns>
         public override Response<int> Delete(string sql = "")
         {
+            if (string.IsNullOrEmpty(sql))
+            {
+                sql = string.Format("DELETE FROM UploadFile WHERE Id = '{0}'", Id);
+            }
+
             return base.Delete(sql);
         }
 

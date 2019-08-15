@@ -1,5 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Data;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 
@@ -74,15 +76,27 @@ namespace SGSTakePhoto.Infrastructure
             return SqLiteHelper.ExecuteNonQuery(sql);
         }
 
-        ///// <summary>
-        ///// 
-        ///// </summary>
-        ///// <param name="userName"></param>
-        ///// <param name="executionSystem"></param>
-        ///// <returns></returns>
-        //public virtual T GetEntity<T>(string userName, string executionSystem)
-        //{
-        //    return T;
-        //}
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="sql"></param>
+        /// <returns></returns>
+        public virtual Response<T> SingleOrDefault<T>(string sql = "")
+        {
+            Response<DataTable> result = SqLiteHelper.ExecuteDataTable(sql);
+
+            if (!result.Success)
+            {
+                return new Response<T> { ErrorMessage = result.ErrorMessage };
+            }
+            if (result.Data == null || result.Data.Rows.Count <= 0)
+            {
+                return new Response<T> { ErrorMessage = "No Data" };
+            }
+
+
+            return new Response<T> { Data = result.Data.Rows.Cast<T>().FirstOrDefault() };
+        }
     }
 }

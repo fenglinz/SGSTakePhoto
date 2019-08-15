@@ -31,7 +31,7 @@
                 <RowDefinition Height="80*"></RowDefinition>
             </Grid.RowDefinitions>
             <GroupBox Header="Search" Grid.Row="0">
-                <Grid>
+                <Grid x:Name="gdOtsOrder">
                     <Grid.RowDefinitions>
                         <RowDefinition></RowDefinition>
                         <RowDefinition></RowDefinition>
@@ -44,13 +44,13 @@
                         <ColumnDefinition Width="15*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Case Num" Height="30" Style="{DynamicResource h5}"/>
-                    <TextBox Grid.Column="1" x:Name="txtCaseNum" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                    <TextBox Grid.Column="1" x:Name="txtCaseNum" Text="{Binding Path=CaseNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                     <Label Grid.Column="2" Content="Job Num" Height="30" Style="{DynamicResource h5}"/>
-                    <TextBox Grid.Column="3" x:Name="txtJobNum" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                    <TextBox Grid.Column="3" x:Name="txtJobNum" Text="{Binding Path=JobNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                     <Label Grid.Row="1" Grid.Column="0" Content="Sample ID" Height="30" Style="{DynamicResource h5}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Text="{Binding Path=SampleID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                     <Label Grid.Row="1" Grid.Column="2" Content="Status" Height="30" Style="{DynamicResource h5}"/>
-                    <ComboBox Grid.Column="3" Grid.Row="1" Height="30" Text="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    <ComboBox Grid.Column="3" Grid.Row="1" Height="30" Text="{Binding Path=Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBoxItem Content="120000" IsSelected="True" />
                         <ComboBoxItem Content="500000"  />
                         <ComboBoxItem Content="1200000"  />
@@ -64,7 +64,7 @@
                 <Button Style="{DynamicResource btn-danger}" Content="Delete" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnDelete" Click="BtnDelete_Click"/>
                 <Button Style="{DynamicResource btn-info}" Content="Upload" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnUpload" Click="BtnUpload_Click"/>
             </StackPanel>
-            <DataGrid Grid.Row="2" Name="dgOtsOrder" AutoGenerateColumns="False" CanUserAddRows="False">
+            <DataGrid Grid.Row="2" Name="dgOtsOrder" AutoGenerateColumns="False" CanUserAddRows="False" SelectedIndex="0" SelectionChanged="DgOtsOrder_SelectionChanged">
                 <DataGrid.Columns>
                     <DataGridTemplateColumn Header="" Width="35">
                         <DataGridTemplateColumn.CellTemplate>

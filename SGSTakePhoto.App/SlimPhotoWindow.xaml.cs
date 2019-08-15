@@ -20,13 +20,18 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class SlimPhotoWindow : UserControl
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public SlimPhotoWindow()
         {
             InitializeComponent();
         }
 
+        #region 扫描
+
         /// <summary>
-        /// 
+        /// 扫描
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -53,10 +58,14 @@ namespace SGSTakePhoto.App
                     }
                 }
             }
-        }
+        } 
+
+        #endregion
+
+        #region 拍照
 
         /// <summary>
-        /// 
+        /// 拍照
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -78,17 +87,25 @@ namespace SGSTakePhoto.App
             {
                 CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["SlimOrder"];
             }
-        }
+        } 
+
+        #endregion
+
+        #region 删除
 
         /// <summary>
-        /// 
+        /// 删除
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
 
-        }
+        } 
+
+        #endregion
+
+        #region 照片上传查询
 
         /// <summary>
         /// 照片上传查询
@@ -113,7 +130,11 @@ namespace SGSTakePhoto.App
             {
                 CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["Upload"];
             }
-        }
+        } 
+
+        #endregion
+
+        #region 照片预览
 
         /// <summary>
         /// 照片预览
@@ -130,7 +151,7 @@ namespace SGSTakePhoto.App
 
             if (!CommonHelper.UserControls.ContainsKey("Browser"))
             {
-                BrowserModule browserModule = new BrowserModule(order);
+                BrowserModule browserModule = new BrowserModule { Order = order, ParentControl = this };
                 CommonHelper.MainWindow.brMain.Child = browserModule;
                 CommonHelper.UserControls.Add("Browser", browserModule);
             }
@@ -138,6 +159,8 @@ namespace SGSTakePhoto.App
             {
                 CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["Browser"];
             }
-        }
+        } 
+
+        #endregion
     }
 }

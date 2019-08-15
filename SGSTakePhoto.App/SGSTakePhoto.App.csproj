@@ -42,6 +42,7 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.SQLite, Version=1.0.111.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Xml" />
@@ -73,6 +74,8 @@
       <DependentUpon>OtsPhotoWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\BaseServices.cs" />
+    <Compile Include="Services\OrderServices.cs" />
+    <Compile Include="Services\UploadFileServices.cs" />
     <Compile Include="Services\UserServices.cs" />
     <Compile Include="SettingWindow.xaml.cs">
       <DependentUpon>SettingWindow.xaml</DependentUpon>
@@ -117,7 +120,7 @@
     <Compile Include="Extention\BarCodeScan.cs" />
     <Compile Include="Extention\CommonHelper.cs" />
     <Compile Include="Extention\ToastNotificationHelper.cs" />
-    <Compile Include="Services\UploadFileService.cs" />
+    <Compile Include="Extention\UploadFileExtention.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

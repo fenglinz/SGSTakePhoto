@@ -19,6 +19,7 @@ namespace SGSTakePhoto.App
         public string LoginPwd { get; set; }
 
         public ActiveDirectoryService() { }
+
         public ActiveDirectoryService(string adName, string loginName, string loginPwd)
         {
             this.AdName = adName;

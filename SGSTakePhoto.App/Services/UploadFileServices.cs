@@ -1,25 +1,21 @@
 ﻿using SGSTakePhoto.Infrastructure;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SGSTakePhoto.App
 {
     /// <summary>
-    /// 用户操作服务
+    /// 文件服务类
     /// </summary>
-    public class UserServices : BaseServices<UserConfig>
+    public class UploadFileServices : BaseServices<UploadFile>
     {
         /// <summary>
         /// 
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public Response<int> Create(UserConfig entity)
+        public Response<int> Create(UploadFile entity)
         {
             return entity.Create();
         }
@@ -29,7 +25,7 @@ namespace SGSTakePhoto.App
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public Response<int> Delete(UserConfig entity)
+        public Response<int> Delete(UploadFile entity)
         {
             return entity.Delete();
         }
@@ -39,23 +35,23 @@ namespace SGSTakePhoto.App
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public ResponseSet<UserConfig> GetList(string sql)
+        public ResponseSet<UploadFile> GetList(string sql)
         {
             Response<DataTable> result = SqLiteHelper.ExecuteDataTable(sql);
 
             if (!result.Success)
             {
-                return new ResponseSet<UserConfig> { ErrorMessage = result.ErrorMessage };
+                return new ResponseSet<UploadFile> { ErrorMessage = result.ErrorMessage };
             }
             if (result.Data == null || result.Data.Rows.Count <= 0)
             {
-                return new ResponseSet<UserConfig> { ErrorMessage = "No Data" };
+                return new ResponseSet<UploadFile> { ErrorMessage = "No Data" };
             }
 
-            ObservableCollection<UserConfig> datas = new ObservableCollection<UserConfig>();
-            result.Data.Rows.Cast<UserConfig>().ToList().ForEach(x => datas.Add(x));
+            ObservableCollection<UploadFile> datas = new ObservableCollection<UploadFile>();
+            result.Data.Rows.Cast<UploadFile>().ToList().ForEach(x => datas.Add(x));
 
-            return new ResponseSet<UserConfig> { Datas = datas };
+            return new ResponseSet<UploadFile> { Datas = datas };
         }
 
         /// <summary>
@@ -63,21 +59,21 @@ namespace SGSTakePhoto.App
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public Response<UserConfig> SingleOrDefault(string sql)
+        public Response<UploadFile> SingleOrDefault(string sql)
         {
             Response<DataTable> result = SqLiteHelper.ExecuteDataTable(sql);
 
             if (!result.Success)
             {
-                return new Response<UserConfig> { ErrorMessage = result.ErrorMessage };
+                return new Response<UploadFile> { ErrorMessage = result.ErrorMessage };
             }
             if (result.Data == null || result.Data.Rows.Count <= 0)
             {
-                return new Response<UserConfig> { ErrorMessage = "No Data" };
+                return new Response<UploadFile> { ErrorMessage = "No Data" };
             }
 
 
-            return new Response<UserConfig> { Data = result.Data.Rows.Cast<UserConfig>().FirstOrDefault() };
+            return new Response<UploadFile> { Data = result.Data.Rows.Cast<UploadFile>().FirstOrDefault() };
         }
 
         /// <summary>
@@ -85,7 +81,7 @@ namespace SGSTakePhoto.App
         /// </summary>
         /// <param name="entity"></param>
         /// <returns></returns>
-        public Response<int> Update(UserConfig entity)
+        public Response<int> Update(UploadFile entity)
         {
             return entity.Update();
         }

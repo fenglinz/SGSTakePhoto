@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -96,5 +97,20 @@ namespace SGSTakePhoto.App
             CommonHelper.CurrentSystem = btn.Name.Replace("btn", string.Empty);
             this.brMain.Child.RenderSize = new Size { Height = this.Height, Width = this.Width };
         }
+
+        #region 结束应用程序
+
+        /// <summary>
+        /// 结束应用程序
+        /// </summary>
+        /// <param name="e"></param>
+        protected override void OnClosed(EventArgs e)
+        {
+            base.OnClosed(e);
+
+            Application.Current.Shutdown();
+        } 
+
+        #endregion
     }
 }

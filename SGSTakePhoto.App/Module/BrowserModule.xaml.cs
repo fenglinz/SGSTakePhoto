@@ -36,13 +36,28 @@ namespace SGSTakePhoto.App
         /// <summary>
         /// 
         /// </summary>
+        public UserControl ParentControl { get; set; }
+
+        #region 构造函数
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         /// <param name="order"></param>
-        public BrowserModule(Order order)
+        public BrowserModule()
         {
             InitializeComponent();
-            Order = order;
-        }
+        } 
 
+        #endregion
+
+        #region 控件加载完成后
+
+        /// <summary>
+        /// 控件加载完成后
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Browser_Loaded(object sender, RoutedEventArgs e)
         {
             dtTemp = new DataTable();
@@ -57,37 +72,31 @@ namespace SGSTakePhoto.App
                 DataRow row = dtTemp.NewRow();
                 row[0] = i;
                 row[1] = 1;
-                row[2] = "https://ss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=3155068632,1890443235&fm=26&gp=0.jpg"; //files[i];
+                row[2] = files[i];
 
                 dtTemp.Rows.Add(row);
             }
 
             lbImageView.ItemsSource = dtTemp.DefaultView;
-        }
+        } 
+
+        #endregion
+
+        #region 返回到层窗口
 
         /// <summary>
         /// 返回到上次目录
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void BtnBack_Click(object sender, System.Windows.RoutedEventArgs e)
+        private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            switch (CommonHelper.CurrentSystem)
-            {
-                case "OTS":
-                    CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.otsModule;
-                    break;
-                case "SLIM":
-                    CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.SlimModule;
-                    break;
-                case "Share":
-                    CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.shareFolderModule;
-                    break;
-                case "Setting":
-                    CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.settingModule;
-                    break;
-            }
+            CommonHelper.MainWindow.brMain.Child = ParentControl;
         }
+
+        #endregion
+
+        #region 拍照
 
         /// <summary>
         /// 拍照
@@ -99,6 +108,10 @@ namespace SGSTakePhoto.App
 
         }
 
+        #endregion
+
+        #region 全选
+
         /// <summary>
         /// 全选
         /// </summary>
@@ -108,6 +121,10 @@ namespace SGSTakePhoto.App
         {
 
         }
+
+        #endregion
+
+        #region 取消全选
 
         /// <summary>
         /// 取消全选
@@ -119,6 +136,10 @@ namespace SGSTakePhoto.App
 
         }
 
+        #endregion
+
+        #region 删除
+
         /// <summary>
         /// 删除
         /// </summary>
@@ -129,6 +150,10 @@ namespace SGSTakePhoto.App
 
         }
 
+        #endregion
+
+        #region 上传
+
         /// <summary>
         /// 上传
         /// </summary>
@@ -138,6 +163,10 @@ namespace SGSTakePhoto.App
         {
 
         }
+
+        #endregion
+
+        #region 图片操作
 
         /// <summary>
         /// 图片操作
@@ -165,5 +194,7 @@ namespace SGSTakePhoto.App
                     break;
             }
         }
+
+        #endregion
     }
 }
