@@ -147,7 +147,10 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            foreach (DataRowView item in lbImageView.SelectedItems as DataRowView[])
+            {
+                dtTemp.Rows.Remove(item.Row);
+            }
         }
 
         #endregion
