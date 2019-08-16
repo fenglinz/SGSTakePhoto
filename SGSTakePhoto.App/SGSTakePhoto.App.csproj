@@ -45,6 +45,7 @@
     <Reference Include="System.Data" />
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -57,6 +58,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="WindowsFormsIntegration" />
     <Reference Include="zxing, Version=1.0.3824.27643, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>Library\zxing.dll</HintPath>
@@ -69,6 +71,9 @@
     </ApplicationDefinition>
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Module\PhotoEditModule.xaml.cs">
+      <DependentUpon>PhotoEditModule.xaml</DependentUpon>
     </Compile>
     <Compile Include="OtsPhotoWindow.xaml.cs">
       <DependentUpon>OtsPhotoWindow.xaml</DependentUpon>
@@ -136,6 +141,10 @@
     <Page Include="Module\OtsOrderModule.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Module\PhotoEditModule.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Module\PhotoViewModule.xaml">
       <Generator>MSBuild:Compile</Generator>

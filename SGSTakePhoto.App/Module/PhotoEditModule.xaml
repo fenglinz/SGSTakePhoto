@@ -1,0 +1,17 @@
+﻿<UserControl x:Class="SGSTakePhoto.App.PhotoEditModule"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:wfh="clr-namespace:System.Windows.Forms.Integration;assembly=WindowsFormsIntegration"
+             xmlns:wfc="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
+             xmlns:local="clr-namespace:SGSTakePhoto.App"
+             mc:Ignorable="d" 
+             Loaded="UserControl_Loaded"
+             d:DesignHeight="800" d:DesignWidth="1000">
+    <Grid Name="gdEdit">
+        <WindowsFormsHost Name="wfFrom" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <wfc:FlowLayoutPanel Name="flowLayoutPanel"></wfc:FlowLayoutPanel>
+        </WindowsFormsHost>
+    </Grid>
+</UserControl>

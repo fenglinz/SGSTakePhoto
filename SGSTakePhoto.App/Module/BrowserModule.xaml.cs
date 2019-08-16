@@ -61,7 +61,7 @@ namespace SGSTakePhoto.App
         private void Browser_Loaded(object sender, RoutedEventArgs e)
         {
             dtTemp = new DataTable();
-            var files = Directory.GetFiles(@"C:\Users\meizu\Pictures\Saved Pictures");
+            var files = Directory.GetFiles(@"C:\Users\meizu\Pictures\Picture");
             dtTemp.Columns.Add("Id", typeof(int));
             dtTemp.Columns.Add("IsUploaded", typeof(int));
             dtTemp.Columns.Add("PicturePath", typeof(string));
@@ -215,6 +215,12 @@ namespace SGSTakePhoto.App
                 case "Del":
                     break;
                 case "Edit":
+                    PhotoEditModule editModule = new PhotoEditModule
+                    {
+                        ParentControl = this,
+                        FileName = row["PicturePath"].ToString()
+                    };
+                    CommonHelper.MainWindow.brMain.Child = editModule;
                     break;
                 case "Browser":
                     PhotoViewModule viewModule = new PhotoViewModule(row["PicturePath"].ToString())

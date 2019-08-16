@@ -48,7 +48,7 @@ namespace SGSTakePhoto.App
         /// <returns></returns>
         public string CurrentUploadPath(Order entity, string status)
         {
-            string type = status[1].ToString();
+            string type = status[0].ToString();
             switch (CurrentSystem)
             {
                 case "OTS":
@@ -60,7 +60,7 @@ namespace SGSTakePhoto.App
                             return Path.Combine(RootPath, CurrentUser, DateTime.Now.ToString("yyyy-MM-dd"), entity.JobNum, type);
                     }
                 case "SLIM":
-                    return Path.Combine(RootPath, CurrentUser, DateTime.Now.ToString("yyyy-MM-dd"), entity.JobNum, type);
+                    return Path.Combine(RootPath, CurrentUser, DateTime.Now.ToString("yyyy-MM-dd"), entity.OrderNum, type);
                 case "Share":
                 default:
                     return Path.Combine(RootPath, CurrentUser, DateTime.Now.ToString("yyyy-MM-dd"), entity.JobNum, type);
@@ -74,7 +74,7 @@ namespace SGSTakePhoto.App
         /// <returns></returns>
         public string GeneralPhotoName(Order order, string status)
         {
-            string type = status[1].ToString();
+            string type = status[0].ToString();
             string dirPath = CurrentUploadPath(order, status);
             if (!Directory.Exists(dirPath))
             {
