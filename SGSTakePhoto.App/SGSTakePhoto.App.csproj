@@ -69,6 +69,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converts\ImageDecoder.cs" />
+    <Compile Include="Converts\ImageQueue.cs" />
     <Compile Include="LoginWindow.xaml.cs">
       <DependentUpon>LoginWindow.xaml</DependentUpon>
     </Compile>
@@ -93,6 +95,9 @@
     </Compile>
     <Compile Include="UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="WaitingProgress.xaml.cs">
+      <DependentUpon>WaitingProgress.xaml</DependentUpon>
     </Compile>
     <Page Include="LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -249,6 +254,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="WaitingProgress.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Module\BrowserModule.xaml.cs">
@@ -313,6 +322,7 @@
     <Resource Include="Icon\icon.png" />
     <Resource Include="Icon\sgs-logo.png" />
     <Resource Include="Icon\Update.ico" />
+    <Resource Include="Icon\loading.png" />
     <Content Include="Library\DirectShowLib-2005.dll" />
     <Content Include="Library\WPFMediaKit.dll" />
     <Content Include="Library\zxing.dll" />

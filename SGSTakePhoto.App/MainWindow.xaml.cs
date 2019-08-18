@@ -1,6 +1,8 @@
 ﻿using SGSTakePhoto.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -46,6 +48,23 @@ namespace SGSTakePhoto.App
         {
             this.brMain.Child = this.otsModule;
             CommonHelper.CurrentSystem = "OTS";
+        }
+
+        /// <summary>
+        /// 所有控件加载完成后检查更新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Window_ContentRendered(object sender, EventArgs e)
+        {
+            //检查更新
+            CommonHelper.AutoUpdate(this, (value) =>
+            {
+                UpdateWindow updateWindow = new UpdateWindow(value) { Owner = this };
+                if (updateWindow.ShowDialog() == true && updateWindow.IsExsitUpgrade == false) return;
+                this.Closed += new EventHandler((obj, arg) => Process.Start(Path.Combine(CommonHelper.RootPath, "AutoUpdate.exe"), string.Format("{0}.zip", value.AppName)));
+                this.Close();
+            });
         }
 
         /// <summary>
@@ -105,7 +124,7 @@ namespace SGSTakePhoto.App
             base.OnClosed(e);
 
             Application.Current.Shutdown();
-        } 
+        }
 
         #endregion
     }

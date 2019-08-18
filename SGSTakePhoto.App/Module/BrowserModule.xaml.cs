@@ -1,4 +1,5 @@
 ﻿using SGSTakePhoto.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
@@ -6,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace SGSTakePhoto.App
 {
@@ -61,6 +63,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void Browser_Loaded(object sender, RoutedEventArgs e)
         {
+            Order.PhotoType = "Original";
             Binding_Data();
         }
 
@@ -106,7 +109,13 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnTakePhoto_Click(object sender, RoutedEventArgs e)
         {
-
+            CameraWindow camera = new CameraWindow
+            {
+                Order = Order,
+                Owner = App.CurrentWindow
+            };
+            if (camera.ShowDialog() == true) return;
+            Binding_Data(Order.PhotoType);
         }
 
         #endregion
@@ -193,6 +202,7 @@ namespace SGSTakePhoto.App
         {
             Button btn = sender as Button;
             string filter = btn.Content.ToString();
+            Order.PhotoType = filter;
             Binding_Data(filter);
         }
 

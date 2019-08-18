@@ -33,7 +33,7 @@ namespace AutoUpdate
             }
             else
             {
-                string filePath = Path.Combine(RootPath, "Source", args[0]);
+                string filePath = Path.Combine(RootPath, "Upgrade", args[0]);
                 Process[] proces = Process.GetProcessesByName("SGSTakePhoto");
                 foreach (Process proc in proces) proc.Kill();
                 Response result = UnZipFile(filePath, RootPath);

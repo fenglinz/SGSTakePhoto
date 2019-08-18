@@ -81,6 +81,8 @@ namespace SGSTakePhoto.App
         {
             //抓取控件做成图片
             RenderTargetBitmap bmp = new RenderTargetBitmap((int)VideoCapture.ActualWidth, (int)VideoCapture.ActualHeight, 96, 96, PixelFormats.Default);
+            VideoCapture.Measure(VideoCapture.RenderSize);
+            VideoCapture.Arrange(new Rect(VideoCapture.RenderSize));
             bmp.Render(VideoCapture);
             BitmapEncoder encoder = new JpegBitmapEncoder();
             encoder.Frames.Add(BitmapFrame.Create(bmp));

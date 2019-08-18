@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System;
 using System.IO;
 using System.Windows;
-using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace SGSTakePhoto.Infrastructure
 {
@@ -11,6 +11,11 @@ namespace SGSTakePhoto.Infrastructure
     /// </summary>
     public class CommonHelper
     {
+        /// <summary>
+        /// 当前软件版本
+        /// </summary>
+        public const double AppVersion = 1.1;
+
         /// <summary>
         /// 获取当前应用程序的路径
         /// </summary>
@@ -165,6 +170,35 @@ namespace SGSTakePhoto.Infrastructure
         public static void NoDataSelected()
         {
             MessageBox.Show("No Data Selected", "Error");
+        }
+
+        /// <summary>
+        /// 检查更新
+        /// </summary>
+        /// <param name="win"></param>
+        /// <param name="action"></param>
+        public static void AutoUpdate(Window win, Action<UpdateInfo> action)
+        {
+            try
+            {
+                HttpClient.PostAsync("http://47.106.120.125//Api/Upgrade/DataTransfer", DateTime.Now.Ticks.ToString(), "").ContinueWith((postResult) =>
+                {
+                    if (postResult.Exception != null) return;
+                    HttpResult result = postResult.Result;
+                    if (string.IsNullOrWhiteSpace(result.Html)) return;
+                    UpdateInfo updateInfo = JsonConvert.DeserializeObject<UpdateInfo>(result.Html);
+                    //如果版本号不相同或者要求强制升级
+                    if (updateInfo.AppVersion != AppVersion || updateInfo.ForceUpgrade)
+                    {
+                        if (updateInfo.AppVersion == AppVersion) return;
+                        win.Dispatcher.Invoke(DispatcherPriority.ApplicationIdle, new Action(() => action.Invoke(updateInfo)));
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
     }
 }

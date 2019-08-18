@@ -25,7 +25,7 @@
                             <RowDefinition Height="50"></RowDefinition>
                         </Grid.RowDefinitions>
                         <!--Source="{Binding Path=PicturePath,Converter={StaticResource ImageConverter}}"-->
-                        <Image Grid.Row="0" Source="{Binding Path=FileFullName,Converter={StaticResource RecipesImageInfoConverter}}"/>
+                        <Image Grid.Row="0" local:ImageDecoder.Source="{Binding Path=FileFullName}"/>
                         <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal">
                             <CheckBox Width="20" Margin="20,0" Name="chkReport" IsEnabled="False"  IsChecked="{Binding Path = IsSync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource checkbox has-success}"/>
                             <Button Width="50" Margin="5,0" Name="btnDelete" Content="Del"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Delete" Click="BtnOperate_Click"/>
@@ -97,6 +97,7 @@
                      SnapsToDevicePixels="True" 
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
                      SelectionMode="Multiple"
+                     ItemsSource="{Binding UploadFiles}"
                      ItemTemplate="{StaticResource ItemTemplate}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
