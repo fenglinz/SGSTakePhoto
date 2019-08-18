@@ -27,8 +27,7 @@ namespace SGSTakePhoto.App
         /// <returns></returns>
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
-            return "True";
-            //return (int)value <= 0 ? "False" : "True";
+            return (int)value <= 0 ? "False" : "True";
         }
 
         /// <summary>

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
 using System.Globalization;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Threading;
 
 namespace SGSTakePhoto.App
@@ -20,10 +17,20 @@ namespace SGSTakePhoto.App
     {
         public const string ApplicationName = "SGSTakePhoto";
 
+        /// <summary>
+        /// 主窗口
+        /// </summary>
+        public static MainWindow CurrentWindow { get; set; }
+
+        /// <summary>
+        /// UserControl集合
+        /// </summary>
+        public static Dictionary<string, UserControl> UserControls = new Dictionary<string, UserControl>();
+
         //单实例模式
         private Mutex mutex;
         protected override void OnStartup(StartupEventArgs e)
-      {
+        {
             AppDomain.CurrentDomain.AssemblyResolve += OnResolveAssembly;
             bool startupFlag = false;
             try

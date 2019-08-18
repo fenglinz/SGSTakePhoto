@@ -29,7 +29,6 @@ namespace SGSTakePhoto.App
                 Bitmap bitmap = (Bitmap)Image.FromFile(imagedata, true);
                 bitmap.Save(stream, ImageFormat.Png);
                 BitmapDecoder decoder = BitmapDecoder.Create(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
-                //JpegBitmapDecoder jpeDecoder = new JpegBitmapDecoder(stream, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
                 return decoder.Frames[0];
             }
         }

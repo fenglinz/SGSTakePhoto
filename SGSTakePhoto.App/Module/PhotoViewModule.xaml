@@ -6,6 +6,9 @@
              xmlns:local="clr-namespace:SGSTakePhoto.App"
              mc:Ignorable="d" 
              d:DesignHeight="800" d:DesignWidth="1200">
+    <UserControl.Resources>
+        <local:RecipesImageInfoConverter x:Key="RecipesImageInfoConverter" />
+    </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
             <EventTrigger.Actions>
@@ -27,6 +30,6 @@
         <StackPanel Orientation="Vertical">
             <Button Name="btnBack" Content="Back" Style="{StaticResource btn-success}" Margin="10,10" Width="80" Click="BtnBack_Click"/>
         </StackPanel>
-        <Image Grid.Column="1" Name="imgPhotoView" Source="{Binding Path=PicturePath}"/>
+        <Image Grid.Column="1" Name="imgPhotoView" Source="{Binding Path=PicturePath,Converter={StaticResource RecipesImageInfoConverter}}"/>
     </Grid>
 </UserControl>

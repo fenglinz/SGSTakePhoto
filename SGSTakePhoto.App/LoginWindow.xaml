@@ -24,7 +24,7 @@
                             <ColumnDefinition Width="75*"/>
                         </Grid.ColumnDefinitions>
                         <Label Content="User Name" Grid.Row="0"  Style="{DynamicResource h5}"/>
-                        <TextBox Grid.Row="0" Grid.Column="2" Name="txtUserName"/>
+                        <TextBox Grid.Row="0" Grid.Column="2" Name="txtUserName" Text="test"/>
                         <Label Content="  Password" Grid.Row="1" Style="{DynamicResource h5}"/>
                         <PasswordBox Grid.Row="1" Grid.Column="2" x:Name="txtPwd"/>
                         <Button Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" x:Name="btnLogin" Click="BtnLogin_Click" Content="Login" Width="120" Style="{DynamicResource btn-success}"/>

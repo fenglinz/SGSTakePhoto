@@ -37,28 +37,15 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnScan_Click(object sender, RoutedEventArgs e)
         {
-            ScanWindow scan = new ScanWindow { };
+            ScanWindow scan = new ScanWindow { Owner = App.CurrentWindow };
             //如果是激活状态则返回
-            if (scan.IsClosed)
+            if (scan.IsClosed) return;
+            if (scan.ShowDialog() == false)
             {
-                scan.Close();
+                TextBox txtBox = (sender as TextBox);
+                txtBox.Text = scan.BarCode;
             }
-            else
-            {
-                if (scan.ShowDialog() == false)
-                {
-                    switch ((sender as TextBox).Name)
-                    {
-                        case "txtOrderNum":
-
-                            break;
-                        case "txtSampleId":
-
-                            break;
-                    }
-                }
-            }
-        } 
+        }
 
         #endregion
 
@@ -77,17 +64,17 @@ namespace SGSTakePhoto.App
 
             }
 
-            if (!CommonHelper.UserControls.ContainsKey("SlimOrder"))
+            if (!App.UserControls.ContainsKey("SlimOrder"))
             {
                 SlimOrderModule slimOrderOrder = new SlimOrderModule(order);
-                CommonHelper.MainWindow.brMain.Child = slimOrderOrder;
-                CommonHelper.UserControls.Add("SlimOrder", slimOrderOrder);
+                App.CurrentWindow.brMain.Child = slimOrderOrder;
+                App.UserControls.Add("SlimOrder", slimOrderOrder);
             }
             else
             {
-                CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["SlimOrder"];
+                App.CurrentWindow.brMain.Child = App.UserControls["SlimOrder"];
             }
-        } 
+        }
 
         #endregion
 
@@ -101,7 +88,7 @@ namespace SGSTakePhoto.App
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
 
-        } 
+        }
 
         #endregion
 
@@ -120,17 +107,17 @@ namespace SGSTakePhoto.App
 
             }
 
-            if (!CommonHelper.UserControls.ContainsKey("Upload"))
+            if (!App.UserControls.ContainsKey("Upload"))
             {
-                UploadModule uploadModule = new UploadModule(order);
-                CommonHelper.MainWindow.brMain.Child = uploadModule;
-                CommonHelper.UserControls.Add("Upload", uploadModule);
+                UploadModule uploadModule = new UploadModule { Order = order, ParentControl = this };
+                App.CurrentWindow.brMain.Child = uploadModule;
+                App.UserControls.Add("Upload", uploadModule);
             }
             else
             {
-                CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["Upload"];
+                App.CurrentWindow.brMain.Child = App.UserControls["Upload"];
             }
-        } 
+        }
 
         #endregion
 
@@ -149,17 +136,17 @@ namespace SGSTakePhoto.App
 
             }
 
-            if (!CommonHelper.UserControls.ContainsKey("Browser"))
+            if (!App.UserControls.ContainsKey("Browser"))
             {
                 BrowserModule browserModule = new BrowserModule { Order = order, ParentControl = this };
-                CommonHelper.MainWindow.brMain.Child = browserModule;
-                CommonHelper.UserControls.Add("Browser", browserModule);
+                App.CurrentWindow.brMain.Child = browserModule;
+                App.UserControls.Add("Browser", browserModule);
             }
             else
             {
-                CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["Browser"];
+                App.CurrentWindow.brMain.Child = App.UserControls["Browser"];
             }
-        } 
+        }
 
         #endregion
     }

@@ -10,6 +10,7 @@ namespace SGSTakePhoto.Infrastructure
     {
         #region 字段
 
+        private string executionSystem;
         private string caseNum;
         private string jobNum;
         private string orderNum;
@@ -24,6 +25,7 @@ namespace SGSTakePhoto.Infrastructure
 
         #region 属性
 
+        public string ExecutionSystem { get => executionSystem; set { executionSystem = value; NotifyPropertyChange(() => ExecutionSystem); } }
         public string CaseNum { get => caseNum; set { caseNum = value; NotifyPropertyChange(() => CaseNum); } }
         public string JobNum { get => jobNum; set { jobNum = value; NotifyPropertyChange(() => JobNum); } }
         public string OrderNum { get => orderNum; set { orderNum = value; NotifyPropertyChange(() => OrderNum); } }
@@ -36,16 +38,36 @@ namespace SGSTakePhoto.Infrastructure
 
         #endregion
 
+        #region 扩展属性
+
         /// <summary>
-        /// 
+        /// 用于保存选择的图片类型
         /// </summary>
-        public string RelativePath
+        public string PhotoType { get; set; }
+
+        /// <summary>
+        /// 生成文件名
+        /// </summary>
+        public string GeneralFileName
         {
             get
             {
-                return string.Format(@"{0}\{1}\{2}", string.Empty, DateTime.Now.ToString("yyyy-MM-dd"), CaseNum);
+                return CommonHelper.GeneralPhotoName(this);
             }
         }
+
+        /// <summary>
+        /// 文件的绝对路径
+        /// </summary>
+        public string AbsolutePath
+        {
+            get
+            {
+                return CommonHelper.CurrentUploadPath(this);
+            }
+        }
+
+        #endregion
 
         /// <summary>
         /// 
@@ -56,6 +78,7 @@ namespace SGSTakePhoto.Infrastructure
             return new Order
             {
                 Id = row.IsNull("Id") ? string.Empty : row["Id"].ToString(),
+                ExecutionSystem = row.IsNull("ExecutionSystem") ? string.Empty : row["ExecutionSystem"].ToString(),
                 CaseNum = row.IsNull("CaseNum") ? string.Empty : row["CaseNum"].ToString(),
                 JobNum = row.IsNull("JobNum") ? string.Empty : row["JobNum"].ToString(),
                 OrderNum = row.IsNull("OrderNum") ? string.Empty : row["OrderNum"].ToString(),
@@ -80,6 +103,7 @@ namespace SGSTakePhoto.Infrastructure
                 sql = string.Format(@"INSERT INTO [Order]
                   (
                       Id,
+                      ExecutionSystem,
                       CaseNum,
                       JobNum,
                       OrderNum,
@@ -99,9 +123,10 @@ namespace SGSTakePhoto.Infrastructure
                    '{5}',
                    '{6}',
                    '{7}',
+                   '{8}',
                    DATETIME(),
                    0
-                   )", Id, CaseNum, JobNum, OrderNum, SampleID, TestItemID, Status, Owner);
+                   )", Id, ExecutionSystem, CaseNum, JobNum, OrderNum, SampleID, TestItemID, Status, Owner);
             }
 
             return base.Create(sql);

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGSTakePhoto.Infrastructure;
+using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,7 +18,6 @@ namespace SGSTakePhoto.App
         public readonly SlimPhotoWindow SlimModule = new SlimPhotoWindow { };
         public readonly ShareFolderWindow shareFolderModule = new ShareFolderWindow { };
         public readonly SettingWindow settingModule = new SettingWindow { };
-        public readonly CameraModule cameraModule = new CameraModule { };
         private readonly List<UserControl> userControl;
 
         /// <summary>
@@ -31,11 +31,9 @@ namespace SGSTakePhoto.App
                 otsModule,SlimModule,shareFolderModule,settingModule
             };
 
-
-            CommonHelper.MainWindow = this;
             foreach (UserControl item in userControl)
             {
-                CommonHelper.UserControls.Add(item.Name, item);
+                App.UserControls.Add(item.Name, item);
             }
         }
 
@@ -57,7 +55,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void Window_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            foreach (UserControl control in CommonHelper.UserControls.Values)
+            foreach (UserControl control in App.UserControls.Values)
             {
                 control.Height = e.NewSize.Height;
                 control.Width = e.NewSize.Width - 200;
@@ -92,8 +90,6 @@ namespace SGSTakePhoto.App
                     break;
             }
 
-            //停止照相机
-            cameraModule.Stop();
             CommonHelper.CurrentSystem = btn.Name.Replace("btn", string.Empty);
             this.brMain.Child.RenderSize = new Size { Height = this.Height, Width = this.Width };
         }

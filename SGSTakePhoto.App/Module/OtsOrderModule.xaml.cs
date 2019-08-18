@@ -11,7 +11,7 @@ namespace SGSTakePhoto.App
     public partial class OtsOrderModule : UserControl
     {
         /// <summary>
-        /// 
+        /// Order
         /// </summary>
         public Order Order { get; set; }
 
@@ -45,13 +45,13 @@ namespace SGSTakePhoto.App
         #endregion
 
         /// <summary>
-        /// 
+        /// 返回到OTS
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.otsModule;
+            App.CurrentWindow.brMain.Child = App.CurrentWindow.otsModule;
         }
 
         /// <summary>
@@ -61,59 +61,34 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnScan_Click(object sender, RoutedEventArgs e)
         {
-            ScanWindow scan = new ScanWindow { };
+            ScanWindow scan = new ScanWindow { Owner = App.CurrentWindow };
             //如果是激活状态则返回
-            if (scan.IsClosed)
+            if (scan.IsClosed) return;
+            if (scan.ShowDialog() == false)
             {
-                scan.Close();
-            }
-            else
-            {
-                if (scan.ShowDialog() == true) return;
                 TextBox txtBox = (sender as TextBox);
                 txtBox.Text = scan.BarCode;
             }
         }
 
         /// <summary>
-        /// 
+        /// 点击拍照
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BtnImageType_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender as Button;
-            switch (btn.Content.ToString())
+            Order.PhotoType = btn.Content.ToString();
+            PhotoType = Order.PhotoType;
+            CameraWindow camera = new CameraWindow
             {
-                case "Original":
-                    break;
-                case "Before":
-                    break;
-                case "Testing":
-                    break;
-                case "During":
-                    break;
-                case "After":
-                    break;
-                case "Feature":
-                    break;
-                default:
-
-                    break;
-            }
-
-            PhotoType = btn.Content.ToString();
-            CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.cameraModule;
-        }
-
-        /// 关闭窗口事件
-        /// </summary>
-        ///<param name="sender">
-        ///<param name="cancelEventArgs">
-        private void OnClosing(object sender, CancelEventArgs cancelEventArgs)
-        {
-            MessageBox.Show("OnClosing 子窗口要被关闭了");
-            // 析构
+                Order = Order,
+                Owner = App.CurrentWindow
+            };
+            if (camera.ShowDialog() == true) return;
+            BrowserModule module = new BrowserModule { Order = Order, ParentControl = this };
+            App.CurrentWindow.brMain.Child = module;
         }
     }
 }

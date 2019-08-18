@@ -33,6 +33,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="PresentationFramework" />
+    <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,6 +46,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Column.cs" />
+    <Compile Include="CommonHelper.cs" />
+    <Compile Include="EditResult.cs" />
     <Compile Include="HttpClient.cs" />
     <Compile Include="NotifyBaseEntity.cs" />
     <Compile Include="Order.cs" />

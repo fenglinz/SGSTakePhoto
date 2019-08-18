@@ -38,8 +38,8 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
-            CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.settingModule;
-            //CommonHelper.UserControls.Remove("UserConfig");
+            App.CurrentWindow.brMain.Child = App.CurrentWindow.settingModule;
+            //App.UserControls.Remove("UserConfig");
         }
     }
 }

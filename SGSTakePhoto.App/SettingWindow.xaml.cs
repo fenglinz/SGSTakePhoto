@@ -59,15 +59,15 @@ namespace SGSTakePhoto.App
         {
             UserConfig model = dgUserConfig.SelectedItem as UserConfig;
             if (model == null) return;
-            if (!CommonHelper.UserControls.ContainsKey("UserConfig"))
+            if (!App.UserControls.ContainsKey("UserConfig"))
             {
                 UserConfigModule module = new UserConfigModule(model);
-                CommonHelper.MainWindow.brMain.Child = module;
-                CommonHelper.UserControls.Add("UserConfig", module);
+                App.CurrentWindow.brMain.Child = module;
+                App.UserControls.Add("UserConfig", module);
             }
             else
             {
-                CommonHelper.MainWindow.brMain.Child = CommonHelper.UserControls["UserConfig"];
+                App.CurrentWindow.brMain.Child = App.UserControls["UserConfig"];
             }
         }
     }

@@ -123,7 +123,6 @@
     <Compile Include="Converts\TransferTypeConverter.cs" />
     <Compile Include="Services\ActiveDirectoryService.cs" />
     <Compile Include="Extention\BarCodeScan.cs" />
-    <Compile Include="Extention\CommonHelper.cs" />
     <Compile Include="Extention\ToastNotificationHelper.cs" />
     <Compile Include="Extention\UploadFileExtention.cs" />
     <Compile Include="MainWindow.xaml.cs">
@@ -134,7 +133,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Module\CameraModule.xaml">
+    <Page Include="Module\CameraWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -255,8 +254,8 @@
     <Compile Include="Module\BrowserModule.xaml.cs">
       <DependentUpon>BrowserModule.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Module\CameraModule.xaml.cs">
-      <DependentUpon>CameraModule.xaml</DependentUpon>
+    <Compile Include="Module\CameraWindow.xaml.cs">
+      <DependentUpon>CameraWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Module\OtsOrderModule.xaml.cs">
       <DependentUpon>OtsOrderModule.xaml</DependentUpon>
@@ -315,12 +314,6 @@
     <Resource Include="Icon\sgs-logo.png" />
     <Resource Include="Icon\Update.ico" />
     <Content Include="Library\DirectShowLib-2005.dll" />
-    <Content Include="Library\EVRPresenter32.dll" />
-    <Content Include="Library\EVRPresenter64.dll" />
-    <Content Include="Library\System.Runtime.dll" />
-    <Content Include="Library\System.Runtime.InteropServices.WindowsRuntime.dll" />
-    <Content Include="Library\Windows.ApplicationModel.dll" />
-    <Content Include="Library\Windows.UI.dll" />
     <Content Include="Library\WPFMediaKit.dll" />
     <Content Include="Library\zxing.dll" />
   </ItemGroup>
@@ -335,6 +328,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>12.0.2</Version>
+    </PackageReference>
     <PackageReference Include="System.Data.SQLite.Core">
       <Version>1.0.111</Version>
     </PackageReference>
@@ -344,7 +340,8 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del *.xml
+    <PostBuildEvent>xcopy /e/r/y $(SolutionDir)SGSTakePhoto.Edit  $(TargetDir)
+del *.xml
 del *.pdb</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -7,16 +7,15 @@
              mc:Ignorable="d" Name="Browser" Loaded="Browser_Loaded"
              d:DesignHeight="800" d:DesignWidth="1200">
     <UserControl.Resources>
-        <local:RecipesImageInfoConverter x:Key="ImageConverter" />
-        <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
+        <local:RecipesImageInfoConverter x:Key="RecipesImageInfoConverter" />
         <DataTemplate x:Key="ItemTemplate">
             <Grid Width="400" Height="350" >
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition SharedSizeGroup="SingleWidthColumn" ></ColumnDefinition>
+                    <ColumnDefinition SharedSizeGroup="SingleWidthColumn" />
                 </Grid.ColumnDefinitions>
                 <Grid.Style>
                     <Style>
-                        <Setter Property="TextBlock.Foreground" Value="Transparent"></Setter>
+                        <Setter Property="TextBlock.Foreground" Value="Transparent"/>
                     </Style>
                 </Grid.Style>
                 <Border Margin="2" BorderThickness="1" BorderBrush="SteelBlue" CornerRadius="3">
@@ -26,13 +25,13 @@
                             <RowDefinition Height="50"></RowDefinition>
                         </Grid.RowDefinitions>
                         <!--Source="{Binding Path=PicturePath,Converter={StaticResource ImageConverter}}"-->
-                        <Image Grid.Row="0" Source="{Binding Path=PicturePath}"/>
+                        <Image Grid.Row="0" Source="{Binding Path=FileFullName,Converter={StaticResource RecipesImageInfoConverter}}"/>
                         <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal">
-                            <CheckBox Width="70" Margin="5,0" Name="chkReport" Content="Report" IsEnabled="False"  IsChecked="{Binding Path = IsUploaded,Converter={StaticResource CheckBoxEnableConverter}}" ToolTip="Report"/>
-                            <Button Width="50" Margin="5,0" Name="btnDelete" Content="Del"  Tag ="{Binding Path = Id}" ToolTip="Delete" Click="BtnOperate_Click"/>
-                            <Button Width="50" Margin="5,0" Name="btnEdit" Content="Edit"  Tag ="{Binding Path = Id}" ToolTip="Edit" Click="BtnOperate_Click"/>
-                            <Button Width="80" Margin="5,0" Name="btnBrowser" Content="Browser"  Tag ="{Binding Path = Id}" ToolTip="Browser" Click="BtnOperate_Click"/>
-                            <Button Width="70" Margin="5,0" Name="btnUpload" Content="Upload"  Tag ="{Binding Path = Id}" ToolTip="Upload" Click="BtnOperate_Click"/>
+                            <CheckBox Width="20" Margin="20,0" Name="chkReport" IsEnabled="False"  IsChecked="{Binding Path = IsSync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource checkbox has-success}"/>
+                            <Button Width="50" Margin="5,0" Name="btnDelete" Content="Del"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Delete" Click="BtnOperate_Click"/>
+                            <Button Width="50" Margin="5,0" Name="btnEdit" Content="Edit"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Edit" Click="BtnOperate_Click"/>
+                            <Button Width="80" Margin="5,0" Name="btnBrowser" Content="Browser"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Browser" Click="BtnOperate_Click"/>
+                            <Button Width="70" Margin="5,0" Name="btnUpload" Content="Upload"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Upload" Click="BtnOperate_Click"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -97,6 +96,7 @@
                      Grid.IsSharedSizeScope="True" 
                      SnapsToDevicePixels="True" 
                      ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                     SelectionMode="Multiple"
                      ItemTemplate="{StaticResource ItemTemplate}">
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>

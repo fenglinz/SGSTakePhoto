@@ -46,10 +46,9 @@
                     <TextBox Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                     <Label Grid.Column="2" Content="Status" Height="30" Style="{DynamicResource h5}"/>
                     <ComboBox Grid.Column="3" Height="30" Text="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <ComboBoxItem Content="120000" IsSelected="True" />
-                        <ComboBoxItem Content="500000"  />
-                        <ComboBoxItem Content="1200000"  />
-                        <ComboBoxItem Content="2000000"  />
+                        <ComboBoxItem Content="NoPhoto" IsSelected="True" />
+                        <ComboBoxItem Content="NoUpload"  />
+                        <ComboBoxItem Content="Uploaded"  />
                     </ComboBox>
                     <Label Grid.Row="1" Grid.Column="0" Content="Sample ID" Height="30" Style="{DynamicResource h5}"/>
                     <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>

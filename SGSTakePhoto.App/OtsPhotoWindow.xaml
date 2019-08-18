@@ -52,10 +52,9 @@
                     <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Text="{Binding Path=SampleID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                     <Label Grid.Row="1" Grid.Column="2" Content="Status" Height="30" Style="{DynamicResource h5}"/>
                     <ComboBox Grid.Column="3" Grid.Row="1" Name="cmbStatus" SelectedIndex="0" Height="30" Text="{Binding Path=Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                        <ComboBoxItem Content="120000" IsSelected="True" />
-                        <ComboBoxItem Content="500000"  />
-                        <ComboBoxItem Content="1200000"  />
-                        <ComboBoxItem Content="2000000"  />
+                        <ComboBoxItem Content="NoPhoto" IsSelected="True" />
+                        <ComboBoxItem Content="NoUpload"  />
+                        <ComboBoxItem Content="Uploaded"  />
                     </ComboBox>
                     <Button Grid.Row="1" Grid.Column="4" Style="{DynamicResource btn-primary}" Content="Search" Height="30" Margin="5,0,0,0" Width="100" x:Name="btnSearch" Click="BtnSearch_Click"/>
                 </Grid>

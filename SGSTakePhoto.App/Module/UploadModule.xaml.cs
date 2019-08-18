@@ -1,6 +1,7 @@
 ﻿using SGSTakePhoto.Infrastructure;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace SGSTakePhoto.App
@@ -10,10 +11,17 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class UploadModule : UserControl
     {
+        #region 属性
+
         /// <summary>
-        /// 
+        /// Order
         /// </summary>
         public Order Order { get; set; }
+
+        /// <summary>
+        /// 父级控件，用于返回
+        /// </summary>
+        public UserControl ParentControl { get; set; }
         /// <summary>
         /// 
         /// </summary>
@@ -22,42 +30,41 @@ namespace SGSTakePhoto.App
         /// <summary>
         /// 
         /// </summary>
+        private UploadFileServices uploadFileServices;
+
+        #endregion
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public UploadModule()
         {
             InitializeComponent();
+            uploadFileServices = new UploadFileServices();
         }
 
         /// <summary>
-        /// 
-        /// </summary>
-        public UploadModule(Order order)
-        {
-            InitializeComponent();
-            this.Order = order;
-        }
-
-        /// <summary>
-        /// 
+        /// 数据绑定
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void Upload_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             if (Order == null) return;
-            if (UploadFiles != null) return;
+            Binding_Data();
+        }
 
-            UploadFiles = new ObservableCollection<UploadFile>
+        /// <summary>
+        /// 加载数据
+        /// </summary>
+        private void Binding_Data()
+        {
+            var result = uploadFileServices.GetList(string.Format("SELECT *FROM [UploadFile] WHERE OrderId = '{0}'", Order.Id));
+            if (result.Success)
             {
-                new UploadFile
-                {
-                    Id = Guid.NewGuid().ToString(),
-                     FileName = "哈哈哈",
-                     Status = "Uploading",
-                     UploadTime = DateTime.Now
-                }
-            };
-
-            dgUpload.ItemsSource = UploadFiles;
+                UploadFiles = result.Datas;
+                dgUpload.ItemsSource = UploadFiles;
+            }
         }
 
         /// <summary>
@@ -67,31 +74,17 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnBack_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            switch (CommonHelper.CurrentSystem)
-            {
-                case "OTS":
-                    CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.otsModule;
-                    break;
-                case "SLIM":
-                    CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.SlimModule;
-                    break;
-                case "Share":
-                    CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.shareFolderModule;
-                    break;
-                case "Setting":
-                    CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.settingModule;
-                    break;
-            }
+            App.CurrentWindow.brMain.Child = ParentControl;
         }
 
         /// <summary>
-        /// 
+        /// 图片上传
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BtnUpload_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            MessageBox.Show("Has joined the upload queue!");
         }
     }
 }

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -60,18 +61,43 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnScan_Click(object sender, RoutedEventArgs e)
         {
-            ScanWindow scan = new ScanWindow { };
+            ScanWindow scan = new ScanWindow { Owner = App.CurrentWindow };
             //如果是激活状态则返回
-            if (scan.IsClosed)
+            if (scan.IsClosed) return;
+            if (scan.ShowDialog() == false)
             {
-                scan.Close();
-            }
-            else
-            {
-                if (scan.ShowDialog() == true) return;
                 TextBox txtBox = (sender as TextBox);
                 txtBox.Text = scan.BarCode;
             }
+        }
+
+        /// <summary>
+        /// 判断此条码是否存在
+        /// </summary>
+        /// <returns></returns>
+        private bool Order_Exists()
+        {
+            List<string> lstFilter = new List<string> { "WHERE (1=1)" };
+            if (!string.IsNullOrEmpty(txtCaseNum.Text))
+            {
+                lstFilter.Add(string.Format("CaseNum = '{0}'", txtCaseNum.Text));
+            }
+            if (!string.IsNullOrEmpty(txtJobNum.Text))
+            {
+                lstFilter.Add(string.Format("JobNum = '{0}'", txtJobNum.Text));
+            }
+            if (!string.IsNullOrEmpty(txtSampleId.Text))
+            {
+                lstFilter.Add(string.Format("SampleID = '{0}'", txtSampleId.Text));
+            }
+
+            var result = orderServices.SingleOrDefault(string.Format("SELECT * FROM [Order] {0}", string.Join(" AND ", lstFilter)));
+            if (result.Success)
+            {
+                return result.Data != null;
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -83,7 +109,7 @@ namespace SGSTakePhoto.App
         {
             Order order = dgOtsOrder.SelectedItem as Order;
             OtsOrderModule otsOrder = new OtsOrderModule(order);
-            CommonHelper.MainWindow.brMain.Child = otsOrder;
+            App.CurrentWindow.brMain.Child = otsOrder;
         }
 
         /// <summary>
@@ -94,13 +120,10 @@ namespace SGSTakePhoto.App
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
             if (SelectedItem == null) return;
-            MessageBoxResult result = MessageBox.Show("Delete after confirmation", "Comfirm", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (MessageBoxResult.Yes == result)
-            {
-                SelectedItem.Delete();
-                Orders.Remove(SelectedItem);
-                dgOtsOrder.SelectedIndex = 0;
-            }
+            if (!CommonHelper.DeleteConfirm()) return;
+            SelectedItem.Delete();
+            Orders.Remove(SelectedItem);
+            dgOtsOrder.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -112,12 +135,12 @@ namespace SGSTakePhoto.App
         {
             if (SelectedItem != null)
             {
-                UploadModule uploadModule = new UploadModule(SelectedItem);
-                CommonHelper.MainWindow.brMain.Child = uploadModule;
+                UploadModule uploadModule = new UploadModule { Order = SelectedItem, ParentControl = this };
+                App.CurrentWindow.brMain.Child = uploadModule;
             }
             else
             {
-                MessageBox.Show("No Data Selected", "Error");
+                CommonHelper.NoDataSelected();
             }
         }
 
@@ -131,11 +154,11 @@ namespace SGSTakePhoto.App
             if (SelectedItem != null)
             {
                 BrowserModule module = new BrowserModule { Order = SelectedItem, ParentControl = this };
-                CommonHelper.MainWindow.brMain.Child = module;
+                App.CurrentWindow.brMain.Child = module;
             }
             else
             {
-                MessageBox.Show("No Data Selected", "Error");
+                CommonHelper.NoDataSelected();
             }
         }
 
@@ -146,6 +169,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnSearch_Click(object sender, RoutedEventArgs e)
         {
+            if (!VerifyInputIsValid()) return;
             List<string> lstFilter = new List<string> { "WHERE (1=1)" };
             if (!string.IsNullOrEmpty(txtCaseNum.Text))
             {
@@ -154,6 +178,10 @@ namespace SGSTakePhoto.App
             if (!string.IsNullOrEmpty(txtJobNum.Text))
             {
                 lstFilter.Add(string.Format("JobNum = '{0}'", txtJobNum.Text));
+            }
+            if (!string.IsNullOrEmpty(txtSampleId.Text))
+            {
+                lstFilter.Add(string.Format("SampleID = '{0}'", txtSampleId.Text));
             }
             if (cmbStatus.SelectedIndex >= 0)
             {
@@ -164,13 +192,55 @@ namespace SGSTakePhoto.App
             if (result.Success)
             {
                 Orders = result.Datas;
-                dgOtsOrder.ItemsSource = Orders;
-                dgOtsOrder.SelectedIndex = 0;
             }
             else
             {
-                Orders.Clear();
+                //判断是否存在此Order
+                if (!Order_Exists())
+                {
+                    Order model = new Order
+                    {
+                        ExecutionSystem = CommonHelper.CurrentSystem,
+                        CaseNum = txtCaseNum.Text,
+                        JobNum = txtJobNum.Text,
+                        SampleID = txtSampleId.Text,
+                        Status = cmbStatus.SelectedIndex >= 0 ? cmbStatus.SelectedValue.ToString() : "NoPhoto",
+                        Owner = CommonHelper.CurrentUser
+                    };
+
+                    model.Create();
+                    if (Orders == null) Orders = new ObservableCollection<Order>();
+                    Orders.Add(model);
+                }
             }
+
+            dgOtsOrder.ItemsSource = Orders;
+            dgOtsOrder.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// 校验输入是否完整
+        /// </summary>
+        /// <returns></returns>
+        private bool VerifyInputIsValid()
+        {
+            if (string.IsNullOrEmpty(txtCaseNum.Text))
+            {
+                MessageBox.Show("Must input CaseNum", "Notice");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txtJobNum.Text))
+            {
+                MessageBox.Show("Must input JobNum", "Notice");
+                return false;
+            }
+            if (string.IsNullOrEmpty(txtSampleId.Text))
+            {
+                MessageBox.Show("Must input SampleID", "Notice");
+                return false;
+            }
+
+            return true;
         }
     }
 }

@@ -44,7 +44,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            CommonHelper.MainWindow.brMain.Child = CommonHelper.MainWindow.shareFolderModule;
+            App.CurrentWindow.brMain.Child = App.CurrentWindow.shareFolderModule;
         }
 
         /// <summary>
@@ -56,27 +56,18 @@ namespace SGSTakePhoto.App
         {
             ScanWindow scan = new ScanWindow { };
             //如果是激活状态则返回
-            if (scan.IsClosed)
+            if (scan.IsClosed) return;
+            switch ((sender as TextBox).Name)
             {
-                scan.Close();
-            }
-            else
-            {
-                if (scan.ShowDialog() == false)
-                {
-                    switch ((sender as TextBox).Name)
-                    {
-                        case "txtCaseNum":
+                case "txtCaseNum":
 
-                            break;
-                        case "txtJobNum":
+                    break;
+                case "txtJobNum":
 
-                            break;
-                        case "txtSampleId":
+                    break;
+                case "txtSampleId":
 
-                            break;
-                    }
-                }
+                    break;
             }
         }
     }

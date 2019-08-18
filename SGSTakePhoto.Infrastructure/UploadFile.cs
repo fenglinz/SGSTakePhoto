@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.IO;
 
 namespace SGSTakePhoto.Infrastructure
 {
@@ -23,6 +24,7 @@ namespace SGSTakePhoto.Infrastructure
         #endregion
 
         #region 属性
+
         public string OrderId { get => orderId; set { orderId = value; NotifyPropertyChange(() => OrderId); } }
         public string ExecutionSystem { get => executionSystem; set { executionSystem = value; NotifyPropertyChange(() => ExecutionSystem); } }
         public bool IsSync { get => isSync; set { isSync = value; NotifyPropertyChange(() => IsSync); } }
@@ -32,6 +34,17 @@ namespace SGSTakePhoto.Infrastructure
         public string Status { get => status; set { status = value; NotifyPropertyChange(() => Status); } }
         public DateTime? UploadTime { get => uploadTime; set { uploadTime = value; NotifyPropertyChange(() => UploadTime); } }
         public DateTime CreateTime { get => createDate; set { createDate = value; NotifyPropertyChange(() => CreateTime); } }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string FileFullName
+        {
+            get
+            {
+                return Path.Combine(Location, FileName);
+            }
+        }
 
         #endregion
 
@@ -132,6 +145,8 @@ namespace SGSTakePhoto.Infrastructure
             {
                 sql = string.Format("DELETE FROM [UploadFile] WHERE Id = '{0}'", Id);
             }
+
+            File.Delete(FileFullName);
 
             return base.Delete(sql);
         }

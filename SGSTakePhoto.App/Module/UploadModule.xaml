@@ -39,7 +39,7 @@
                     <DataGridTemplateColumn Header="" Width="35">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
-                                <CheckBox IsEnabled="{Binding Id,Converter={StaticResource CheckBoxEnableConverter}}" IsChecked="{Binding IsSync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox IsEnabled="{Binding Id}" IsChecked="{Binding IsSync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>

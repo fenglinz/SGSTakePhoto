@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SGSTakePhoto.Infrastructure;
+using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -45,9 +46,9 @@ namespace SGSTakePhoto.App
             {
                 WindowStartupLocation = WindowStartupLocation.CenterScreen,
             };
-
+            App.CurrentWindow = main;
             //if (!ValidateInput()) return;
-
+            CommonHelper.CurrentUser = txtUserName.Text.Trim();
             main.Show();
             this.Close();
 

@@ -50,7 +50,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            CommonHelper.MainWindow.brMain.Child = ParentControl;
+            App.CurrentWindow.brMain.Child = ParentControl;
         }
     }
 }

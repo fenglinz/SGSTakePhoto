@@ -1,20 +1,11 @@
 ﻿using SGSTakePhoto.Infrastructure;
-using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace SGSTakePhoto.App
 {
@@ -23,20 +14,29 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class BrowserModule : UserControl
     {
+        #region 属性
+
         /// <summary>
-        /// 
+        /// Order
         /// </summary>
         public Order Order { get; set; }
 
         /// <summary>
-        /// 
+        /// UploadFiles
         /// </summary>
-        private DataTable dtTemp { get; set; }
+        private ObservableCollection<UploadFile> UploadFiles { get; set; }
 
         /// <summary>
-        /// 
+        /// 父级容器
         /// </summary>
         public UserControl ParentControl { get; set; }
+
+        /// <summary>
+        /// UploadFileServices
+        /// </summary>
+        private UploadFileServices uploadFileServices;
+
+        #endregion
 
         #region 构造函数
 
@@ -47,6 +47,7 @@ namespace SGSTakePhoto.App
         public BrowserModule()
         {
             InitializeComponent();
+            uploadFileServices = new UploadFileServices();
         }
 
         #endregion
@@ -60,24 +61,24 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void Browser_Loaded(object sender, RoutedEventArgs e)
         {
-            dtTemp = new DataTable();
-            var files = Directory.GetFiles(@"C:\Users\meizu\Pictures\Picture");
-            dtTemp.Columns.Add("Id", typeof(int));
-            dtTemp.Columns.Add("IsUploaded", typeof(int));
-            dtTemp.Columns.Add("PicturePath", typeof(string));
+            Binding_Data();
+        }
 
-            for (int i = 0; i < files.Length; i++)
+        /// <summary>
+        /// 加载数据
+        /// </summary>
+        private void Binding_Data(string photoType = "Original")
+        {
+            var result = uploadFileServices.GetList(string.Format("SELECT *FROM [UploadFile] WHERE OrderId = '{0}' AND PhotoType = '{1}'", Order.Id, photoType));
+            if (result.Success)
             {
-                if (!(files[i].EndsWith(".png") || files[i].EndsWith(".jpg"))) continue;
-                DataRow row = dtTemp.NewRow();
-                row[0] = i;
-                row[1] = 1;
-                row[2] = files[i];
-
-                dtTemp.Rows.Add(row);
+                UploadFiles = result.Datas;
+                lbImageView.ItemsSource = UploadFiles;
             }
-
-            lbImageView.ItemsSource = dtTemp.DefaultView;
+            else
+            {
+                if (UploadFiles != null) UploadFiles.Clear();
+            }
         }
 
         #endregion
@@ -91,7 +92,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            CommonHelper.MainWindow.brMain.Child = ParentControl;
+            App.CurrentWindow.brMain.Child = ParentControl;
         }
 
         #endregion
@@ -119,7 +120,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnSelectAll_Click(object sender, RoutedEventArgs e)
         {
-
+            lbImageView.SelectAll();
         }
 
         #endregion
@@ -133,12 +134,12 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnUnSelectAll_Click(object sender, RoutedEventArgs e)
         {
-
+            lbImageView.UnselectAll();
         }
 
         #endregion
 
-        #region 删除
+        #region 删除选中的图片
 
         /// <summary>
         /// 删除
@@ -147,32 +148,44 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-            foreach (DataRowView item in lbImageView.SelectedItems as DataRowView[])
+            IList<UploadFile> lstUploadFiles = lbImageView.SelectedItems.Cast<UploadFile>().ToList();
+            if (lstUploadFiles == null || lstUploadFiles.Count <= 0)
             {
-                dtTemp.Rows.Remove(item.Row);
+                CommonHelper.NoDataSelected();
+            }
+            else
+            {
+                if (!CommonHelper.DeleteConfirm()) return;
+                foreach (UploadFile item in lstUploadFiles)
+                {
+                    UploadFiles.Remove(item);
+                    item.Delete();
+                }
             }
         }
 
         #endregion
 
-        #region 上传
+        #region 上传图片
 
         /// <summary>
-        /// 上传
+        /// 上传图片
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void BtnUpload_Click(object sender, RoutedEventArgs e)
         {
-
+            MessageBox.Show("Has joined the upload queue!");
+            UploadModule uploadModule = new UploadModule { Order = Order, ParentControl = this };
+            App.CurrentWindow.brMain.Child = uploadModule;
         }
 
         #endregion
 
-        #region 图片操作
+        #region 图片类型筛选
 
         /// <summary>
-        /// 
+        /// 图片类型筛选
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -180,28 +193,7 @@ namespace SGSTakePhoto.App
         {
             Button btn = sender as Button;
             string filter = btn.Content.ToString();
-            switch (filter)
-            {
-                case "Original":
-                    break;
-                case "Before":
-                    break;
-                case "Testing":
-                    break;
-                case "During":
-                    break;
-                case "After":
-                    break;
-                case "Test":
-                    break;
-                case "Feature":
-                    break;
-                case "Other":
-                    break;
-                default:
-
-                    break;
-            }
+            Binding_Data(filter);
         }
 
         /// <summary>
@@ -212,27 +204,28 @@ namespace SGSTakePhoto.App
         private void BtnOperate_Click(object sender, RoutedEventArgs e)
         {
             Button btn = sender as Button;
-            DataRow row = dtTemp.Select(string.Format("Id = '{0}'", btn.Tag))[0];
+            UploadFile model = UploadFiles.Where(x => x.Id == btn.Tag.ToString()).FirstOrDefault();
             switch (btn.Content)
             {
                 case "Del":
+                    UploadFiles.Remove(model);
+                    model.Delete();
                     break;
                 case "Edit":
                     PhotoEditModule editModule = new PhotoEditModule
                     {
                         ParentControl = this,
-                        FileName = row["PicturePath"].ToString()
+                        UploadFile = model
                     };
-                    CommonHelper.MainWindow.brMain.Child = editModule;
+
+                    App.CurrentWindow.brMain.Child = editModule;
                     break;
                 case "Browser":
-                    PhotoViewModule viewModule = new PhotoViewModule(row["PicturePath"].ToString())
-                    {
-                        ParentControl = this
-                    };
-                    CommonHelper.MainWindow.brMain.Child = viewModule;
+                    PhotoViewModule viewModule = new PhotoViewModule(model.FileFullName) { ParentControl = this };
+                    App.CurrentWindow.brMain.Child = viewModule;
                     break;
                 case "Upload":
+                    MessageBox.Show("Has joined the upload queue!");
                     break;
             }
         }
