@@ -12,7 +12,7 @@ namespace SGSTakePhoto.App
     {
         public Response<int> Create(Order entity)
         {
-            return entity.Create();
+            return entity.InsertOrReplace();
         }
 
         public Response<int> Delete(Order entity)
@@ -58,7 +58,7 @@ namespace SGSTakePhoto.App
 
         public Response<int> Update(Order entity)
         {
-            return entity.Update();
+            return entity.InsertOrReplace();
         }
     }
 }

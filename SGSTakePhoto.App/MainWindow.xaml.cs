@@ -47,7 +47,7 @@ namespace SGSTakePhoto.App
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             this.brMain.Child = this.otsModule;
-            CommonHelper.CurrentSystem = "OTS";
+            App.CurrentSystem = "OTS";
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace SGSTakePhoto.App
                     if (this.brMain.Child != this.SlimModule)
                         this.brMain.Child = this.SlimModule;
                     break;
-                case "btnShare":
+                case "btnShareFolder":
                     if (this.brMain.Child != this.shareFolderModule)
                         this.brMain.Child = this.shareFolderModule;
                     break;
@@ -109,7 +109,7 @@ namespace SGSTakePhoto.App
                     break;
             }
 
-            CommonHelper.CurrentSystem = btn.Name.Replace("btn", string.Empty);
+            App.CurrentSystem = btn.Name.Replace("btn", string.Empty);
             this.brMain.Child.RenderSize = new Size { Height = this.Height, Width = this.Width };
         }
 

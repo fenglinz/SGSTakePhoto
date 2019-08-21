@@ -1,18 +1,7 @@
 ﻿using SGSTakePhoto.Infrastructure;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace SGSTakePhoto.App
 {
@@ -21,54 +10,68 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class SettingWindow : UserControl
     {
-        public UIElement parentContiner;
+        #region 属性
+
+        /// <summary>
+        /// UserConfig
+        /// </summary>
         private ObservableCollection<UserConfig> userConfigs;
 
         /// <summary>
-        /// 
+        /// UserServices
+        /// </summary>
+        private UserServices userServices;
+
+        /// <summary>
+        /// SelectedItem
+        /// </summary>
+        private UserConfig SelectedItem => dgUserConfig.SelectedItem as UserConfig;
+
+        #endregion
+
+        #region 构造函数
+
+        /// <summary>
+        /// 构造函数
         /// </summary>
         public SettingWindow()
         {
             InitializeComponent();
+            userServices = new UserServices();
         }
 
         /// <summary>
-        /// 
+        /// SettingWindow_Loaded
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void SettingWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            userConfigs = new ObservableCollection<UserConfig>
+            var result = userServices.GetList("SELECT * FROM [UserConfig]");
+            if (result.Success)
             {
-                new UserConfig
-                {
-                    Id="1",UserName="admin",Organization="VOC",ExecutionSystem="SLIM",DefaultWidth=1920,DefaultHeight=1080,DefaultDPI=96
-                }
-            };
+                userConfigs = result.Datas;
+            }
 
             dgUserConfig.ItemsSource = userConfigs;
         }
 
+        #endregion
+
+        #region 选中数据行
+
         /// <summary>
-        /// 
+        /// 选中数据行
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void DgUserConfig_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            UserConfig model = dgUserConfig.SelectedItem as UserConfig;
-            if (model == null) return;
-            if (!App.UserControls.ContainsKey("UserConfig"))
-            {
-                UserConfigModule module = new UserConfigModule(model);
-                App.CurrentWindow.brMain.Child = module;
-                App.UserControls.Add("UserConfig", module);
-            }
-            else
-            {
-                App.CurrentWindow.brMain.Child = App.UserControls["UserConfig"];
-            }
-        }
+            if (SelectedItem == null) return;
+            UserConfigModule module = new UserConfigModule(SelectedItem);
+            App.CurrentWindow.brMain.Child = module;
+        } 
+
+        #endregion
     }
 }

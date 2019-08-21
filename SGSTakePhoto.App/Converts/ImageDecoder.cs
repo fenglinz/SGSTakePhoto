@@ -6,9 +6,21 @@ using System.Windows.Media.Imaging;
 
 namespace SGSTakePhoto.App
 {
+    /// <summary>
+    /// /
+    /// </summary>
     public static class ImageDecoder
     {
+        /// <summary>
+        /// 
+        /// </summary>
         public static readonly DependencyProperty SourceProperty;
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="image"></param>
+        /// <returns></returns>
         public static string GetSource(Image image)
         {
             if (image == null)
@@ -17,6 +29,12 @@ namespace SGSTakePhoto.App
             }
             return (string)image.GetValue(ImageDecoder.SourceProperty);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="image"></param>
+        /// <param name="value"></param>
         public static void SetSource(Image image, string value)
         {
             if (image == null)
@@ -25,11 +43,22 @@ namespace SGSTakePhoto.App
             }
             image.SetValue(ImageDecoder.SourceProperty, value);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         static ImageDecoder()
         {
             ImageDecoder.SourceProperty = DependencyProperty.RegisterAttached("Source", typeof(string), typeof(ImageDecoder), new PropertyMetadata(new PropertyChangedCallback(ImageDecoder.OnSourceWithSourceChanged)));
             ImageQueue.OnComplate += new ImageQueue.ComplateDelegate(ImageDecoder.ImageQueue_OnComplate);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="u"></param>
+        /// <param name="b"></param>
         private static void ImageQueue_OnComplate(Image i, string u, BitmapImage b)
         {
             //System.Windows.MessageBox.Show(u);
@@ -57,6 +86,12 @@ namespace SGSTakePhoto.App
                 }
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="o"></param>
+        /// <param name="e"></param>
         private static void OnSourceWithSourceChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             ImageQueue.Queue((Image)o, (string)e.NewValue);

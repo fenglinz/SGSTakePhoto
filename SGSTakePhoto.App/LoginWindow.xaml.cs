@@ -48,7 +48,7 @@ namespace SGSTakePhoto.App
             };
             App.CurrentWindow = main;
             //if (!ValidateInput()) return;
-            CommonHelper.CurrentUser = txtUserName.Text.Trim();
+            App.CurrentUser = txtUserName.Text.Trim();
             main.Show();
             this.Close();
 

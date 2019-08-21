@@ -80,58 +80,16 @@ namespace SGSTakePhoto.Infrastructure
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public override Response<int> Create(string sql = "")
+        public override Response<int> InsertOrReplace(string sql = "")
         {
             if (string.IsNullOrEmpty(sql))
             {
-                sql = string.Format(@"INSERT INTO [UploadFile]
-                                                  (
-                                                      Id,
-                                                      OrderId,
-                                                      ExecutionSystem,
-                                                      IsSync,
-                                                      FileName,
-                                                      Location,
-                                                      PhotoType,
-                                                      Status,
-                                                      UploadTime,
-                                                      CreateTime
-                                                  )
-                                                  VALUES
-                                                  (   '{0}',
-                                                      '{1}', 
-                                                      '{2}', 
-                                                          0,    
-                                                      '{3}',
-                                                      '{4}',
-                                                      '{5}',
-                                                      '{6}',
-                                                      NULL,
-                                                      DATETIME()
-                                                      )", Id, OrderId, ExecutionSystem, FileName, Location, PhotoType, Status);
+                sql = string.Format(@"REPLACE INTO [UploadFile] (Id, OrderId, ExecutionSystem, IsSync, FileName, Location, PhotoType, Status, UploadTime, CreateTime)
+                                                  VALUES ('{0}', '{1}',  '{2}', '{3}',  '{4}',  '{5}', '{6}', '{7}', {8}, '{9}')",
+                                                  Id, OrderId, ExecutionSystem, IsSync ? 1 : 0, FileName, Location, PhotoType, Status, UploadTime.HasValue ? string.Format("'{0}'", uploadTime.Value.ToString("yyyy-MM-dd HH:mm:ss")) : "NULL", CreateTime.ToString("yyyy-MM-dd HH:mm:ss"));
             }
 
-            return base.Create(sql);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public override Response<int> Update(string sql = "")
-        {
-            if (string.IsNullOrEmpty(sql))
-            {
-                sql = string.Format(@"UPDATE [UploadFile] SET IsSync = '{0}',
-                                                      FileName = '{1}',
-                                                      Location = '{2}',
-                                                      PhotoType = '{3}',
-                                                      Status = '{4}',
-                                                      UploadTime = {5}", IsSync, FileName, Location, PhotoType, Status, UploadTime.HasValue ? string.Format("'{0}'", UploadTime.Value.ToString("yyyy-MM-dd hh:mm:ss")) : "'NULL'", CreateTime);
-            }
-
-            return base.Update(sql);
+            return base.InsertOrReplace(sql);
         }
 
         /// <summary>

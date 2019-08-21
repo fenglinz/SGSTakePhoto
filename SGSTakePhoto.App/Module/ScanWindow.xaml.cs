@@ -80,7 +80,8 @@ namespace SGSTakePhoto.App
         private void BtnPlay_Click(object sender, RoutedEventArgs e)
         {
             //抓取控件做成图片
-            RenderTargetBitmap bmp = new RenderTargetBitmap((int)VideoCapture.ActualWidth, (int)VideoCapture.ActualHeight, 96, 96, PixelFormats.Default);
+            RenderTargetBitmap bmp = new RenderTargetBitmap((int)VideoCapture.NaturalVideoWidth, (int)VideoCapture.NaturalVideoHeight, 96, 96, PixelFormats.Default);
+            VideoCapture.Stretch = Stretch.Fill;
             VideoCapture.Measure(VideoCapture.RenderSize);
             VideoCapture.Arrange(new Rect(VideoCapture.RenderSize));
             bmp.Render(VideoCapture);
@@ -189,8 +190,18 @@ namespace SGSTakePhoto.App
         {
             VideoCapture.Close();
             base.OnClosing(e);
-        } 
+        }
 
         #endregion
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void VideoCapture_NewVideoSample(object sender, WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs e)
+        {
+
+        }
     }
 }

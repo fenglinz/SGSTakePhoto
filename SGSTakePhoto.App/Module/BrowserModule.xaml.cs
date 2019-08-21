@@ -218,6 +218,7 @@ namespace SGSTakePhoto.App
             switch (btn.Content)
             {
                 case "Del":
+                    if (!CommonHelper.DeleteConfirm()) break;
                     UploadFiles.Remove(model);
                     model.Delete();
                     break;

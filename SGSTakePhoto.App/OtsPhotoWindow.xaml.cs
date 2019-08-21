@@ -13,20 +13,26 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class OtsPhotoWindow : UserControl
     {
+        #region 属性
+
         /// <summary>
         /// OtsOrder
         /// </summary>
         private ObservableCollection<Order> Orders { get; set; }
 
         /// <summary>
-        /// 
+        /// OrderServices
         /// </summary>
         private readonly OrderServices orderServices;
 
         /// <summary>
-        /// 
+        /// Order
         /// </summary>
         private Order SelectedItem => dgOtsOrder.SelectedItem as Order;
+
+        #endregion
+
+        #region 构造函数
 
         /// <summary>
         /// 构造函数初始化数据
@@ -44,7 +50,7 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void OtsPhoto_Loaded(object sender, RoutedEventArgs e)
         {
-            var result = orderServices.GetList("SELECT * FROM [Order]");
+            var result = orderServices.GetList(string.Format("SELECT * FROM [Order] WHERE ExecutionSystem = 'OTS' AND Owner = '{0}'", App.CurrentUser));
             if (result.Success)
             {
                 Orders = result.Datas;
@@ -52,7 +58,9 @@ namespace SGSTakePhoto.App
 
             dgOtsOrder.ItemsSource = Orders;
             dgOtsOrder.SelectedIndex = 0;
-        }
+        } 
+
+        #endregion
 
         /// <summary>
         /// 点击扫描按钮
@@ -108,7 +116,7 @@ namespace SGSTakePhoto.App
         private void BtnTakePhoto_Click(object sender, RoutedEventArgs e)
         {
             Order order = dgOtsOrder.SelectedItem as Order;
-            OtsOrderModule otsOrder = new OtsOrderModule(order);
+            OtsOrderModule otsOrder = new OtsOrderModule { Order = order };
             App.CurrentWindow.brMain.Child = otsOrder;
         }
 
@@ -200,15 +208,15 @@ namespace SGSTakePhoto.App
                 {
                     Order model = new Order
                     {
-                        ExecutionSystem = CommonHelper.CurrentSystem,
+                        ExecutionSystem = App.CurrentSystem,
                         CaseNum = txtCaseNum.Text,
                         JobNum = txtJobNum.Text,
                         SampleID = txtSampleId.Text,
                         Status = cmbStatus.SelectedIndex >= 0 ? cmbStatus.SelectedValue.ToString() : "NoPhoto",
-                        Owner = CommonHelper.CurrentUser
+                        Owner = App.CurrentUser
                     };
 
-                    model.Create();
+                    model.InsertOrReplace();
                     if (Orders == null) Orders = new ObservableCollection<Order>();
                     Orders.Add(model);
                 }

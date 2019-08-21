@@ -14,16 +14,20 @@ namespace SGSTakePhoto.App
     public static class ImageQueue
     {
         #region 辅助类别
+
         private class ImageQueueInfo
         {
             public Image image { get; set; }
-            public String url { get; set; }
+            public string url { get; set; }
         }
+
         #endregion
+
         public delegate void ComplateDelegate(Image i, string u, BitmapImage b);
         public static event ComplateDelegate OnComplate;
         private static AutoResetEvent autoEvent;
         private static Queue<ImageQueueInfo> Stacks;
+
         static ImageQueue()
         {
             ImageQueue.Stacks = new Queue<ImageQueueInfo>();
@@ -35,6 +39,10 @@ namespace SGSTakePhoto.App
             };
             t.Start();
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
         private static void DownloadImage()
         {
             while (true)
@@ -68,6 +76,7 @@ namespace SGSTakePhoto.App
                         }
                         else if ("file".Equals(uri.Scheme, StringComparison.CurrentCultureIgnoreCase))
                         {
+                            if (!File.Exists(t.url)) continue;
                             using (var fs = new FileStream(t.url, FileMode.Open))
                             {
                                 image = new BitmapImage();
@@ -99,6 +108,12 @@ namespace SGSTakePhoto.App
                 autoEvent.WaitOne();
             }
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="img"></param>
+        /// <param name="url"></param>
         public static void Queue(Image img, String url)
         {
             if (String.IsNullOrEmpty(url)) return;

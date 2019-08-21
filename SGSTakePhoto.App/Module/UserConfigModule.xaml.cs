@@ -24,10 +24,15 @@ namespace SGSTakePhoto.App
         /// <summary>
         /// 
         /// </summary>
+        private UserConfig userConfig;
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="userConfig"></param>
         public UserConfigModule(UserConfig userConfig)
         {
             InitializeComponent();
+            this.userConfig = userConfig;
             dgUserConfig.DataContext = userConfig;
         }
 
@@ -38,8 +43,8 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnSave_Click(object sender, RoutedEventArgs e)
         {
+            userConfig.InsertOrReplace();
             App.CurrentWindow.brMain.Child = App.CurrentWindow.settingModule;
-            //App.UserControls.Remove("UserConfig");
         }
     }
 }

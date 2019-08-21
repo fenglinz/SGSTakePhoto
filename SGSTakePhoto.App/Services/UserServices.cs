@@ -21,7 +21,7 @@ namespace SGSTakePhoto.App
         /// <returns></returns>
         public Response<int> Create(UserConfig entity)
         {
-            return entity.Create();
+            return entity.InsertOrReplace();
         }
 
         /// <summary>
@@ -87,7 +87,7 @@ namespace SGSTakePhoto.App
         /// <returns></returns>
         public Response<int> Update(UserConfig entity)
         {
-            return entity.Update();
+            return entity.InsertOrReplace();
         }
     }
 }

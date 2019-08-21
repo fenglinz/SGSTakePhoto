@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SGSTakePhoto.App"
         Name="SlimPhoto"
+        Loaded="SlimPhoto_Loaded"
         mc:Ignorable="d" Height="800" Width="1200">
     <UserControl.Resources>
         <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
@@ -69,7 +70,7 @@
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
                     </DataGridTemplateColumn>
-                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Order Num" Binding="{Binding CaseNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Order Num" Binding="{Binding OrderNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="SampleID" Binding="{Binding SampleID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Status" Binding="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Owner" Binding="{Binding Owner, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>

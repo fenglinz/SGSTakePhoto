@@ -1,6 +1,7 @@
 ﻿using SGSTakePhoto.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,13 +21,54 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class SlimPhotoWindow : UserControl
     {
+        #region 属性
+
         /// <summary>
-        /// 
+        /// OtsOrder
+        /// </summary>
+        private ObservableCollection<Order> Orders { get; set; }
+
+        /// <summary>
+        /// OrderServices
+        /// </summary>
+        private readonly OrderServices orderServices;
+
+        /// <summary>
+        /// SelectedItem
+        /// </summary>
+        private Order SelectedItem => dgSlimOrder.SelectedItem as Order; 
+
+        #endregion
+
+        #region 构造函数
+
+        /// <summary>
+        /// 构造函数
         /// </summary>
         public SlimPhotoWindow()
         {
             InitializeComponent();
+            orderServices = new OrderServices();
         }
+
+        /// <summary>
+        /// 控件加载完毕
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SlimPhoto_Loaded(object sender, RoutedEventArgs e)
+        {
+            var result = orderServices.GetList(string.Format("SELECT * FROM [Order] WHERE ExecutionSystem = 'SLIM' AND Owner = '{0}'", App.CurrentUser));
+            if (result.Success)
+            {
+                Orders = result.Datas;
+            }
+
+            dgSlimOrder.ItemsSource = Orders;
+            dgSlimOrder.SelectedIndex = 0;
+        } 
+
+        #endregion
 
         #region 扫描
 
@@ -59,21 +101,8 @@ namespace SGSTakePhoto.App
         private void BtnTakePhoto_Click(object sender, RoutedEventArgs e)
         {
             Order order = dgSlimOrder.SelectedItem as Order;
-            if (order == null)
-            {
-
-            }
-
-            if (!App.UserControls.ContainsKey("SlimOrder"))
-            {
-                SlimOrderModule slimOrderOrder = new SlimOrderModule(order);
-                App.CurrentWindow.brMain.Child = slimOrderOrder;
-                App.UserControls.Add("SlimOrder", slimOrderOrder);
-            }
-            else
-            {
-                App.CurrentWindow.brMain.Child = App.UserControls["SlimOrder"];
-            }
+            SlimOrderModule slimOrder = new SlimOrderModule { Order = order };
+            App.CurrentWindow.brMain.Child = slimOrder;
         }
 
         #endregion
@@ -87,7 +116,11 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnDelete_Click(object sender, RoutedEventArgs e)
         {
-
+            if (SelectedItem == null) return;
+            if (!CommonHelper.DeleteConfirm()) return;
+            SelectedItem.Delete();
+            Orders.Remove(SelectedItem);
+            dgSlimOrder.SelectedIndex = 0;
         }
 
         #endregion
@@ -101,21 +134,14 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnUpload_Click(object sender, RoutedEventArgs e)
         {
-            Order order = dgSlimOrder.SelectedItem as Order;
-            if (order == null)
+            if (SelectedItem != null)
             {
-
-            }
-
-            if (!App.UserControls.ContainsKey("Upload"))
-            {
-                UploadModule uploadModule = new UploadModule { Order = order, ParentControl = this };
+                UploadModule uploadModule = new UploadModule { Order = SelectedItem, ParentControl = this };
                 App.CurrentWindow.brMain.Child = uploadModule;
-                App.UserControls.Add("Upload", uploadModule);
             }
             else
             {
-                App.CurrentWindow.brMain.Child = App.UserControls["Upload"];
+                CommonHelper.NoDataSelected();
             }
         }
 
@@ -130,21 +156,14 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnBrowser_Click(object sender, RoutedEventArgs e)
         {
-            Order order = dgSlimOrder.SelectedItem as Order;
-            if (order == null)
+            if (SelectedItem != null)
             {
-
-            }
-
-            if (!App.UserControls.ContainsKey("Browser"))
-            {
-                BrowserModule browserModule = new BrowserModule { Order = order, ParentControl = this };
-                App.CurrentWindow.brMain.Child = browserModule;
-                App.UserControls.Add("Browser", browserModule);
+                BrowserModule module = new BrowserModule { Order = SelectedItem, ParentControl = this };
+                App.CurrentWindow.brMain.Child = module;
             }
             else
             {
-                App.CurrentWindow.brMain.Child = App.UserControls["Browser"];
+                CommonHelper.NoDataSelected();
             }
         }
 

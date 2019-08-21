@@ -15,6 +15,8 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class CameraWindow : Window
     {
+        #region 属性
+
         /// <summary>
         /// Order
         /// </summary>
@@ -24,6 +26,13 @@ namespace SGSTakePhoto.App
         /// 是否关闭当前控件
         /// </summary>
         public bool IsClosed { get; set; }
+
+        /// <summary>
+        /// 判断当前使用的是哪个摄像头
+        /// </summary>
+        public int VideoInputQuantity { get; set; } 
+
+        #endregion
 
         #region 构造函数
 
@@ -89,7 +98,8 @@ namespace SGSTakePhoto.App
             try
             {
                 //抓取控件做成图片
-                RenderTargetBitmap bmp = new RenderTargetBitmap((int)VideoCapture.ActualWidth, (int)VideoCapture.ActualHeight, 96, 96, PixelFormats.Default);
+                RenderTargetBitmap bmp = new RenderTargetBitmap((int)VideoCapture.NaturalVideoWidth, (int)VideoCapture.NaturalVideoHeight, 96, 96, PixelFormats.Default);
+                VideoCapture.Stretch = Stretch.Fill;
                 VideoCapture.Measure(VideoCapture.RenderSize);
                 VideoCapture.Arrange(new Rect(VideoCapture.RenderSize));
                 bmp.Render(VideoCapture);
@@ -101,7 +111,7 @@ namespace SGSTakePhoto.App
                     OrderId = Order.Id,
                     IsSync = false,
                     Status = "Waitting",
-                    ExecutionSystem = CommonHelper.CurrentSystem,
+                    ExecutionSystem = App.CurrentSystem,
                     FileName = Order.GeneralFileName,
                     Location = Order.AbsolutePath,
                     PhotoType = Order.PhotoType
@@ -114,7 +124,7 @@ namespace SGSTakePhoto.App
                     File.WriteAllBytes(model.FileFullName, captureData);
                 }
 
-                model.Create();
+                model.InsertOrReplace();
             }
             catch (Exception ex)
             {
@@ -130,8 +140,33 @@ namespace SGSTakePhoto.App
 
         #endregion
 
+        #region 切换摄像头
+
         /// <summary>
-        /// 
+        /// 重新拍照
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnSwitch_Click(object sender, RoutedEventArgs e)
+        {
+            if (VideoInputQuantity == MultimediaUtil.VideoInputNames.Length - 1)
+            {
+                VideoInputQuantity = 0;
+            }
+            else
+            {
+                VideoInputQuantity++;
+            }
+
+            VideoCapture.VideoCaptureSource = MultimediaUtil.VideoInputNames[VideoInputQuantity];
+        }
+
+        #endregion
+
+        #region 选择图片
+
+        /// <summary>
+        /// 从文件夹选择图片
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -154,14 +189,14 @@ namespace SGSTakePhoto.App
                             OrderId = Order.Id,
                             IsSync = false,
                             Status = "Waitting",
-                            ExecutionSystem = CommonHelper.CurrentSystem,
+                            ExecutionSystem = App.CurrentSystem,
                             FileName = Order.GeneralFileName,
                             Location = Order.AbsolutePath,
                             PhotoType = Order.PhotoType
                         };
 
                         File.Copy(item, model.FileFullName, true);
-                        model.Create();
+                        model.InsertOrReplace();
                     }
                 }
             }
@@ -170,5 +205,7 @@ namespace SGSTakePhoto.App
                 MessageBox.Show(ex.Message);
             }
         }
+
+        #endregion
     }
 }

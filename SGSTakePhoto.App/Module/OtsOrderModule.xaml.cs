@@ -1,4 +1,5 @@
 ﻿using SGSTakePhoto.Infrastructure;
+using System;
 using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
@@ -28,18 +29,29 @@ namespace SGSTakePhoto.App
         public OtsOrderModule()
         {
             InitializeComponent();
-            if (Order != null) gdOtsOrder.DataContext = Order;
+            Loaded += OtsOrderModule_Loaded;
         }
 
         /// <summary>
-        /// 构造函数
+        /// 
         /// </summary>
-        /// <param name="order"></param>
-        public OtsOrderModule(Order order)
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OtsOrderModule_Loaded(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
-            this.Order = order;
-            if (Order != null) gdOtsOrder.DataContext = Order;
+            if (Order == null)
+            {
+                Order = new Order
+                {
+                    ExecutionSystem = App.CurrentSystem,
+                    Owner = App.CurrentUser,
+                    Status = "NoPhoto",
+                    IsChecked = false,
+                    CreateTime = DateTime.Now
+                };
+            }
+
+            gdOtsOrder.DataContext = Order;
         }
 
         #endregion
@@ -68,6 +80,7 @@ namespace SGSTakePhoto.App
             {
                 TextBox txtBox = (sender as TextBox);
                 txtBox.Text = scan.BarCode;
+                Order.InsertOrReplace();
             }
         }
 
@@ -79,16 +92,23 @@ namespace SGSTakePhoto.App
         private void BtnImageType_Click(object sender, RoutedEventArgs e)
         {
             Button btn = (Button)sender as Button;
-            Order.PhotoType = btn.Content.ToString();
-            PhotoType = Order.PhotoType;
-            CameraWindow camera = new CameraWindow
+            if (string.IsNullOrEmpty(Order.CaseNum) || string.IsNullOrEmpty(Order.JobNum) || string.IsNullOrEmpty(Order.SampleID))
             {
-                Order = Order,
-                Owner = App.CurrentWindow
-            };
-            if (camera.ShowDialog() == true) return;
-            BrowserModule module = new BrowserModule { Order = Order, ParentControl = this };
-            App.CurrentWindow.brMain.Child = module;
+                MessageBox.Show("Please scan CaseNum and JobNum/SampleID first", "Error");
+            }
+            else
+            {
+                Order.PhotoType = btn.Content.ToString();
+                PhotoType = Order.PhotoType;
+                CameraWindow camera = new CameraWindow
+                {
+                    Order = Order,
+                    Owner = App.CurrentWindow
+                };
+                if (camera.ShowDialog() == true) return;
+                BrowserModule module = new BrowserModule { Order = Order, ParentControl = this };
+                App.CurrentWindow.brMain.Child = module;
+            }
         }
     }
 }

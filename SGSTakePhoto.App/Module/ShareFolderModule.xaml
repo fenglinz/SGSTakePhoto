@@ -29,7 +29,7 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Grid Name="dgOtsOrder">
+            <Grid Name="dgShareFolderOrder">
                 <Grid.RowDefinitions>
                     <RowDefinition></RowDefinition>
                     <RowDefinition></RowDefinition>
@@ -44,15 +44,15 @@
                 </Grid.ColumnDefinitions>
                 <Button Name="btnBack" Content="Back" Width="80" Style="{DynamicResource btn-success}" Click="BtnBack_Click"/>
                 <Label Grid.Row="1" Content="Order Num/Other" Style="{DynamicResource h5}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="BarCode" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="BarCode" Text="{Binding Path= OrderNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                 <Label Grid.Row="2" Content="Sample ID" Style="{DynamicResource h5}"/>
-                <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtSampleID" Height="30" Tag="BarCode" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtSampleID" Height="30" Tag="BarCode" Text="{Binding Path= SampleID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                 <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal">
-                    <Button Name="btnOriginal" Content="Original" Width="80" Margin="10,0,0,0"/>
-                    <Button Name="btnBefore" Content="Before" Width="80" Margin="20,0,0,0"/>
-                    <Button Name="btnTesting" Content="Testing" Width="80" Margin="20,0,0,0"/>
-                    <Button Name="btnAfter" Content="After" Width="80" Margin="20,0,0,0"/>
-                    <Button Name="btnFeature" Content="Feature" Width="80" Margin="20,0,0,0"/>
+                    <Button Name="btnOriginal" Content="Original" Width="80" Margin="10,0,0,0" Click="BtnImageType_Click"/>
+                    <Button Name="btnBefore" Content="Before" Width="80" Margin="20,0,0,0" Click="BtnImageType_Click"/>
+                    <Button Name="btnTesting" Content="Testing" Width="80" Margin="20,0,0,0" Click="BtnImageType_Click"/>
+                    <Button Name="btnAfter" Content="After" Width="80" Margin="20,0,0,0" Click="BtnImageType_Click"/>
+                    <Button Name="btnFeature" Content="Feature" Width="80" Margin="20,0,0,0" Click="BtnImageType_Click"/>
                 </StackPanel>
             </Grid>
         </Grid>

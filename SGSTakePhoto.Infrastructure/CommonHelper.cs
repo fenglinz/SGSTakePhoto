@@ -22,16 +22,6 @@ namespace SGSTakePhoto.Infrastructure
         public static string RootPath = AppDomain.CurrentDomain.BaseDirectory;
 
         /// <summary>
-        /// 当前用户正在使用的系统
-        /// </summary>
-        public static string CurrentSystem { get; set; }
-
-        /// <summary>
-        /// 当前登录用户
-        /// </summary>
-        public static string CurrentUser { get; set; }
-
-        /// <summary>
         /// 程序升级目录
         /// </summary>
         public static string SourcePath
@@ -61,21 +51,21 @@ namespace SGSTakePhoto.Infrastructure
         public static string CurrentUploadPath(Order entity)
         {
             string type = entity.PhotoType[0].ToString();
-            switch (CurrentSystem)
+            switch (entity.ExecutionSystem)
             {
                 case "OTS":
                     switch (entity.PhotoType)
                     {
                         case "Original":
-                            return Path.Combine(UploadPath, CurrentUser, DateTime.Now.ToString("yyyy-MM-dd"), entity.CaseNum, type);
+                            return Path.Combine(UploadPath, entity.Owner, DateTime.Now.ToString("yyyy-MM-dd"), entity.CaseNum, type);
                         default:
-                            return Path.Combine(UploadPath, CurrentUser, DateTime.Now.ToString("yyyy-MM-dd"), entity.JobNum, type);
+                            return Path.Combine(UploadPath, entity.Owner, DateTime.Now.ToString("yyyy-MM-dd"), entity.JobNum, type);
                     }
                 case "SLIM":
-                    return Path.Combine(UploadPath, CurrentUser, DateTime.Now.ToString("yyyy-MM-dd"), entity.OrderNum, type);
+                    return Path.Combine(UploadPath, entity.Owner, DateTime.Now.ToString("yyyy-MM-dd"), entity.OrderNum, type);
                 case "Share":
                 default:
-                    return Path.Combine(UploadPath, CurrentUser, DateTime.Now.ToString("yyyy-MM-dd"), entity.JobNum, type);
+                    return Path.Combine(UploadPath, entity.Owner, DateTime.Now.ToString("yyyy-MM-dd"), entity.JobNum, type);
             }
         }
 
@@ -93,7 +83,7 @@ namespace SGSTakePhoto.Infrastructure
                 Directory.CreateDirectory(dirPath);
             }
             string fileName, orderId = GeneralOrderNum(dirPath);
-            switch (CurrentSystem)
+            switch (entity.ExecutionSystem)
             {
                 case "OTS":
                     switch (entity.PhotoType)
@@ -107,7 +97,7 @@ namespace SGSTakePhoto.Infrastructure
                     }
                     break;
                 case "SLIM":
-                    fileName = entity.SampleID;
+                    fileName = string.Format("{0}.jpg", entity.SampleID);
                     break;
                 case "Share":
                 default:

@@ -7,9 +7,6 @@
         Name="Setting"
         Loaded="SettingWindow_Loaded"
         mc:Ignorable="d"  Height="800" Width="1200">
-    <UserControl.Resources>
-        <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
-    </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
             <EventTrigger.Actions>
@@ -27,13 +24,6 @@
         <Grid>
             <DataGrid CanUserResizeRows="False" CanUserResizeColumns="True"  CanUserAddRows="False"  AutoGenerateColumns="False"  RowHeaderWidth="0" Name="dgUserConfig" SelectionChanged="DgUserConfig_SelectionChanged">
                 <DataGrid.Columns>
-                    <DataGridTemplateColumn Header="" Width="35">
-                        <DataGridTemplateColumn.CellTemplate>
-                            <DataTemplate>
-                                <CheckBox IsEnabled="{Binding Id,Converter={StaticResource CheckBoxEnableConverter}}"/>
-                            </DataTemplate>
-                        </DataGridTemplateColumn.CellTemplate>
-                    </DataGridTemplateColumn>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="User" Binding="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Organization" Binding="{Binding Organization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                     <DataGridTextColumn Width="*" IsReadOnly="True" Header="Execution System" Binding="{Binding ExecutionSystem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>

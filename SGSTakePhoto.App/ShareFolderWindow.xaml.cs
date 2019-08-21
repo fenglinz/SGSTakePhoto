@@ -1,6 +1,7 @@
 ﻿using SGSTakePhoto.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,9 +21,34 @@ namespace SGSTakePhoto.App
     /// </summary>
     public partial class ShareFolderWindow : UserControl
     {
+        #region 属性
+
+        /// <summary>
+        /// OtsOrder
+        /// </summary>
+        private ObservableCollection<Order> Orders { get; set; }
+
+        /// <summary>
+        /// OrderServices
+        /// </summary>
+        private readonly OrderServices orderServices;
+
+        /// <summary>
+        /// Order
+        /// </summary>
+        private Order SelectedItem => dgShareFolder.SelectedItem as Order;
+
+        #endregion
+
+        #region 构造函数
+
+        /// <summary>
+        /// 构造函数
+        /// </summary>
         public ShareFolderWindow()
         {
             InitializeComponent();
+            orderServices = new OrderServices();
         }
 
         /// <summary>
@@ -30,33 +56,48 @@ namespace SGSTakePhoto.App
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
+        private void ShareFolder_Loaded(object sender, RoutedEventArgs e)
+        {
+            var result = orderServices.GetList(string.Format("SELECT * FROM [Order] WHERE ExecutionSystem = 'ShareFolder' AND Owner = '{0}'", App.CurrentUser));
+            if (result.Success)
+            {
+                Orders = result.Datas;
+            }
+
+            dgShareFolder.ItemsSource = Orders;
+            dgShareFolder.SelectedIndex = 0;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 拍照
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void BtnTakePhoto_Click(object sender, RoutedEventArgs e)
         {
             Order order = dgShareFolder.SelectedItem as Order;
-            if (order == null)
-            {
-
-            }
-
-            if (!App.UserControls.ContainsKey("ShareFolderOrder"))
-            {
-                ShareFolderModule shareFolderOrder = new ShareFolderModule(order);
-                App.CurrentWindow.brMain.Child = shareFolderOrder;
-                App.UserControls.Add("ShareFolderOrder", shareFolderOrder);
-            }
-            else
-            {
-                App.CurrentWindow.brMain.Child = App.UserControls["ShareFolderOrder"];
-            }
-        }
-
-        private void BtnDelete_Click(object sender, RoutedEventArgs e)
-        {
-
+            ShareFolderModule shareOrder = new ShareFolderModule { Order = order };
+            App.CurrentWindow.brMain.Child = shareOrder;
         }
 
         /// <summary>
-        /// 条形码或二维码扫描
+        /// 删除
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnDelete_Click(object sender, RoutedEventArgs e)
+        {
+            if (SelectedItem == null) return;
+            if (!CommonHelper.DeleteConfirm()) return;
+            SelectedItem.Delete();
+            Orders.Remove(SelectedItem);
+            dgShareFolder.SelectedIndex = 0;
+        }
+
+        /// <summary>
+        /// 扫描条形码或二维码
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -79,21 +120,14 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnUpload_Click(object sender, RoutedEventArgs e)
         {
-            Order order = dgShareFolder.SelectedItem as Order;
-            if (order == null)
+            if (SelectedItem != null)
             {
-
-            }
-
-            if (!App.UserControls.ContainsKey("Upload"))
-            {
-                UploadModule uploadModule = new UploadModule { Order = order, ParentControl = this };
+                UploadModule uploadModule = new UploadModule { Order = SelectedItem, ParentControl = this };
                 App.CurrentWindow.brMain.Child = uploadModule;
-                App.UserControls.Add("Upload", uploadModule);
             }
             else
             {
-                App.CurrentWindow.brMain.Child = App.UserControls["Upload"];
+                CommonHelper.NoDataSelected();
             }
         }
 
@@ -104,21 +138,14 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnBrowser_Click(object sender, RoutedEventArgs e)
         {
-            Order order = dgShareFolder.SelectedItem as Order;
-            if (order == null)
+            if (SelectedItem != null)
             {
-
-            }
-
-            if (!App.UserControls.ContainsKey("Browser"))
-            {
-                BrowserModule browserModule = new BrowserModule { Order = order, ParentControl = this };
-                App.CurrentWindow.brMain.Child = browserModule;
-                App.UserControls.Add("Browser", browserModule);
+                BrowserModule module = new BrowserModule { Order = SelectedItem, ParentControl = this };
+                App.CurrentWindow.brMain.Child = module;
             }
             else
             {
-                App.CurrentWindow.brMain.Child = App.UserControls["Browser"];
+                CommonHelper.NoDataSelected();
             }
         }
     }

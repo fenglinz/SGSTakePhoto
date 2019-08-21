@@ -17,7 +17,7 @@ namespace SGSTakePhoto.App
         /// <returns></returns>
         public Response<int> Create(UploadFile entity)
         {
-            return entity.Create();
+            return entity.InsertOrReplace();
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace SGSTakePhoto.App
         /// <returns></returns>
         public Response<int> Update(UploadFile entity)
         {
-            return entity.Update();
+            return entity.InsertOrReplace();
         }
     }
 }

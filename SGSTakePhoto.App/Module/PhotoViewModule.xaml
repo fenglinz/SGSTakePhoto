@@ -8,6 +8,10 @@
              d:DesignHeight="800" d:DesignWidth="1200">
     <UserControl.Resources>
         <local:RecipesImageInfoConverter x:Key="RecipesImageInfoConverter" />
+        <TransformGroup x:Key="ImageCompareResources">
+            <ScaleTransform/>
+            <TranslateTransform/>
+        </TransformGroup>
     </UserControl.Resources>
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
@@ -22,14 +26,22 @@
             </EventTrigger.Actions>
         </EventTrigger>
     </UserControl.Triggers>
-    <Grid Name="gdPhotoView">
+    <Grid Name="ImageComparePanel">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Vertical">
-            <Button Name="btnBack" Content="Back" Style="{StaticResource btn-success}" Margin="10,10" Width="80" Click="BtnBack_Click"/>
-        </StackPanel>
-        <Image Grid.Column="1" Name="imgPhotoView" Source="{Binding Path=PicturePath,Converter={StaticResource RecipesImageInfoConverter}}"/>
+        <Button VerticalAlignment="Top" Name="btnBack" Content="Back" Style="{StaticResource btn-success}" Margin="10,10" Width="80" Click="BtnBack_Click"/>
+        <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
+                      VerticalScrollBarVisibility="Disabled" Name="masterScrollViewer" Background="WhiteSmoke" Grid.Column="1">
+            <ContentControl x:Name="ContentControl"
+                            MouseLeftButtonDown="ContentControl_MouseLeftButtonDown"
+                            MouseLeftButtonUp="ContentControl_MouseLeftButtonUp"
+                            MouseMove="ContentControl_MouseMove"
+                            MouseWheel="ContentControl_MouseWheel">
+                <Image Name="imgPhotoView" RenderOptions.BitmapScalingMode="NearestNeighbor"
+                       local:ImageDecoder.Source="{Binding Path=PicturePath}" Stretch="Uniform" RenderTransform="{StaticResource ImageCompareResources}"/>
+            </ContentControl>
+        </ScrollViewer>
     </Grid>
 </UserControl>

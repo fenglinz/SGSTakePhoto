@@ -93,6 +93,7 @@
     <Compile Include="SlimPhotoWindow.xaml.cs">
       <DependentUpon>SlimPhotoWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Styles\UniversalWindowStyle.cs" />
     <Compile Include="UpdateWindow.xaml.cs">
       <DependentUpon>UpdateWindow.xaml</DependentUpon>
     </Compile>
@@ -246,6 +247,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Styles\Universal.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Window.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -323,6 +328,12 @@
     <Resource Include="Icon\sgs-logo.png" />
     <Resource Include="Icon\Update.ico" />
     <Resource Include="Icon\loading.png" />
+    <Resource Include="Icon\switch.ico" />
+    <Resource Include="Icon\switch.png" />
+    <Resource Include="Icon\gallery.ico" />
+    <Resource Include="Icon\gallery.png" />
+    <Resource Include="Icon\camera.ico" />
+    <Resource Include="Icon\camera.png" />
     <Content Include="Library\DirectShowLib-2005.dll" />
     <Content Include="Library\WPFMediaKit.dll" />
     <Content Include="Library\zxing.dll" />
@@ -338,6 +349,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Fluent.Ribbon">
+      <Version>6.1.0.326</Version>
+    </PackageReference>
     <PackageReference Include="Newtonsoft.Json">
       <Version>12.0.2</Version>
     </PackageReference>

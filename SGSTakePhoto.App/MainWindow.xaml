@@ -3,13 +3,21 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:SGSTakePhoto.App"
+        xmlns:themes="clr-namespace:SGSTakePhoto.App.Styles"
         mc:Ignorable="d" WindowStartupLocation="CenterScreen"
         SizeChanged="Window_SizeChanged"
         Loaded="Window_Loaded"
         ContentRendered="Window_ContentRendered"
-        Title="SGSTakePhoto" Height="800" Width="1200">
-    <Grid Name="mGrid">
+        Title="SGSTakePhoto" Height="800" Width="1200" Style="{StaticResource Universal}">
+    <themes:UniversalWindowStyle.TitleBar>
+        <themes:UniversalTitleBar ForegroundColor="Gray" 
+                                  InactiveForegroundColor="Gray" 
+                                  ButtonHoverForeground="#3F000000" 
+                                  ButtonHoverBackground="#3F000000"
+                                  ButtonPressedForeground="#7FFFFFFF" 
+                                  ButtonPressedBackground="#3F000000" />
+    </themes:UniversalWindowStyle.TitleBar>
+    <Grid Name="mGrid" Margin="0,30,0,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -23,7 +31,7 @@
                 <StackPanel Orientation="Vertical"  Grid.Column="0" VerticalAlignment="Top">
                     <Button Style="{DynamicResource btn-primary}" Content="OTS Photo" Height="28" Margin="0,20,0,0" Width="120" x:Name="btnOTS" Click="BtnMenu_Click"/>
                     <Button Style="{DynamicResource btn-primary}" Content="SLIM Photo" Height="28" Margin="0,20,0,0" Width="120"  x:Name="btnSLIM" Click="BtnMenu_Click"/>
-                    <Button Style="{DynamicResource btn-primary}" Content="Share Folder" Height="28" Margin="0,20,0,0" Width="120"  x:Name="btnShare" Click="BtnMenu_Click"/>
+                    <Button Style="{DynamicResource btn-primary}" Content="Share Folder" Height="28" Margin="0,20,0,0" Width="120"  x:Name="btnShareFolder" Click="BtnMenu_Click"/>
                     <Button Style="{DynamicResource btn-primary}" Content="Setting" Height="28" Margin="0,20,0,0" Width="120" x:Name="btnSetting" Click="BtnMenu_Click"/>
                 </StackPanel>
             </GroupBox.Content>

@@ -55,34 +55,10 @@ namespace SGSTakePhoto.Infrastructure
         //}
 
         /// <summary>
-        /// 新增
-        /// </summary>
-        /// <returns></returns>
-        public virtual Response<int> Create(string sql = "")
-        {
-            //if (string.IsNullOrEmpty(sql))
-            //{
-            //    sb.Clear();
-            //    foreach (PropertyInfo item in Properties)
-            //    {
-            //        foreach(CustomAttributeData cusAttribute in item.CustomAttributes)
-            //        {
-            //            if(cusAttribute.AttributeType == typeof(Column))
-            //            {
-
-            //            }
-            //        }
-            //    }
-            //}
-
-            return SqLiteHelper.ExecuteNonQuery(sql);
-        }
-
-        /// <summary>
         /// 更新
         /// </summary>
         /// <returns></returns>
-        public virtual Response<int> Update(string sql = "")
+        public virtual Response<int> InsertOrReplace(string sql = "")
         {
             return SqLiteHelper.ExecuteNonQuery(sql);
         }

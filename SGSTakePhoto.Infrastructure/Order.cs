@@ -96,56 +96,16 @@ namespace SGSTakePhoto.Infrastructure
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public override Response<int> Create(string sql = "")
+        public override Response<int> InsertOrReplace(string sql = "")
         {
             if (string.IsNullOrEmpty(sql))
             {
-                sql = string.Format(@"INSERT INTO [Order]
-                  (
-                      Id,
-                      ExecutionSystem,
-                      CaseNum,
-                      JobNum,
-                      OrderNum,
-                      SampleID,
-                      TestItemID,
-                      Status,
-                      Owner,
-                      CreateTime,
-                      IsChecked
-                  )
-                  VALUES
-                  ('{0}',
-                   '{1}',
-                   '{2}', 
-                   '{3}',
-                   '{4}',
-                   '{5}',
-                   '{6}',
-                   '{7}',
-                   '{8}',
-                   DATETIME(),
-                   0
-                   )", Id, ExecutionSystem, CaseNum, JobNum, OrderNum, SampleID, TestItemID, Status, Owner);
+                sql = string.Format(@"REPLACE INTO [Order] (Id, ExecutionSystem, CaseNum, JobNum, OrderNum, SampleID, TestItemID, Status, Owner, CreateTime, IsChecked)
+                                                   VALUES ('{0}', '{1}',  '{2}',  '{3}', '{4}', '{5}', '{6}',  '{7}', '{8}', '{9}', '{10}')",
+                                                   Id, ExecutionSystem, CaseNum, JobNum, OrderNum, SampleID, TestItemID, Status, Owner, CreateTime.ToString("yyyy-MM-dd HH:mm:ss"), IsChecked ? 1 : 0);
             }
 
-            return base.Create(sql);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public override Response<int> Update(string sql = "")
-        {
-            if (string.IsNullOrEmpty(sql))
-            {
-                sql = string.Format(@"UPDATE [Order] SET CaseNum = '{1}',JobNum = '{2}',OrderNum = '{3}',SampleID = '{4}',TestItemID = '{5}',Status = '{6}',Owner = '{7}' WHERE Id = '{0}'",
-                    Id, CaseNum, JobNum, OrderNum, SampleID, TestItemID, Status, Owner);
-            }
-
-            return base.Update(sql);
+            return base.InsertOrReplace(sql);
         }
 
         /// <summary>

@@ -23,6 +23,16 @@ namespace SGSTakePhoto.App
         public static MainWindow CurrentWindow { get; set; }
 
         /// <summary>
+        /// 当前用户正在使用的系统
+        /// </summary>
+        public static string CurrentSystem { get; set; }
+
+        /// <summary>
+        /// 当前登录用户
+        /// </summary>
+        public static string CurrentUser { get; set; }
+
+        /// <summary>
         /// UserControl集合
         /// </summary>
         public static Dictionary<string, UserControl> UserControls = new Dictionary<string, UserControl>();

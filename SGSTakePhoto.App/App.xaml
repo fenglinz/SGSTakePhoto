@@ -11,6 +11,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/SGSTakePhoto.App;component/Styles/Bootstrap.xaml"/>
                 <ResourceDictionary Source="pack://application:,,,/SGSTakePhoto.App;component/PathGeometries/Glyphicons.xaml"/>
+                <ResourceDictionary Source="pack://application:,,,/SGSTakePhoto.App;component/Styles/Universal.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

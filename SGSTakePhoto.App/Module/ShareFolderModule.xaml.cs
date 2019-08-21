@@ -25,16 +25,38 @@ namespace SGSTakePhoto.App
         /// 
         /// </summary>
         public Order Order { get; set; }
+        public string PhotoType { get; set; } = "Original";
 
         /// <summary>
         /// 
         /// </summary>
         /// <param name="order"></param>
-        public ShareFolderModule(Order order)
+        public ShareFolderModule()
         {
             InitializeComponent();
+            Loaded += ShareFolderModule_Loaded;
+        }
 
-            this.Order = order;
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ShareFolderModule_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (Order == null)
+            {
+                Order = new Order
+                {
+                    ExecutionSystem = App.CurrentSystem,
+                    Owner = App.CurrentUser,
+                    Status = "NoPhoto",
+                    IsChecked = false,
+                    CreateTime = DateTime.Now
+                };
+            }
+
+            dgShareFolderOrder.DataContext = Order;
         }
 
         /// <summary>
@@ -54,20 +76,42 @@ namespace SGSTakePhoto.App
         /// <param name="e"></param>
         private void BtnScan_Click(object sender, RoutedEventArgs e)
         {
-            ScanWindow scan = new ScanWindow { };
+            ScanWindow scan = new ScanWindow { Owner = App.CurrentWindow };
             //如果是激活状态则返回
             if (scan.IsClosed) return;
-            switch ((sender as TextBox).Name)
+            if (scan.ShowDialog() == false)
             {
-                case "txtCaseNum":
+                TextBox txtBox = (sender as TextBox);
+                txtBox.Text = scan.BarCode;
 
-                    break;
-                case "txtJobNum":
+                Order.InsertOrReplace();
+            }
+        }
 
-                    break;
-                case "txtSampleId":
-
-                    break;
+        /// <summary>
+        /// 点击拍照
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void BtnImageType_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = (Button)sender as Button;
+            if (string.IsNullOrEmpty(Order.OrderNum) || string.IsNullOrEmpty(Order.SampleID))
+            {
+                MessageBox.Show("Please scan OrderNum and  SampleID first", "Error");
+            }
+            else
+            {
+                Order.PhotoType = btn.Content.ToString();
+                PhotoType = Order.PhotoType;
+                CameraWindow camera = new CameraWindow
+                {
+                    Order = Order,
+                    Owner = App.CurrentWindow
+                };
+                if (camera.ShowDialog() == true) return;
+                BrowserModule module = new BrowserModule { Order = Order, ParentControl = this };
+                App.CurrentWindow.brMain.Child = module;
             }
         }
     }

@@ -88,43 +88,24 @@ namespace SGSTakePhoto.Infrastructure
         /// </summary>
         /// <param name="sql"></param>
         /// <returns></returns>
-        public override Response<int> Create(string sql = "")
+        public override Response<int> InsertOrReplace(string sql = "")
         {
             if (string.IsNullOrEmpty(sql))
             {
-                sql = string.Format(@"INSERT INTO [UserConfig](Id,UserName,Organization,ExecutionSystem,DefaultWidth,DefaultHeight,DefaultDPI) VALUES('{0}','{1}','{2}','{3}',{4},{5},{6})",
-                         Guid.NewGuid().ToString(),
-                         UserName,
-                         Organization,
-                         ExecutionSystem,
-                         DefaultWidth,
-                         DefaultHeight,
-                         DefaultHeight);
+                if (string.IsNullOrEmpty(sql))
+                {
+                    sql = string.Format(@"REPLACE INTO [UserConfig](Id,UserName,Organization,ExecutionSystem,DefaultWidth,DefaultHeight,DefaultDPI) VALUES ('{0}','{1}','{2}','{3}',{4},{5},{6})",
+                             Id,
+                             UserName,
+                             Organization,
+                             ExecutionSystem,
+                             DefaultWidth,
+                             DefaultHeight,
+                             DefaultDPI);
+                }
             }
 
-            return base.Create(sql);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sql"></param>
-        /// <returns></returns>
-        public override Response<int> Update(string sql = "")
-        {
-            if (string.IsNullOrEmpty(sql))
-            {
-                sql = string.Format(@"UPDATE [UserConfig] SET UserName = '{0}',Organization = '{1}',ExecutionSystem = '{2}',DefaultWidth = '{3}',DefaultHeight = '{4}',DefaultDPI = '{5}' WHERE Id = '{6}'",
-                         UserName,
-                         Organization,
-                         ExecutionSystem,
-                         DefaultWidth,
-                         DefaultHeight,
-                         DefaultHeight,
-                         Id);
-            }
-
-            return base.Update(sql);
+            return base.InsertOrReplace(sql);
         }
 
         /// <summary>
