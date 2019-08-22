@@ -99,7 +99,7 @@ namespace SGSTakePhoto.App
             {
                 //抓取控件做成图片
                 RenderTargetBitmap bmp = new RenderTargetBitmap((int)VideoCapture.NaturalVideoWidth, (int)VideoCapture.NaturalVideoHeight, 96, 96, PixelFormats.Default);
-                VideoCapture.Stretch = Stretch.Fill;
+                //VideoCapture.Stretch = Stretch.Fill;
                 VideoCapture.Measure(VideoCapture.RenderSize);
                 VideoCapture.Arrange(new Rect(VideoCapture.RenderSize));
                 bmp.Render(VideoCapture);

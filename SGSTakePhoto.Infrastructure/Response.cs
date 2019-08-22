@@ -9,12 +9,12 @@ namespace SGSTakePhoto.Infrastructure
     {
         public bool Success { get; set; }
 
-        public string _errorMessage;
-        public string ErrorMessage
+        public string errors;
+        public string Errors
         {
             get
             {
-                return _errorMessage;
+                return errors;
             }
             set
             {
@@ -22,7 +22,7 @@ namespace SGSTakePhoto.Infrastructure
                 {
                     Success = false;
                 }
-                _errorMessage = value;
+                errors = value;
             }
         }
 

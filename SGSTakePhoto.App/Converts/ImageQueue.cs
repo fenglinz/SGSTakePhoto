@@ -5,6 +5,7 @@ using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Threading;
 using System.IO;
+using System.Windows;
 
 namespace SGSTakePhoto.App
 {
@@ -30,9 +31,9 @@ namespace SGSTakePhoto.App
 
         static ImageQueue()
         {
-            ImageQueue.Stacks = new Queue<ImageQueueInfo>();
+            Stacks = new Queue<ImageQueueInfo>();
             autoEvent = new AutoResetEvent(true);
-            Thread t = new Thread(new ThreadStart(ImageQueue.DownloadImage))
+            Thread t = new Thread(new ThreadStart(DownloadImage))
             {
                 Name = "下载图片",
                 IsBackground = true
@@ -48,11 +49,11 @@ namespace SGSTakePhoto.App
             while (true)
             {
                 ImageQueueInfo t = null;
-                lock (ImageQueue.Stacks)
+                lock (Stacks)
                 {
-                    if (ImageQueue.Stacks.Count > 0)
+                    if (Stacks.Count > 0)
                     {
-                        t = ImageQueue.Stacks.Dequeue();
+                        t = Stacks.Dequeue();
                     }
                 }
                 if (t != null)
@@ -64,14 +65,16 @@ namespace SGSTakePhoto.App
                         if ("http".Equals(uri.Scheme, StringComparison.CurrentCultureIgnoreCase))
                         {
                             //如果是HTTP下载文件
-                            WebClient wc = new WebClient();
-                            using (var ms = new MemoryStream(wc.DownloadData(uri)))
+                            using (WebClient wc = new WebClient())
                             {
-                                image = new BitmapImage();
-                                image.BeginInit();
-                                image.CacheOption = BitmapCacheOption.OnLoad;
-                                image.StreamSource = ms;
-                                image.EndInit();
+                                using (var ms = new MemoryStream(wc.DownloadData(uri)))
+                                {
+                                    image = new BitmapImage();
+                                    image.BeginInit();
+                                    image.CacheOption = BitmapCacheOption.OnLoad;
+                                    image.StreamSource = ms;
+                                    image.EndInit();
+                                }
                             }
                         }
                         else if ("file".Equals(uri.Scheme, StringComparison.CurrentCultureIgnoreCase))
@@ -89,22 +92,19 @@ namespace SGSTakePhoto.App
                         if (image != null)
                         {
                             if (image.CanFreeze) image.Freeze();
-                            t.image.Dispatcher.BeginInvoke(new Action<ImageQueueInfo, BitmapImage>((i, bmp) => 
+                            t.image.Dispatcher.BeginInvoke(new Action<ImageQueueInfo, BitmapImage>((i, bmp) =>
                             {
-                                if (ImageQueue.OnComplate != null)
-                                {
-                                    ImageQueue.OnComplate(i.image, i.url, bmp);
-                                }
-                            }),new Object[] { t, image });
+                                OnComplate?.Invoke(i.image, i.url, bmp);
+                            }), new object[] { t, image });
                         }
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
-                        System.Windows.MessageBox.Show(e.Message);
+                        MessageBox.Show(e.Message);
                         continue;
                     }
                 }
-                if (ImageQueue.Stacks.Count > 0) continue;
+                if (Stacks.Count > 0) continue;
                 autoEvent.WaitOne();
             }
         }
@@ -116,11 +116,11 @@ namespace SGSTakePhoto.App
         /// <param name="url"></param>
         public static void Queue(Image img, String url)
         {
-            if (String.IsNullOrEmpty(url)) return;
-            lock (ImageQueue.Stacks)
+            if (string.IsNullOrEmpty(url)) return;
+            lock (Stacks)
             {
-                ImageQueue.Stacks.Enqueue(new ImageQueueInfo { url = url, image = img });
-                ImageQueue.autoEvent.Set();
+                Stacks.Enqueue(new ImageQueueInfo { url = url, image = img });
+                autoEvent.Set();
             }
         }
     }

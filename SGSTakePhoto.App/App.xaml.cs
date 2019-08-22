@@ -65,11 +65,37 @@ namespace SGSTakePhoto.App
             finally
             {
                 base.OnStartup(e);
+                LoadLanguage();
             }
         }
 
         /// <summary>
         /// 
+        /// </summary>
+        private void LoadLanguage()
+        {
+            CultureInfo currentCultureInfo = CultureInfo.CurrentCulture;
+            ResourceDictionary langRd = null;
+            try
+            {
+                langRd = Application.LoadComponent(new Uri(@"Language\" + currentCultureInfo.Name + ".xaml", UriKind.Relative)) as ResourceDictionary;
+            }
+            catch
+            {
+
+            }
+            if (langRd != null)
+            {
+                //if (this.Resources.MergedDictionaries.Count > 0)
+                //{
+                //    this.Resources.MergedDictionaries.Clear();
+                //}
+                this.Resources.MergedDictionaries[0] = langRd;
+            }
+        }
+
+        /// <summary>
+        /// 将软件所需的资源一次都加载到内存中
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="args"></param>

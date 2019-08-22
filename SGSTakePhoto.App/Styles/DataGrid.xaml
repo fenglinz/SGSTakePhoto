@@ -90,6 +90,7 @@
         <Setter Property="BorderThickness" Value="0,0,0,2"/>
         <Setter Property="Padding" Value="5,0"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
@@ -183,5 +184,6 @@
     </Style>
     <Style x:Key="DataGridTextCenter" TargetType="{x:Type TextBlock}">
         <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
     </Style>
 </ResourceDictionary>

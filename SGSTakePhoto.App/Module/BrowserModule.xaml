@@ -28,10 +28,10 @@
                         <Image Grid.Row="0" local:ImageDecoder.Source="{Binding Path=FileFullName}"/>
                         <StackPanel Grid.Row="1" HorizontalAlignment="Left" Orientation="Horizontal">
                             <CheckBox Width="20" Margin="20,0" Name="chkReport" IsEnabled="False"  IsChecked="{Binding Path = IsSync, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource checkbox has-success}"/>
-                            <Button Width="50" Margin="5,0" Name="btnDelete" Content="Del"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Delete" Click="BtnOperate_Click"/>
-                            <Button Width="50" Margin="5,0" Name="btnEdit" Content="Edit"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Edit" Click="BtnOperate_Click"/>
-                            <Button Width="80" Margin="5,0" Name="btnBrowser" Content="Browser"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Browser" Click="BtnOperate_Click"/>
-                            <Button Width="70" Margin="5,0" Name="btnUpload" Content="Upload"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Upload" Click="BtnOperate_Click"/>
+                            <Button Width="60" Margin="5,0" Name="btnDelete" Content="{StaticResource Del}"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Delete" Click="BtnOperate_Click"/>
+                            <Button Width="60" Margin="5,0" Name="btnEdit" Content="{StaticResource Edit}"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Edit" Click="BtnOperate_Click"/>
+                            <Button Width="80" Margin="5,0" Name="btnBrowser" Content="{StaticResource Browser}"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Browser" Click="BtnOperate_Click"/>
+                            <Button Width="60" Margin="5,0" Name="btnUpload" Content="{StaticResource Upload}"  Tag ="{Binding Path = Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="Upload" Click="BtnOperate_Click"/>
                         </StackPanel>
                     </Grid>
                 </Border>
@@ -61,7 +61,7 @@
             </EventTrigger.Actions>
         </EventTrigger>
     </UserControl.Triggers>
-    <GroupBox Header="Photo Browser">
+    <GroupBox Header="{StaticResource PhotoBrowser}">
         <Grid Margin="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>
@@ -85,12 +85,12 @@
             <Button Name="btnFeature"  Grid.Column="5" Content="Feature" Style="{Binding}" Cursor="Hand" Click="BtnPhotoTypeFilter_Click"/>
             <Button Name="btnOther"  Grid.Column="6" Content="Other" Style="{Binding}" Cursor="Hand" Click="BtnPhotoTypeFilter_Click"/>
 
-            <Button Name="btnBack" Grid.Row="1" Content="Back" Width="100" Style="{DynamicResource btn-success}" Click="BtnBack_Click"/>
-            <Button Name="btnTakePhoto" Width="100" Grid.Row="1" Grid.Column="1" Content="Take Photo" Click="BtnTakePhoto_Click"/>
-            <Button Name="btnSelectAll" Width="100" Grid.Row="1" Grid.Column="2" Content="Select All" Click="BtnSelectAll_Click"/>
-            <Button Name="btnUnSelectAll" Width="100" Grid.Row="1" Grid.Column="3" Content="UnSelect All" Click="BtnUnSelectAll_Click"/>
-            <Button Name="btnDelete" Width="100" Grid.Row="1" Grid.Column="4" Content="Delete" Click="BtnDelete_Click"/>
-            <Button Name="btnUpload" Width="100" Grid.Row="1" Grid.Column="5" Content="Upload" Click="BtnUpload_Click"/>
+            <Button Name="btnBack" Grid.Row="1" Content="{StaticResource Back}" Width="100" Style="{DynamicResource btn-success}" Click="BtnBack_Click"/>
+            <Button Name="btnTakePhoto" Width="100" Grid.Row="1" Grid.Column="1" Content="{StaticResource TakePhoto}" Click="BtnTakePhoto_Click"/>
+            <Button Name="btnSelectAll" Width="100" Grid.Row="1" Grid.Column="2" Content="{StaticResource SelectAll}" Click="BtnSelectAll_Click"/>
+            <Button Name="btnUnSelectAll" Width="100" Grid.Row="1" Grid.Column="3" Content="{StaticResource UnSelectAll}" Click="BtnUnSelectAll_Click"/>
+            <Button Name="btnDelete" Width="100" Grid.Row="1" Grid.Column="4" Content="{StaticResource Delete}" Click="BtnDelete_Click"/>
+            <Button Name="btnUpload" Width="100" Grid.Row="1" Grid.Column="5" Content="{StaticResource Upload}" Click="BtnUpload_Click"/>
 
             <ListBox Name="lbImageView" Grid.Row="2" Grid.ColumnSpan="7" 
                      Grid.IsSharedSizeScope="True" 

@@ -19,7 +19,7 @@
             </EventTrigger.Actions>
         </EventTrigger>
     </UserControl.Triggers>
-    <GroupBox Header="Create OTS Order">
+    <GroupBox Header="{StaticResource OtsList}">
         <Grid Name="gdOtsOrder">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -42,13 +42,13 @@
                     <ColumnDefinition Width="100"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Name="btnBack" Content="Back" Width="80" Style="{DynamicResource btn-success}" Click="BtnBack_Click"/>
+                <Button Name="btnBack" Content="{StaticResource Back}" Width="80" Style="{DynamicResource btn-success}" Click="BtnBack_Click"/>
                 <Label Grid.Row="1" Content="Case Num" Style="{DynamicResource h5}"/>
-                <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtCaseNum" Height="30" Text="{Binding Path= CaseNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="BarCode" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                <TextBox Grid.Column="1" Grid.Row="1" x:Name="txtCaseNum" Height="30" Text="{Binding Path= CaseNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{StaticResource Scan}" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                 <Label Grid.Row="2" Content="Job Num" Style="{DynamicResource h5}"/>
-                <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtJobNum" Height="30" Text="{Binding Path= JobNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="BarCode" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtJobNum" Height="30" Text="{Binding Path= JobNum, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{StaticResource Scan}" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                 <Label Grid.Row="3" Content="Sample ID" Style="{DynamicResource h5}"/>
-                <TextBox Grid.Row="3" Grid.Column="2" x:Name="txtSampleID" Height="30" Text="{Binding Path= SampleID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="BarCode" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                <TextBox Grid.Row="3" Grid.Column="2" x:Name="txtSampleID" Height="30" Text="{Binding Path= SampleID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Tag="{StaticResource Scan}" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                 <Label Grid.Row="4" Content="Test Item ID" Style="{DynamicResource h5}"/>
                 <TextBox Grid.Row="4" Grid.Column="2" x:Name="txtItemID" Height="30" Text="{Binding Path= TestItemID, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource input-sm}"/>
                 <StackPanel Grid.Row="5" Grid.ColumnSpan="2" Orientation="Horizontal">

@@ -63,7 +63,7 @@ namespace SGSTakePhoto.App
             }
             catch (WebException ex)
             {
-                return new Response { ErrorMessage = ex.Message };
+                return new Response { Errors = ex.Message };
             }
         }
 
@@ -129,7 +129,7 @@ namespace SGSTakePhoto.App
             }
             catch (Exception ex)
             {
-                return new Response { ErrorMessage = ex.Message };
+                return new Response { Errors = ex.Message };
             }
         }
 
@@ -147,7 +147,7 @@ namespace SGSTakePhoto.App
             }
             catch (Exception ex)
             {
-                return new Response { ErrorMessage = ex.Message };
+                return new Response { Errors = ex.Message };
             }
         }
 
@@ -183,14 +183,14 @@ namespace SGSTakePhoto.App
                 proc.StandardError.Close();
                 if (string.IsNullOrEmpty(errormsg))
                 {
-                    return new Response { ErrorMessage = errormsg };
+                    return new Response { Errors = errormsg };
                 }
 
                 return new Response { };
             }
             catch (Exception ex)
             {
-                return new Response { ErrorMessage = ex.Message };
+                return new Response { Errors = ex.Message };
             }
         }
 

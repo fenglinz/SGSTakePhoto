@@ -51,7 +51,7 @@ namespace SGSTakePhoto.Infrastructure
             }
             catch (SQLiteException ex)
             {
-                return new Response<int> { ErrorMessage = ex.Message };
+                return new Response<int> { Errors = ex.Message };
             }
         }
 
@@ -92,7 +92,7 @@ namespace SGSTakePhoto.Infrastructure
             }
             catch (SQLiteException ex)
             {
-                return new Response<object> { ErrorMessage = ex.Message };
+                return new Response<object> { Errors = ex.Message };
             }
         }
 
@@ -133,7 +133,7 @@ namespace SGSTakePhoto.Infrastructure
             }
             catch (SQLiteException ex)
             {
-                return new Response<DataTable> { ErrorMessage = ex.Message };
+                return new Response<DataTable> { Errors = ex.Message };
             }
         }
 
@@ -184,7 +184,7 @@ namespace SGSTakePhoto.Infrastructure
             }
             catch (SQLiteException ex)
             {
-                return new Response<int> { ErrorMessage = ex.Message };
+                return new Response<int> { Errors = ex.Message };
             }
         }
 

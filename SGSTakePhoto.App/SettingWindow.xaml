@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SGSTakePhoto.App"
         Name="Setting"
         Loaded="SettingWindow_Loaded"
-        mc:Ignorable="d"  Height="800" Width="1200">
+        mc:Ignorable="d"  d:DesignHeight="800" d:DesignWidth="1000">
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
             <EventTrigger.Actions>
@@ -20,13 +20,13 @@
             </EventTrigger.Actions>
         </EventTrigger>
     </UserControl.Triggers>
-    <GroupBox Header="Setting">
+    <GroupBox Header="{StaticResource SettingList}">
         <Grid>
             <DataGrid CanUserResizeRows="False" CanUserResizeColumns="True"  CanUserAddRows="False"  AutoGenerateColumns="False"  RowHeaderWidth="0" Name="dgUserConfig" SelectionChanged="DgUserConfig_SelectionChanged">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="User" Binding="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
-                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Organization" Binding="{Binding Organization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
-                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="Execution System" Binding="{Binding ExecutionSystem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="{StaticResource User}" Binding="{Binding UserName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="{StaticResource Organization}" Binding="{Binding Organization, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
+                    <DataGridTextColumn Width="*" IsReadOnly="True" Header="{StaticResource System}" Binding="{Binding ExecutionSystem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ElementStyle="{StaticResource DataGridTextCenter}"/>
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>

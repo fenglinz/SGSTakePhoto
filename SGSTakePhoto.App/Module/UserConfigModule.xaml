@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SGSTakePhoto.App"
              mc:Ignorable="d" Name="UserConfig"
-             d:DesignHeight="800" d:DesignWidth="1200">
+             d:DesignHeight="800" d:DesignWidth="1000">
     <UserControl.Triggers>
         <EventTrigger RoutedEvent="UserControl.Loaded">
             <EventTrigger.Actions>
@@ -19,7 +19,7 @@
             </EventTrigger.Actions>
         </EventTrigger>
     </UserControl.Triggers>
-    <GroupBox Header="Setting List">
+    <GroupBox Header="{StaticResource SettingList}">
         <Grid Margin="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition></RowDefinition>
@@ -42,15 +42,15 @@
                     <ColumnDefinition Width="150"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <Button Name="btnSave" Content="Save" Width="80"  Style="{DynamicResource btn-success}" Click="BtnSave_Click" HorizontalAlignment="Left"/>
-                <Label Grid.Row="1" Content="Photo Default Width" Style="{DynamicResource h5}" HorizontalAlignment="Left"/>
+                <Button Name="btnSave" Content="{StaticResource Save}" Width="80"  Style="{DynamicResource btn-success}" Click="BtnSave_Click" HorizontalAlignment="Left"/>
+                <Label Grid.Row="1" Content="{StaticResource DefaultWidth}" Style="{DynamicResource h5}" HorizontalAlignment="Left"/>
                 <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtDefaultWidth" Text="{Binding DefaultWidth, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Height="30" Style="{DynamicResource input-sm}"/>
-                <Label Grid.Row="2" Content="Photo Default Height" Style="{DynamicResource h5}" HorizontalAlignment="Left"/>
+                <Label Grid.Row="2" Content="{StaticResource DefaultHeight}" Style="{DynamicResource h5}" HorizontalAlignment="Left"/>
                 <TextBox Grid.Row="2" Grid.Column="2" x:Name="txtDefaultHeight" Height="30" Text="{Binding DefaultHeight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource input-sm}"/>
-                <Label Grid.Row="3" Content="Photo Default DPI" Style="{DynamicResource h5}" HorizontalAlignment="Left"/>
+                <Label Grid.Row="3" Content="{StaticResource DefaultDPI}" Style="{DynamicResource h5}" HorizontalAlignment="Left"/>
                 <TextBox Grid.Row="3" Grid.Column="2" x:Name="txtDefaultDPI" Height="30" Text="{Binding DefaultDPI, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Style="{DynamicResource input-sm}"/>
                 <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal">
-                    <Label Content="保存成功才生效" Style="{DynamicResource text-warning}" Height="30"></Label>
+                    <Label Content="{StaticResource Notice}" Style="{DynamicResource text-warning}" Height="30"></Label>
                 </StackPanel>
             </Grid>
         </Grid>

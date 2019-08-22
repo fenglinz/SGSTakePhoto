@@ -81,7 +81,7 @@ namespace SGSTakePhoto.App
         {
             //抓取控件做成图片
             RenderTargetBitmap bmp = new RenderTargetBitmap((int)VideoCapture.NaturalVideoWidth, (int)VideoCapture.NaturalVideoHeight, 96, 96, PixelFormats.Default);
-            VideoCapture.Stretch = Stretch.Fill;
+            //VideoCapture.Stretch = Stretch.Fill;
             VideoCapture.Measure(VideoCapture.RenderSize);
             VideoCapture.Arrange(new Rect(VideoCapture.RenderSize));
             bmp.Render(VideoCapture);
@@ -94,7 +94,7 @@ namespace SGSTakePhoto.App
                 Response<string> result = scan.GetBarCode(ms);
                 if (!result.Success)
                 {
-                    MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(result.Errors, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     VideoCapture.Play();
                 }
                 else
@@ -159,7 +159,7 @@ namespace SGSTakePhoto.App
                 Response<string> result = scan.GetBarCode(fileStream);
                 if (!result.Success)
                 {
-                    MessageBox.Show(result.ErrorMessage, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(result.Errors, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
@@ -193,15 +193,5 @@ namespace SGSTakePhoto.App
         }
 
         #endregion
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void VideoCapture_NewVideoSample(object sender, WPFMediaKit.DirectShow.MediaPlayers.VideoSampleArgs e)
-        {
-
-        }
     }
 }

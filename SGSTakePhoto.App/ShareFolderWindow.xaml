@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SGSTakePhoto.App"
         Name="ShareFolder"
         Loaded="ShareFolder_Loaded"
-        mc:Ignorable="d"  Height="800" Width="1200">
+        mc:Ignorable="d"  d:DesignHeight="800" d:DesignWidth="1000">
     <UserControl.Resources>
         <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
     </UserControl.Resources>
@@ -23,7 +23,7 @@
             </EventTrigger.Actions>
         </EventTrigger>
     </UserControl.Triggers>
-    <GroupBox Header="Share Folder List">
+    <GroupBox Header="{StaticResource ShareFolderList}">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="20*"></RowDefinition>
@@ -44,7 +44,7 @@
                         <ColumnDefinition Width="15*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
                     <Label Grid.Column="0" Content="Order Num" Height="30" Style="{DynamicResource h5}"/>
-                    <TextBox Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                    <TextBox Grid.Column="1" x:Name="txtOrderNum" Height="30" Tag="{StaticResource Scan}" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
                     <Label Grid.Column="2" Content="Status" Height="30" Style="{DynamicResource h5}"/>
                     <ComboBox Grid.Column="3" Height="30" Name="cmbStatus" SelectedIndex="1" Text="{Binding Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                         <ComboBoxItem Content="NoPhoto" IsSelected="True" />
@@ -52,14 +52,14 @@
                         <ComboBoxItem Content="Uploaded"  />
                     </ComboBox>
                     <Label Grid.Row="1" Grid.Column="0" Content="Sample ID" Height="30" Style="{DynamicResource h5}"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Height="30" Tag="Scan" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
-                    <Button Grid.Row="1" Grid.Column="2" Style="{DynamicResource btn-primary}" Content="Search" Height="30" HorizontalAlignment="Right" Width="100" x:Name="btnSearch"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="txtSampleId" Height="30" Tag="{StaticResource Scan}" Style="{DynamicResource input-group-btn right}" ButtonBase.Click="BtnScan_Click"/>
+                    <Button Grid.Row="1" Grid.Column="2" Style="{DynamicResource btn-primary}" Content="{StaticResource Search}" Height="30" HorizontalAlignment="Right" Width="100" x:Name="btnSearch"/>
                 </Grid>
             </GroupBox>
             <StackPanel Orientation="Horizontal" Grid.Row="1" Height="50">
-                <Button Style="{DynamicResource btn-primary}" Content="Take Photo" Height="30" Margin="5,0,0,0" Width="100" x:Name="btnTakePhoto" Click="BtnTakePhoto_Click"/>
-                <Button Style="{DynamicResource btn-danger}" Content="Delete" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnDelete" Click="BtnDelete_Click"/>
-                <Button Style="{DynamicResource btn-info}" Content="Upload" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnUpload" Click="BtnUpload_Click"/>
+                <Button Style="{DynamicResource btn-primary}" Content="{StaticResource TakePhoto}" Height="30" Margin="5,0,0,0" Width="100" x:Name="btnTakePhoto" Click="BtnTakePhoto_Click"/>
+                <Button Style="{DynamicResource btn-danger}" Content="{StaticResource Delete}" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnDelete" Click="BtnDelete_Click"/>
+                <Button Style="{DynamicResource btn-info}" Content="{StaticResource Upload}" Height="30" Margin="20,0,0,0" Width="80" x:Name="btnUpload" Click="BtnUpload_Click"/>
             </StackPanel>
             <DataGrid Grid.Row="2" Name="dgShareFolder" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
@@ -79,8 +79,8 @@
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Horizontal">
-                                    <Button x:Name="btnPhotoList" Content="Photo List" Margin="10,0,0,0" Height="30" Width="100" Click="BtnUpload_Click"/>
-                                    <Button x:Name="btnBrowser" Content="Browser" Margin="10,0,0,0" Height="30" Width="80" Click="BtnBrowser_Click"/>
+                                    <Button x:Name="btnPhotoList" Content="{StaticResource PhotoList}" Margin="10,0,0,0" Height="30" Width="100" Click="BtnUpload_Click"/>
+                                    <Button x:Name="btnBrowser" Content="{StaticResource Browser}" Margin="10,0,0,0" Height="30" Width="80" Click="BtnBrowser_Click"/>
                                 </StackPanel>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>

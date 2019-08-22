@@ -41,11 +41,11 @@ namespace SGSTakePhoto.App
 
             if (!result.Success)
             {
-                return new ResponseSet<UploadFile> { ErrorMessage = result.ErrorMessage };
+                return new ResponseSet<UploadFile> { Errors = result.Errors };
             }
             if (result.Data == null || result.Data.Rows.Count <= 0)
             {
-                return new ResponseSet<UploadFile> { ErrorMessage = "No Data" };
+                return new ResponseSet<UploadFile> { Errors = "No Data" };
             }
 
             ObservableCollection<UploadFile> datas = new ObservableCollection<UploadFile>();
@@ -65,11 +65,11 @@ namespace SGSTakePhoto.App
 
             if (!result.Success)
             {
-                return new Response<UploadFile> { ErrorMessage = result.ErrorMessage };
+                return new Response<UploadFile> { Errors = result.Errors };
             }
             if (result.Data == null || result.Data.Rows.Count <= 0)
             {
-                return new Response<UploadFile> { ErrorMessage = "No Data" };
+                return new Response<UploadFile> { Errors = "No Data" };
             }
 
 

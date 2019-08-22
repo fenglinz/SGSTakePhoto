@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <!--登录-->
+    <sys:String x:Key="Title">用户登录</sys:String>
+    <sys:String x:Key="Uid">您的账号</sys:String>
+    <sys:String x:Key="Pwd">您的密码</sys:String>
+    <sys:String x:Key="Lang">您的语言</sys:String>
+    <sys:String x:Key="En">英文</sys:String>
+    <sys:String x:Key="Zh">中文</sys:String>
+    <sys:String x:Key="Login">登录</sys:String>
+    <sys:String x:Key="OK">确定</sys:String>
+    <sys:String x:Key="Cancel">取消</sys:String>
+
+    <!--菜单-->
+    <sys:String x:Key="Menu">菜单</sys:String>
+
+    <!--列表名称-->
+    <sys:String x:Key="OtsList">OTS Order 列表</sys:String>
+    <sys:String x:Key="SlimList">SLIM Order 列表</sys:String>
+    <sys:String x:Key="ShareFolderList">Share Folder Order 列表</sys:String>
+    <sys:String x:Key="SettingList">设置列表</sys:String>
+    <sys:String x:Key="PhotoBrowser">图片列表</sys:String>
+    <sys:String x:Key="UploadList">上传列表</sys:String>
+
+    <!--按钮-->
+    <sys:String x:Key="Scan">扫码</sys:String>
+    <sys:String x:Key="Search">查找</sys:String>
+    <sys:String x:Key="TakePhoto">拍照</sys:String>
+    <sys:String x:Key="Delete">删除</sys:String>
+    <sys:String x:Key="Upload">上传</sys:String>
+    <sys:String x:Key="PhotoList">照片列表</sys:String>
+    <sys:String x:Key="Browser">浏览</sys:String>
+    <sys:String x:Key="Save">保存</sys:String>
+    <sys:String x:Key="Back">返回</sys:String>
+    <sys:String x:Key="SelectAll">全选</sys:String>
+    <sys:String x:Key="UnSelectAll">不全选</sys:String>
+    <sys:String x:Key="Report">报告</sys:String>
+    <sys:String x:Key="Del">删除</sys:String>
+    <sys:String x:Key="Edit">编辑</sys:String>
+    <sys:String x:Key="Switch">切换</sys:String>
+    <sys:String x:Key="Gallery">从相册选择</sys:String>
+
+    <!--列表-->
+    <sys:String x:Key="User">用户</sys:String>
+    <sys:String x:Key="Organization">组织</sys:String>
+    <sys:String x:Key="System">执行系统</sys:String>
+
+    <!--文本框-->
+    <sys:String x:Key="DefaultWidth">图片默认宽度</sys:String>
+    <sys:String x:Key="DefaultHeight">图片默认宽高度</sys:String>
+    <sys:String x:Key="DefaultDPI">图片默认像素密度</sys:String>
+    <sys:String x:Key="Notice">点击保存后生效</sys:String>
+</ResourceDictionary>

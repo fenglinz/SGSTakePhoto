@@ -11,7 +11,17 @@
         Title="SGSTakePhoto" Height="400" Width="600">
     <Grid>
         <Grid DataContext="{Binding Source, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-            <GroupBox BorderThickness="1" Header="AD User Login" Margin="100,80,100,80">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"></RowDefinition>
+                <RowDefinition Height="50"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <Label Grid.Row="1" Content="{DynamicResource Lang}" HorizontalAlignment="Right" Style="{StaticResource h5}" Margin="120,0"/>
+            <ComboBox Grid.Row="1" Name="ChangeLanguage" SelectedIndex="1" Width="100" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Margin="0,0,10,0" SelectionChanged="ChangeLanguage_SelectionChanged">
+                <ComboBoxItem Content="{DynamicResource Zh}" IsSelected="True" />
+                <ComboBoxItem Content="{DynamicResource En}"  />
+            </ComboBox>
+            <GroupBox Grid.Row="2" BorderThickness="1" Header="{DynamicResource Title}" Margin="100,40,100,80">
                 <GroupBox.Content>
                     <Grid>
                         <Grid.RowDefinitions>
@@ -23,11 +33,11 @@
                             <ColumnDefinition Width="25*"/>
                             <ColumnDefinition Width="75*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Content="User Name" Grid.Row="0"  Style="{DynamicResource h5}"/>
+                        <Label Content="{DynamicResource Uid}" Grid.Row="0"  Style="{DynamicResource h5}"/>
                         <TextBox Grid.Row="0" Grid.Column="2" Name="txtUserName" Text="test"/>
-                        <Label Content="  Password" Grid.Row="1" Style="{DynamicResource h5}"/>
+                        <Label Content="{DynamicResource Pwd}" Grid.Row="1" Style="{DynamicResource h5}"/>
                         <PasswordBox Grid.Row="1" Grid.Column="2" x:Name="txtPwd"/>
-                        <Button Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" x:Name="btnLogin" Click="BtnLogin_Click" Content="Login" Width="120" Style="{DynamicResource btn-success}"/>
+                        <Button Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" x:Name="btnLogin" Click="BtnLogin_Click" Content="{DynamicResource Login}" Width="120" Style="{DynamicResource btn-success}"/>
                     </Grid>
                 </GroupBox.Content>
             </GroupBox>

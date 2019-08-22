@@ -61,7 +61,7 @@ namespace SGSTakePhoto.App
             //}
             //else
             //{
-            //    MessageBox.Show(result.ErrorMessage);
+            //    MessageBox.Show(result.Errors);
             //}
         }
 
@@ -86,5 +86,28 @@ namespace SGSTakePhoto.App
         }
 
         #endregion
+
+        /// <summary>
+        /// 修改语言
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ChangeLanguage_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            // TODO: 切换系统资源文件
+            ResourceDictionary dict = new ResourceDictionary();
+            int lang = ChangeLanguage.SelectedIndex;
+            switch (lang)
+            {
+                case 0:
+                    dict.Source = new Uri(@"Language\zh-CN.xaml", UriKind.Relative);
+                    break;
+                case 1:
+                    dict.Source = new Uri(@"Language\en-US.xaml", UriKind.Relative);
+                    break;
+            }
+
+            Application.Current.Resources.MergedDictionaries[0] = dict;
+        }
     }
 }

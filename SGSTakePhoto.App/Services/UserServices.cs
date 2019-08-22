@@ -45,11 +45,11 @@ namespace SGSTakePhoto.App
 
             if (!result.Success)
             {
-                return new ResponseSet<UserConfig> { ErrorMessage = result.ErrorMessage };
+                return new ResponseSet<UserConfig> { Errors = result.Errors };
             }
             if (result.Data == null || result.Data.Rows.Count <= 0)
             {
-                return new ResponseSet<UserConfig> { ErrorMessage = "No Data" };
+                return new ResponseSet<UserConfig> { Errors = "No Data" };
             }
 
             ObservableCollection<UserConfig> datas = new ObservableCollection<UserConfig>();
@@ -69,11 +69,11 @@ namespace SGSTakePhoto.App
 
             if (!result.Success)
             {
-                return new Response<UserConfig> { ErrorMessage = result.ErrorMessage };
+                return new Response<UserConfig> { Errors = result.Errors };
             }
             if (result.Data == null || result.Data.Rows.Count <= 0)
             {
-                return new Response<UserConfig> { ErrorMessage = "No Data" };
+                return new Response<UserConfig> { Errors = "No Data" };
             }
 
 

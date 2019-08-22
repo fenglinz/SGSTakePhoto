@@ -1,6 +1,11 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Management;
+using System.Security.Cryptography;
+using System.Text;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -11,6 +16,13 @@ namespace SGSTakePhoto.Infrastructure
     /// </summary>
     public class CommonHelper
     {
+        #region 属性
+
+        /// <summary>
+        /// 密钥
+        /// </summary>
+        private const string SecretKey = "123456";
+
         /// <summary>
         /// 当前软件版本
         /// </summary>
@@ -42,6 +54,10 @@ namespace SGSTakePhoto.Infrastructure
                 return Path.Combine(RootPath, "Photo_Files");
             }
         }
+
+        #endregion
+
+        #region 方法
 
         /// <summary>
         /// 照片上传的路径
@@ -190,5 +206,78 @@ namespace SGSTakePhoto.Infrastructure
 
             }
         }
+
+        /// <summary>
+        /// 获取默认的Mac地址
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDefualtMacAddress()
+        {
+            List<string> macs = new List<string>();
+            try
+            {
+                ManagementClass mc = new ManagementClass("Win32_NetworkAdapterConfiguration");
+                ManagementObjectCollection moc = mc.GetInstances();
+                foreach (ManagementObject mo in moc)
+                {
+                    if ((bool)mo["IPEnabled"])
+                    {
+                        macs.Add(mo["MacAddress"].ToString());
+                    }
+                }
+
+                return macs.FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+
+                return string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// 生成时间戳
+        /// </summary>
+        /// <returns></returns>
+        public static string CurrentTimestamp()
+        {
+            TimeSpan ts = DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0);
+            return Convert.ToInt64(ts.TotalSeconds).ToString();
+        }
+
+        /// <summary>
+        /// MD5加密
+        /// </summary>
+        /// <param name="strText"></param>
+        /// <returns></returns>
+        public static string MD5Encrypt(string strText)
+        {
+            using (MD5 md5 = new MD5CryptoServiceProvider())
+            {
+                byte[] result = md5.ComputeHash(System.Text.Encoding.Default.GetBytes(strText));
+                return Encoding.Default.GetString(result);
+            }
+        }
+
+        /// <summary>
+        /// 获取Token验证信息
+        /// </summary>
+        public static EncryptToken Token
+        {
+            get
+            {
+                string mac = GetDefualtMacAddress();
+                string timestamp = CurrentTimestamp();
+                string token = MD5Encrypt(string.Format("mac={0}&timestamp={1}&key={2}", mac, timestamp, SecretKey));
+                return new EncryptToken
+                {
+                    Mac = mac,
+                    Timestamp = timestamp,
+                    Token = token
+                };
+            }
+        }
+
+        #endregion
     }
 }

@@ -31,7 +31,7 @@
             <ColumnDefinition Width="100"></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Button VerticalAlignment="Top" Name="btnBack" Content="Back" Style="{StaticResource btn-success}" Margin="10,10" Width="80" Click="BtnBack_Click"/>
+        <Button VerticalAlignment="Top" Name="btnBack" Content="{StaticResource Back}" Style="{StaticResource btn-success}" Margin="10,10" Width="80" Click="BtnBack_Click"/>
         <ScrollViewer HorizontalScrollBarVisibility="Disabled" 
                       VerticalScrollBarVisibility="Disabled" Name="masterScrollViewer" Background="WhiteSmoke" Grid.Column="1">
             <ContentControl x:Name="ContentControl"

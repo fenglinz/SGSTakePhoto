@@ -35,7 +35,7 @@ namespace SGSTakePhoto.App
             }
             catch (Exception ex)
             {
-                return new Response<string> { ErrorMessage = ex.Message };
+                return new Response<string> { Errors = ex.Message };
             }
         }
     }

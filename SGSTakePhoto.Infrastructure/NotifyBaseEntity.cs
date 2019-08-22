@@ -84,11 +84,11 @@ namespace SGSTakePhoto.Infrastructure
 
         //    if (!result.Success)
         //    {
-        //        return new Response<T> { ErrorMessage = result.ErrorMessage };
+        //        return new Response<T> { Errors = result.Errors };
         //    }
         //    if (result.Data == null || result.Data.Rows.Count <= 0)
         //    {
-        //        return new Response<T> { ErrorMessage = "No Data" };
+        //        return new Response<T> { Errors = "No Data" };
         //    }
 
 

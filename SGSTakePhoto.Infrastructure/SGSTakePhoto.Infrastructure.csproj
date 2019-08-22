@@ -38,6 +38,7 @@
     <Reference Include="PresentationFramework.Aero" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -50,6 +51,7 @@
     <Compile Include="Column.cs" />
     <Compile Include="CommonHelper.cs" />
     <Compile Include="EditResult.cs" />
+    <Compile Include="EncryptToken.cs" />
     <Compile Include="HttpClient.cs" />
     <Compile Include="NotifyBaseEntity.cs" />
     <Compile Include="Order.cs" />

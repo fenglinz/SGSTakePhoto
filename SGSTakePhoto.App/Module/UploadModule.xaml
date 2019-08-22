@@ -24,15 +24,15 @@
     <UserControl.Resources>
         <local:CheckBoxEnableConverter x:Key="CheckBoxEnableConverter" />
     </UserControl.Resources>
-    <GroupBox Header="Upload">
+    <GroupBox Header="{StaticResource UploadList}">
         <Grid Margin="10,10,10,10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>
                 <RowDefinition></RowDefinition>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Orientation="Horizontal">
-                <Button Content="Back" Width="80" Style="{DynamicResource btn-success}" Name="btnBack" Click="BtnBack_Click"/>
-                <Button Content="Upload" Width="80" Style="{DynamicResource btn-info}" Name="btnUpload" Margin="20,0" Click="BtnUpload_Click"/>
+                <Button Content="{StaticResource Back}" Width="80" Style="{DynamicResource btn-success}" Name="btnBack" Click="BtnBack_Click"/>
+                <Button Content="{StaticResource Upload}" Width="80" Style="{DynamicResource btn-info}" Name="btnUpload" Margin="20,0" Click="BtnUpload_Click"/>
             </StackPanel>
             <DataGrid Grid.Row="1" Name="dgUpload" AutoGenerateColumns="False" CanUserAddRows="False">
                 <DataGrid.Columns>
